@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="main_menu_item_icon" parent="@style/layout_w_wrap_h_wrap">
+		<item name="android:layout_centerHorizontal">true</item>
+		<item name="android:layout_centerInParent">true</item>
+		<item name="android:layout_centerVertical">true</item>
+	</style>
+	
+	<style name="main_menu_item_text" parent="@style/layout_w_wrap_h_wrap">
+		<item name="android:layout_centerHorizontal">true</item>
+		<item name="android:layout_marginTop" >25dip</item>
+		<item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+		<!-- you need to set this style and the properties id, layout_below
+		and text of the text in the menu. -->
+	</style>
+	
+	<style name="layout_w_wrap_h_wrap">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+	</style>
+	
+	<style name="layout_w_match_h_wrap">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+	</style>
+	
+</resources>

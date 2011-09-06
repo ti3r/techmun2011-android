@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+    <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:stretchColumns="0,1">
+    	
+    	<TableRow android:layout_width="match_parent" android:gravity="center_horizontal" >
+    		
+    		<ImageView android:src="@drawable/icon" 
+    		android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    		<TextView android:text="Tec.ch.mun 2011" 
+    		android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    		
+    	</TableRow>
+    	
+    	<TableRow android:layout_width="match_parent" android:layout_height="wrap_content" >
+    		
+    		<RelativeLayout android:layout_width="wrap_content" 
+    			android:id="@+id/menu_item_mesas"
+    			android:layout_height="wrap_content" >
+    			
+    			<ImageView style="@style/main_menu_item_icon" 
+    				android:id="@+id/main_layout_mesas_icon" android:src="@drawable/icon" />
+    			
+    			<TextView style="@style/main_menu_item_text"   
+    				android:id="@+id/main_layout_mesas_text" 
+    				android:text="Mesas"
+    				android:layout_below="@id/main_layout_mesas_icon"></TextView>
+    			
+    		</RelativeLayout>
+    		
+    		<RelativeLayout android:layout_width="wrap_content"
+    			android:layout_height="wrap_content"
+    			android:id="@+id/menu_item_calendario">
+    			
+    			<ImageView style="@style/main_menu_item_icon"
+    			android:id="@+id/main_layout_calendario_icon" android:src="@drawable/icon" />
+    			<TextView style="@style/main_menu_item_text"
+    				android:id="@+id/main_layout_calendario_text" 
+    				android:layout_below="@id/main_layout_calendario_icon"
+    				android:text="Calendario"></TextView>
+    			
+    		</RelativeLayout>    		
+    	
+    	</TableRow>
+    	
+    	<TableRow style="@style/layout_w_match_h_wrap" >
+    		
+    		<RelativeLayout android:layout_width="wrap_content" 
+    			android:id="@+id/menu_item_mapa"
+    			android:layout_height="wrap_content" >
+    			
+    			<ImageView style="@style/main_menu_item_icon" 
+    				android:id="@+id/main_layout_mapa_icon" android:src="@drawable/icon" />
+    			
+    			<TextView style="@style/main_menu_item_text"   
+    				android:id="@+id/main_layout_mapa_text" 
+    				android:text="Mapa"
+    				android:layout_below="@id/main_layout_mapa_icon"></TextView>
+    			
+    		</RelativeLayout>
+    		
+    		<RelativeLayout android:layout_width="wrap_content"
+    			android:layout_height="wrap_content"
+    			android:id="@+id/menu_item_compartir">
+    			
+    			<ImageView style="@style/main_menu_item_icon"
+    			android:id="@+id/main_layout_compartir_icon" android:src="@drawable/icon" />
+    			<TextView style="@style/main_menu_item_text"
+    				android:id="@+id/main_layout_compartir_text" 
+    				android:layout_below="@id/main_layout_compartir_icon"
+    				android:text="Compartir"></TextView>
+    			
+    		</RelativeLayout>    		
+    	
+    	</TableRow>
+    	
+    	
+    </TableLayout>
+
+    
+</RelativeLayout>

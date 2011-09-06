@@ -1,10 +1,8 @@
 package org.blanco.techmun.android.cproviders;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
@@ -48,18 +46,49 @@ public class MesasContentProvider extends ContentProvider {
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
 		HttpGet req = new HttpGet(MESAS_REST_SERVICE_BSAE_URI);
-		Cursor result = new MatrixCursor(new String[]{"id","nombre","representante"});
 		try {
-			HttpResponse response = httpClient.execute(req);
-			HttpEntity entity = response.getEntity();
-			
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
+			Thread.currentThread().sleep(2000);
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//The cursor must contain an _id column of the CursorAdapters won't work.
+		MatrixCursor result = new MatrixCursor(new String[]{"_id","nombre","representante"});
+//		List<String> projections = Arrays.asList((projection != null)?projection:new String[]{});
+//		HttpResponse response;
+//		try {
+//			response = httpClient.execute(req);
+//			HttpEntity entity = response.getEntity();
+//			Document doc = XmlParser.parseHttpEntity(entity);
+//			//get the parent node "mesas"
+//			NodeList mesaNodes = doc.getFirstChild().getChildNodes();
+//			for(int i=0; i < mesaNodes.getLength(); i++){
+//				List<Object> row = new ArrayList<Object>();
+//				if (projections.isEmpty() || projections.contains("id")){
+//					row.add(mesaNodes.item(i).getAttributes().getNamedItem("id").getNodeValue());
+//				}
+//				if (projections.isEmpty() || projections.contains("nombre")){
+//					row.add(mesaNodes.item(i).getAttributes().getNamedItem("nombre").getNodeValue());
+//				}
+//				if (projections.isEmpty() || projections.contains("id")){
+//					row.add(mesaNodes.item(i).getAttributes().getNamedItem("representante").getNodeValue());
+//				}
+//				result.addRow(row);
+//			}
+//		} catch (ClientProtocolException e) {
+//			Log.e("techmun2011", "Error retrieving Mesa objects",e);
+//		} catch (IOException e) {
+//			Log.e("techmun2011", "Error retrieving Mesa objects",e);
+//		} catch (Exception e){
+//			Log.e("techmun2011", "Error parsing Mesa objects",e);
+//		}
+		List<Object> row = new ArrayList<Object>();
+		row.add(1); row.add("pruebas"); row.add("alexandro.blanco@gmail.com");
+		List<Object> row2 = new ArrayList<Object>();
+		row2.add(3); row2.add("pruebas3"); row2.add("alexandro.blanco@gmail.com2");
+		List<Object> row3 = new ArrayList<Object>();
+		row3.add(2); row3.add("pruebas2"); row3.add("alexandro.blanco@gmail.com3");
+		result.addRow(row); result.addRow(row2); result.addRow(row3);
 		return result;
 	}
 

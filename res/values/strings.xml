@@ -2,4 +2,9 @@
 <resources>
     <string name="hello">Hello World, MainActivity!</string>
     <string name="app_name">Tech Mun 2011</string>
+    <string name="mesas_fragment_title_bar_caption">Mesas</string>
+    <string name="footer_message">
+    	Tech.ch.mun 2011. Oct. 29 a Oct. 31\nUn evento de Prepa Tec. Del Tecnologico de Monterrey.
+    </string>
+    
 </resources>

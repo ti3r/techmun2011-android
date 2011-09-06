@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+    
+    <ImageView android:layout_width="wrap_content" 
+    	android:id="@+id/mesas_list_item_layout_logo" 
+    	android:layout_height="wrap_content" android:padding="1dip"
+    	android:layout_alignParentLeft="true" android:layout_alignParentTop="true"
+    	android:src="@drawable/icon" android:cropToPadding="true" />
+    
+    <TextView android:id="@+id/mesas_list_item_layout_id" 
+    	android:layout_width="wrap_content" android:text="id" 
+    	android:layout_height="wrap_content" 
+    	android:layout_alignParentBottom="true" 
+    	android:layout_alignParentRight="true"
+    	android:visibility="gone" />
+    
+    <TextView android:id="@+id/mesas_list_item_layout_nombre" 
+    android:layout_width="wrap_content" android:text="Nombre" 
+    android:textAppearance="?android:attr/textAppearanceLarge" 
+    android:layout_height="wrap_content" 
+    android:layout_toRightOf="@id/mesas_list_item_layout_logo"/>
+    
+    <TextView android:id="@+id/mesas_list_item_layout_representante" 
+    android:layout_width="wrap_content" android:text="Representante" 
+    android:textAppearance="?android:attr/textAppearanceSmall" 
+    android:layout_height="wrap_content" 
+    android:layout_below="@id/mesas_list_item_layout_nombre"
+   	android:layout_toRightOf="@id/mesas_list_item_layout_logo"
+    />
+   
+   <!-- Social Network Options -->
+   <ImageView android:src="@drawable/facebook_icon" android:layout_width="wrap_content"
+    android:layout_height="wrap_content" android:cropToPadding="true" android:padding="0dip"
+    android:layout_alignParentRight="true" android:layout_alignParentTop="true"
+    android:id="@+id/mesa_list_item_layout_share_facebook_button"
+     />
+    <ImageView android:src="@drawable/twitter_t_icon" android:layout_width="wrap_content"
+    android:layout_height="wrap_content" android:cropToPadding="true" android:padding="0dip"
+    android:layout_alignParentRight="true" 
+    android:layout_below="@id/mesa_list_item_layout_share_facebook_button"
+     />
+   
+</RelativeLayout>

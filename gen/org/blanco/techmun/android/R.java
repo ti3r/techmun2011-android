@@ -11,13 +11,58 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int icon=0x7f020000;
+        public static final int facebook_icon=0x7f020000;
+        public static final int facebook_like=0x7f020001;
+        public static final int icon=0x7f020002;
+        public static final int logo_itesm=0x7f020003;
+        public static final int twitter_t_icon=0x7f020004;
+    }
+    public static final class id {
+        public static final int imageView1=0x7f060016;
+        public static final int main_layout_calendario_icon=0x7f060006;
+        public static final int main_layout_calendario_text=0x7f060007;
+        public static final int main_layout_compartir_icon=0x7f06000c;
+        public static final int main_layout_compartir_text=0x7f06000d;
+        public static final int main_layout_mapa_icon=0x7f060009;
+        public static final int main_layout_mapa_text=0x7f06000a;
+        public static final int main_layout_mesas_icon=0x7f060003;
+        public static final int main_layout_mesas_text=0x7f060004;
+        public static final int main_menu_footer=0x7f060001;
+        public static final int main_menu_icons=0x7f060000;
+        public static final int menu_item_calendario=0x7f060005;
+        public static final int menu_item_compartir=0x7f06000b;
+        public static final int menu_item_mapa=0x7f060008;
+        public static final int menu_item_mesas=0x7f060002;
+        public static final int mesa_list_item_layout_share_facebook_button=0x7f060015;
+        public static final int mesas_fragment_mesas_list=0x7f060010;
+        public static final int mesas_fragment_mesas_title_bar=0x7f06000e;
+        public static final int mesas_fragment_title_bar_progress_bar=0x7f06000f;
+        public static final int mesas_list_item_layout_id=0x7f060012;
+        public static final int mesas_list_item_layout_logo=0x7f060011;
+        public static final int mesas_list_item_layout_nombre=0x7f060013;
+        public static final int mesas_list_item_layout_representante=0x7f060014;
+        public static final int textView1=0x7f060017;
     }
     public static final class layout {
         public static final int main=0x7f030000;
+        public static final int main_menu_icons_table=0x7f030001;
+        public static final int mesas_fragment_main_layout=0x7f030002;
+        public static final int mesas_list_item_layout=0x7f030003;
+        public static final int tech_mun_footer_message=0x7f030004;
     }
     public static final class string {
         public static final int app_name=0x7f040001;
+        public static final int footer_message=0x7f040003;
         public static final int hello=0x7f040000;
+        public static final int mesas_fragment_title_bar_caption=0x7f040002;
+    }
+    public static final class style {
+        public static final int layout_w_match_h_wrap=0x7f050003;
+        public static final int layout_w_wrap_h_wrap=0x7f050002;
+        public static final int main_menu_item_icon=0x7f050000;
+        /**  you need to set this style and the properties id, layout_below
+		and text of the text in the menu. 
+         */
+        public static final int main_menu_item_text=0x7f050001;
     }
 }
