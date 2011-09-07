@@ -5,12 +5,13 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
   
-  <RelativeLayout android:orientation="horizontal" android:id="@+id/mesas_fragment_mesas_title_bar"
-  	android:layout_width="match_parent" android:layout_height="wrap_content">
+  <RelativeLayout android:id="@+id/mesas_fragment_mesas_title_bar"
+  	style="@style/mesa_fragment_main_layout_title_bar">
  	
  	<TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
  		android:text="@string/mesas_fragment_title_bar_caption"
- 		android:layout_alignParentLeft="true" android:layout_alignParentTop="true" />
+ 		android:textAppearance="?android:attr/textAppearanceMedium"
+ 		android:layout_alignParentLeft="true" android:layout_alignParentTop="true" android:id="@+id/textView2"/>
  	
  	<ProgressBar android:layout_height="wrap_content" android:layout_width="wrap_content" 
  		style="?android:attr/progressBarStyleSmall" 
@@ -20,7 +21,7 @@
  	
   </RelativeLayout>
   
-  <ExpandableListView android:id="@+id/mesas_fragment_mesas_list" 
+  <ListView android:id="@+id/mesas_fragment_mesas_list" 
   android:layout_width="match_parent" android:layout_height="wrap_content"
   android:layout_alignParentLeft="true" android:layout_below="@id/mesas_fragment_mesas_title_bar" />
   

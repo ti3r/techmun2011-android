@@ -1,9 +1,12 @@
 package org.blanco.techmun.android.fragments;
 
+import org.blanco.techmun.android.EventosActivity;
 import org.blanco.techmun.android.R;
+import org.blanco.techmun.android.misc.MesaListItemClickListener;
 import org.blanco.techmun.android.misc.MesasCursorAdapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -15,7 +18,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-public class MesasListFragment extends Fragment {
+public class MesasListFragment extends Fragment 
+		implements MesaListItemClickListener{
 
 	ListView list = null;
 	Uri mesasUri = null;
@@ -89,8 +93,8 @@ public class MesasListFragment extends Fragment {
 		protected Cursor doInBackground(Activity... params) {
 			Activity ctx = null;
 			if (params.length != 1){
-				throw new RuntimeException("Activities passed for LoadTableTask must be " +
-						"exactly one ");
+				throw new RuntimeException("Activities passed for LoadTableTask" +
+						" must be exactly one ");
 			}
 			ctx = params[0];
 			Cursor cursor = ctx.getContentResolver()
@@ -102,7 +106,8 @@ public class MesasListFragment extends Fragment {
 		protected void onPostExecute(Cursor result) {
 			if (list != null){
 				MesasCursorAdapter adapter = null;
-				adapter = new MesasCursorAdapter(getActivity(), result);
+				adapter = new MesasCursorAdapter(getActivity(), result, 
+						MesasListFragment.this);
 				list.setAdapter(adapter);
 			}
 			//Hide the progress bar.
@@ -110,6 +115,17 @@ public class MesasListFragment extends Fragment {
 		}
 		
 		
+		
+	}
+
+	@Override
+	public void MesaListItemClicked(Long mesaId, String nombre,
+			String representante) {
+		Bundle extras = new Bundle();
+		extras.putLong("mesa", mesaId);
+		Intent i = new Intent(EventosActivity.ACTION_INTENT);
+		i.putExtras(extras);
+		startActivity(i);
 	}
 	
 }

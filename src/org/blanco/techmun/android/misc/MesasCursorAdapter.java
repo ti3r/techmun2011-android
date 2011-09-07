@@ -6,14 +6,20 @@ import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
-public class MesasCursorAdapter extends CursorAdapter {
+public class MesasCursorAdapter extends CursorAdapter
+		implements OnClickListener{
 
-	public MesasCursorAdapter(Context context, Cursor c) {
+	MesaListItemClickListener clickListener = null;
+	
+	public MesasCursorAdapter(Context context, Cursor c, 
+			MesaListItemClickListener listener) {
 		super(context,c);
+		this.clickListener = listener;
 	}
 
 	@Override
@@ -42,6 +48,21 @@ public class MesasCursorAdapter extends CursorAdapter {
 		id.setText(String.valueOf(vid));
 		nombre.setText(vnombre);
 		repres.setText(vrep);
+		
+		//set the OnClickListener of the item.
+			view.setOnClickListener(this);
+	}
+
+	@Override
+	public void onClick(View v) {
+		TextView id = (TextView) v
+				.findViewById(R.id.mesas_list_item_layout_id);
+		TextView nombre = (TextView) v
+				.findViewById(R.id.mesas_list_item_layout_nombre);
+		TextView repres = (TextView) v
+				.findViewById(R.id.mesas_list_item_layout_representante);
+		clickListener.MesaListItemClicked(Long.parseLong(id.getText().toString()), 
+				nombre.getText().toString(), repres.getText().toString());
 	}
 	
 }

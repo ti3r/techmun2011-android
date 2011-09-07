@@ -5,22 +5,19 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
+	<ImageView android:src="@drawable/techchmunlogo" 
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true" 
+    android:id="@+id/main_menu_logo"/>
+
+
     <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:stretchColumns="0,1">
-    	
-    	<TableRow android:layout_width="match_parent" android:gravity="center_horizontal" >
-    		
-    		<ImageView android:src="@drawable/icon" 
-    		android:layout_width="wrap_content" android:layout_height="wrap_content" />
-    		<TextView android:text="Tec.ch.mun 2011" 
-    		android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-    		
-    	</TableRow>
-    	
+    android:stretchColumns="0,1" android:shrinkColumns="0,1"
+    android:layout_below="@id/main_menu_logo">
+    	    	
     	<TableRow android:layout_width="match_parent" android:layout_height="wrap_content" >
     		
     		<RelativeLayout android:layout_width="wrap_content" 
-    			android:id="@+id/menu_item_mesas"
     			android:layout_height="wrap_content" >
     			
     			<ImageView style="@style/main_menu_item_icon" 

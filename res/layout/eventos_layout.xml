@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+	<RelativeLayout android:orientation="vertical"
+	  android:id="@+id/eventos_layout_mesa_header"
+	  style="@style/layout_w_match_h_wrap">
+	    
+	    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" 
+	    	android:id="@+id/mesa_header_event_layout_icon" android:src="@drawable/icon" 
+	    	android:layout_alignParentTop="true" android:layout_alignParentLeft="true"></ImageView>
+	    
+	    <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" 
+	    	android:id="@+id/mesa_header_event_layout_email_button" 
+	    	android:src="@android:drawable/sym_action_email" 
+	    	android:layout_alignParentTop="true" android:layout_alignParentRight="true" 
+	    	android:scaleType="center" android:background="@android:color/transparent" 
+	    	></ImageButton>
+	    <TextView android:textAppearance="?android:attr/textAppearanceSmall" android:id="@+id/mesa_header_event_layout_descripcion" android:layout_width="wrap_content" android:text="Descripcion" android:layout_height="wrap_content" android:layout_below="@+id/mesa_header_event_layout_icon" android:layout_alignParentLeft="true"></TextView>
+	    <TextView android:textAppearance="?android:attr/textAppearanceMedium" android:id="@+id/mesa_header_event_layout_responsable" android:layout_width="wrap_content" android:text="Responsable" android:layout_height="wrap_content" android:layout_alignBottom="@+id/mesa_header_event_layout_icon" android:layout_toRightOf="@+id/mesa_header_event_layout_icon"></TextView>
+	    <TextView android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/mesa_header_event_layout_nombre" android:layout_width="wrap_content" android:text="Nombre" android:layout_height="wrap_content" android:layout_alignParentTop="true" android:layout_toRightOf="@+id/mesa_header_event_layout_icon"></TextView>
+	    
+	</RelativeLayout>
+	
+	<ProgressBar android:id="@+id/progressBar1" 
+		android:layout_width="wrap_content" android:layout_height="wrap_content" 
+		style="?android:attr/progressBarStyleHorizontal" 
+		android:layout_below="@id/eventos_layout_mesa_header"
+		android:layout_alignParentLeft="true" 
+		android:layout_alignParentRight="true"></ProgressBar>
+	
+	<ListView style="@style/layout_w_match_h_wrap" />	
+	
+</RelativeLayout>

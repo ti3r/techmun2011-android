@@ -23,5 +23,14 @@
 		<item name="android:layout_width">match_parent</item>
 		<item name="android:layout_height">wrap_content</item>
 	</style>
+	<style name="layout_w_match_h_match">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">match_parent</item>
+	</style>
+		
+	<style name="mesa_fragment_main_layout_title_bar" parent="layout_w_match_h_wrap">
+		<item name="android:background">#0000FF</item>
+		<item name="android:orientation">horizontal</item>
+	</style>
 	
 </resources>
