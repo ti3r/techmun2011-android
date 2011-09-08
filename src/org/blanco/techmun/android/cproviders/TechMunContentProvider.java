@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.blanco.techmun.android.misc.EventosFetcher;
+import org.blanco.techmun.entities.Evento;
+import org.blanco.techmun.entities.Eventos;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -12,11 +15,23 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 
-public class MesasContentProvider extends ContentProvider {
+public class TechMunContentProvider extends ContentProvider {
 
-	private String MESAS_REST_SERVICE_BSAE_URI = 
+	private static String MESAS_REST_SERVICE_BSAE_URI = 
 			"https://techmun2011.appspot.com/rest/mesas";
+	
+	public static final String CONTENT_BASE_URI = 
+			"content://org.blanco.techmun.android.mesasprovider";
+	
+	private static final String MESA_CONENT_PETION_REG_EXP =
+			CONTENT_BASE_URI+"/\\d+";
+	
+	private static final String MESA_CONTENT_EVENTOS_PETITION_REG_EXP =
+			CONTENT_BASE_URI+"/\\d+/eventos";
+	
+	
 	DefaultHttpClient httpClient = new DefaultHttpClient();
+	EventosFetcher eventosFeher = new EventosFetcher();
 	
 	@Override
 	public int delete(Uri arg0, String arg1, String[] arg2) {
@@ -25,11 +40,17 @@ public class MesasContentProvider extends ContentProvider {
 
 	@Override
 	public String getType(Uri uri) {
-		if (uri.toString().contains(MESAS_REST_SERVICE_BSAE_URI)){
+		//User wants to retrieve mesa objects
+		if (uri.toString().equalsIgnoreCase(MESAS_REST_SERVICE_BSAE_URI)
+				||
+				uri.toString().matches(MESA_CONENT_PETION_REG_EXP)){
 			return "org.blanco.techmun.entities.Mesa";
-		} else {			
-			return null;
+			//User wants to retrieve 
+		} else if (uri.toString().matches(MESA_CONTENT_EVENTOS_PETITION_REG_EXP)) {			
+			return "org.blanco.techmun.entities.Evento";
 		}
+		//Petition not recognized, return object as default.
+		return "java.lang.Object";
 	}
 
 	@Override
@@ -51,6 +72,19 @@ public class MesasContentProvider extends ContentProvider {
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		if (uri.toString().matches(MESA_CONTENT_EVENTOS_PETITION_REG_EXP)){
+			Eventos eventos = eventosFeher.fetchEventos(uri);
+			MatrixCursor cursor = new MatrixCursor(Evento.EVENTO_COL_NAMES);
+			for( Evento evento : eventos.getEventos() ){
+				List<Object> row = new ArrayList<Object>();
+				row.add(cursor.getLong(cursor.getColumnIndex(Evento.EVENTO_ID_COL_NAME)));
+				row.add(cursor.getLong(cursor.getColumnIndex(Evento.EVENTO_MESAID_COL_NAME)));
+				row.add(cursor.getString(cursor.getColumnIndex(Evento.EVENTO_EVENTO_COL_NAME)));
+				row.add(cursor.getString(cursor.getColumnIndex(Evento.EVENTO_FECHA_COL_NAME)));
+				cursor.addRow(row);
+			}
+			return cursor;
 		}
 		//The cursor must contain an _id column of the CursorAdapters won't work.
 		MatrixCursor result = new MatrixCursor(new String[]{"_id","nombre","representante"});

@@ -21,7 +21,8 @@
     			android:layout_height="wrap_content" >
     			
     			<ImageView style="@style/main_menu_item_icon" 
-    				android:id="@+id/main_layout_mesas_icon" android:src="@drawable/icon" />
+    				android:id="@+id/main_layout_mesas_icon" 
+    				android:src="@android:drawable/ic_menu_agenda" />
     			
     			<TextView style="@style/main_menu_item_text"   
     				android:id="@+id/main_layout_mesas_text" 
@@ -35,7 +36,8 @@
     			android:id="@+id/menu_item_calendario">
     			
     			<ImageView style="@style/main_menu_item_icon"
-    			android:id="@+id/main_layout_calendario_icon" android:src="@drawable/icon" />
+    			android:id="@+id/main_layout_calendario_icon" 
+    			android:src="@android:drawable/ic_menu_my_calendar" />
     			<TextView style="@style/main_menu_item_text"
     				android:id="@+id/main_layout_calendario_text" 
     				android:layout_below="@id/main_layout_calendario_icon"
@@ -52,7 +54,8 @@
     			android:layout_height="wrap_content" >
     			
     			<ImageView style="@style/main_menu_item_icon" 
-    				android:id="@+id/main_layout_mapa_icon" android:src="@drawable/icon" />
+    				android:id="@+id/main_layout_mapa_icon" 
+    				android:src="@android:drawable/ic_menu_mapmode" />
     			
     			<TextView style="@style/main_menu_item_text"   
     				android:id="@+id/main_layout_mapa_text" 
@@ -66,7 +69,9 @@
     			android:id="@+id/menu_item_compartir">
     			
     			<ImageView style="@style/main_menu_item_icon"
-    			android:id="@+id/main_layout_compartir_icon" android:src="@drawable/icon" />
+    			android:id="@+id/main_layout_compartir_icon" 
+    			android:src="@android:drawable/ic_menu_share" />
+    			
     			<TextView style="@style/main_menu_item_text"
     				android:id="@+id/main_layout_compartir_text" 
     				android:layout_below="@id/main_layout_compartir_icon"

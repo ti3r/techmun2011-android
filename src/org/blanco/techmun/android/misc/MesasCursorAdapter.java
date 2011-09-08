@@ -1,6 +1,7 @@
 package org.blanco.techmun.android.misc;
 
 import org.blanco.techmun.android.R;
+import org.blanco.techmun.entities.Mesa;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -61,8 +62,12 @@ public class MesasCursorAdapter extends CursorAdapter
 				.findViewById(R.id.mesas_list_item_layout_nombre);
 		TextView repres = (TextView) v
 				.findViewById(R.id.mesas_list_item_layout_representante);
-		clickListener.MesaListItemClicked(Long.parseLong(id.getText().toString()), 
-				nombre.getText().toString(), repres.getText().toString());
+		//Build the messa object for the selected item.
+		Mesa mesa = new Mesa();
+		mesa.setId(Long.parseLong(id.getText().toString()));
+		mesa.setNombre(nombre.getText().toString());
+		mesa.setRepresentante(repres.getText().toString());
+		clickListener.MesaListItemClicked(mesa);
 	}
 	
 }

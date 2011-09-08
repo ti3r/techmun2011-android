@@ -4,6 +4,7 @@ import org.blanco.techmun.android.EventosActivity;
 import org.blanco.techmun.android.R;
 import org.blanco.techmun.android.misc.MesaListItemClickListener;
 import org.blanco.techmun.android.misc.MesasCursorAdapter;
+import org.blanco.techmun.entities.Mesa;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -119,12 +120,9 @@ public class MesasListFragment extends Fragment
 	}
 
 	@Override
-	public void MesaListItemClicked(Long mesaId, String nombre,
-			String representante) {
+	public void MesaListItemClicked(Mesa mesa) {
 		Bundle extras = new Bundle();
-		extras.putLong("mesa", mesaId);
-		extras.putString("nombre", nombre);
-		extras.putString("representante", representante);
+		extras.putSerializable("mesa", mesa);
 		Intent i = new Intent(EventosActivity.ACTION_INTENT);
 		i.putExtras(extras);
 		startActivity(i);

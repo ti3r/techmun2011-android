@@ -39,7 +39,7 @@
         <provider android:authorities="org.blanco.techmun.android.mesasprovider" 
         android:label="Mesas Content Provider" 
         android:enabled="true" 
-        android:name="org.blanco.techmun.android.cproviders.MesasContentProvider" 
+        android:name="org.blanco.techmun.android.cproviders.TechMunContentProvider" 
         android:exported="false"></provider>
 
     </application>
