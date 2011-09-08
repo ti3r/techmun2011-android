@@ -123,6 +123,8 @@ public class MesasListFragment extends Fragment
 			String representante) {
 		Bundle extras = new Bundle();
 		extras.putLong("mesa", mesaId);
+		extras.putString("nombre", nombre);
+		extras.putString("representante", representante);
 		Intent i = new Intent(EventosActivity.ACTION_INTENT);
 		i.putExtras(extras);
 		startActivity(i);

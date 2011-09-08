@@ -1,9 +1,11 @@
 package org.blanco.techmun.android;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.support.v4.app.FragmentActivity;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 /**
  * The fragment in charge of retrieving and displaying
@@ -11,11 +13,14 @@ import android.widget.Toast;
  * @author Alexandro Blanco <ti3r.bubblenet@gmail.com>
  *
  */
-public class EventosActivity extends Activity {
+public class EventosActivity extends FragmentActivity {
 
 	public static final String ACTION_INTENT = "org.blanco.techmun2011.EVENTOS";
 	
 	Long mesa = null;
+	String nombre = null;
+	String representante = null;
+	ListView eventosList = null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -34,7 +39,19 @@ public class EventosActivity extends Activity {
 	 */
 	public void initComponents(Intent intent){
 		mesa = intent.getLongExtra("mesa", -1);
-		Toast.makeText(this, mesa.toString(), 500);
+		nombre = intent.getStringExtra("nombre");
+		representante = intent.getStringExtra("representante");
+		
+		TextView tNombre = (TextView) 
+			findViewById(R.id.mesa_header_event_layout_nombre);
+		TextView tRepresentante = (TextView) 
+			findViewById(R.id.mesa_header_event_layout_responsable);
+		tNombre.setText(nombre);
+		tRepresentante.setText(representante);
+		eventosList = (ListView) findViewById(R.id.eventos_layout_eventos_list);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.array.test_string_array);
+		eventosList.setAdapter(adapter);
+		
 	}
 	
 }
