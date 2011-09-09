@@ -32,8 +32,9 @@
 		android:layout_alignParentLeft="true" 
 		android:layout_alignParentRight="true"></ProgressBar>
 	
-	<ListView android:layout_below="@id/progressBar1" 
-	android:id="@+id/eventos_layout_eventos_list"
-	android:layout_width="match_parent" android:layout_height="wrap_content" />	
+	<fragment android:layout_width="match_parent" android:layout_height="match_parent"
+  	android:layout_below="@id/progressBar1"
+  	android:id="@+id/eventos_layout_eventos_list_fragment"
+  	android:name="org.blanco.techmun.android.fragments.EventosListFragment"/>
 	
 </RelativeLayout>

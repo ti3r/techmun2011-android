@@ -2,6 +2,8 @@ package org.blanco.techmun.android.cproviders;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -30,8 +32,8 @@ public class TechMunContentProvider extends ContentProvider {
 			CONTENT_BASE_URI+"/\\d+/eventos";
 	
 	
-	DefaultHttpClient httpClient = new DefaultHttpClient();
-	EventosFetcher eventosFeher = new EventosFetcher();
+	DefaultHttpClient httpClient = null;
+	EventosFetcher eventosFeher = null;
 	
 	@Override
 	public int delete(Uri arg0, String arg1, String[] arg2) {
@@ -60,6 +62,8 @@ public class TechMunContentProvider extends ContentProvider {
 
 	@Override
 	public boolean onCreate() {
+		httpClient = new DefaultHttpClient();
+		eventosFeher = new EventosFetcher(httpClient);
 		return true;
 	}
 
@@ -74,14 +78,18 @@ public class TechMunContentProvider extends ContentProvider {
 			e.printStackTrace();
 		}
 		if (uri.toString().matches(MESA_CONTENT_EVENTOS_PETITION_REG_EXP)){
-			Eventos eventos = eventosFeher.fetchEventos(uri);
+			//get The mesa id
+			Pattern p = Pattern.compile(MESA_CONTENT_EVENTOS_PETITION_REG_EXP);
+			Matcher matcher = p.matcher(uri.toString());
+			String mesaId = matcher.group(1);
+			Eventos eventos = eventosFeher.fetchEventos(Long.getLong(mesaId));
 			MatrixCursor cursor = new MatrixCursor(Evento.EVENTO_COL_NAMES);
 			for( Evento evento : eventos.getEventos() ){
 				List<Object> row = new ArrayList<Object>();
-				row.add(cursor.getLong(cursor.getColumnIndex(Evento.EVENTO_ID_COL_NAME)));
-				row.add(cursor.getLong(cursor.getColumnIndex(Evento.EVENTO_MESAID_COL_NAME)));
-				row.add(cursor.getString(cursor.getColumnIndex(Evento.EVENTO_EVENTO_COL_NAME)));
-				row.add(cursor.getString(cursor.getColumnIndex(Evento.EVENTO_FECHA_COL_NAME)));
+				row.add(evento.getId());
+				row.add(evento.getMesaId());
+				row.add(evento.getEvento());
+				row.add(evento.getFecha());
 				cursor.addRow(row);
 			}
 			return cursor;

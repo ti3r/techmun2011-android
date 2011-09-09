@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+  
+  <RelativeLayout android:id="@+id/eventos_list_layout_title_bar"
+  	style="@style/mesa_fragment_main_layout_title_bar">
+ 	
+ 	<TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+ 		android:text="Eventos"
+ 		android:textAppearance="?android:attr/textAppearanceMedium"
+ 		android:layout_alignParentLeft="true" 
+ 		android:layout_alignParentTop="true"/>
+ 	
+ 	<ProgressBar android:layout_height="wrap_content" android:layout_width="wrap_content" 
+ 		style="?android:attr/progressBarStyleSmall" 
+ 		android:id="@+id/eventos_list_layout_title_bar_progress_bar" 
+ 		android:layout_gravity="right" android:visibility="gone"
+ 		android:layout_alignParentRight="true" android:layout_alignParentTop="true"
+ 		android:layout_centerVertical="true" />
+ 	
+  </RelativeLayout>
+  
+  <ListView android:id="@+id/eventos_list_layout_eventos_list" 
+  	style="@style/layout_w_match_h_match"
+  	android:layout_below="@id/eventos_list_layout_title_bar"
+  />
+  
+</RelativeLayout>
