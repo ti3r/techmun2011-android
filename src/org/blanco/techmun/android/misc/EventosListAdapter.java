@@ -65,6 +65,9 @@ public class EventosListAdapter extends BaseAdapter{
 		setViewValues(convertView, (Evento)getItem(position));
 		return convertView;
 	}
-
-	
+	@Override
+	public boolean isEmpty() {
+		return this.eventos.getEventos().isEmpty();
+	}	
+		
 }

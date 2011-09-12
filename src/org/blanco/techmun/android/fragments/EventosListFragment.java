@@ -17,10 +17,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-public class EventosListFragment extends Fragment {
+public class EventosListFragment extends Fragment 
+	implements OnItemClickListener{
 
 	EventosLoader loader = null;
 	Mesa mesa = null;
@@ -35,6 +38,8 @@ public class EventosListFragment extends Fragment {
 				.findViewById(R.id.eventos_list_layout_title_bar_progress_bar);
 		eventosList = (ListView) v
 				.findViewById(R.id.eventos_list_layout_eventos_list);
+		eventosList.setEmptyView(inflater.inflate(R.layout.eventos_list_empty_layout, null));
+		eventosList.setOnItemClickListener(this);
 		return v;
 	}
 	
@@ -101,17 +106,18 @@ public class EventosListFragment extends Fragment {
 			Cursor c = getActivity().getContentResolver().query(
 					Uri.parse(TechMunContentProvider.CONTENT_BASE_URI+"/"+mesa.getId()+"/eventos"), 
 					null, null, null, null);
-			
-			while (c.moveToNext()){
-				Evento e = new Evento();
-				e.setId(c.getLong(c.getColumnIndex(Evento.EVENTO_ID_COL_NAME)));
-				e.setMesaId(c.getLong(c.getColumnIndex(Evento.EVENTO_MESAID_COL_NAME)));
-				e.setEvento(c.getString(c.getColumnIndex(Evento.EVENTO_EVENTO_COL_NAME)));
-				e.setFecha(new Date(Date.parse(
-						c.getString(c.getColumnIndex(Evento.EVENTO_FECHA_COL_NAME)))));
-				result.getEventos().add(e);
+			if (c != null){
+				while (c.moveToNext()){
+					Evento e = new Evento();
+					e.setId(c.getLong(c.getColumnIndex(Evento.EVENTO_ID_COL_NAME)));
+					e.setMesaId(c.getLong(c.getColumnIndex(Evento.EVENTO_MESAID_COL_NAME)));
+					e.setEvento(c.getString(c.getColumnIndex(Evento.EVENTO_EVENTO_COL_NAME)));
+					e.setFecha(new Date(Date.parse(
+							c.getString(c.getColumnIndex(Evento.EVENTO_FECHA_COL_NAME)))));
+					result.getEventos().add(e);
+				}
+				c.close();
 			}
-			c.close();
 			return result;
 		}
 
@@ -119,8 +125,14 @@ public class EventosListFragment extends Fragment {
 		protected void onPostExecute(Eventos result) {
 			EventosListAdapter adapter = new EventosListAdapter(result);
 			eventosList.setAdapter(adapter);
+			adapter.notifyDataSetChanged();
 			hideProgressBar();
 		}
 
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		
 	}
 }

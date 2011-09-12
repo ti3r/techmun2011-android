@@ -36,5 +36,5 @@
   	android:layout_below="@id/progressBar1"
   	android:id="@+id/eventos_layout_eventos_list_fragment"
   	android:name="org.blanco.techmun.android.fragments.EventosListFragment"/>
-	
+
 </RelativeLayout>

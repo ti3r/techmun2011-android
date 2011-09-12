@@ -5,35 +5,37 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.blanco.techmun.android.misc.EventosFetcher;
 import org.blanco.techmun.entities.Evento;
 import org.blanco.techmun.entities.Eventos;
+import org.blanco.techmun.entities.Mesa;
+import org.blanco.techmun.entities.Mesas;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
+import android.util.Log;
 
 public class TechMunContentProvider extends ContentProvider {
 
-	private static String MESAS_REST_SERVICE_BSAE_URI = 
+	protected static String MESAS_REST_SERVICE_BSAE_URI = 
 			"https://techmun2011.appspot.com/rest/mesas";
 	
 	public static final String CONTENT_BASE_URI = 
 			"content://org.blanco.techmun.android.mesasprovider";
 	
 	private static final String MESA_CONENT_PETION_REG_EXP =
-			CONTENT_BASE_URI+"/\\d+";
+			CONTENT_BASE_URI+"/(\\d+)";
 	
 	private static final String MESA_CONTENT_EVENTOS_PETITION_REG_EXP =
-			CONTENT_BASE_URI+"/\\d+/eventos";
+			CONTENT_BASE_URI+"/(\\d+)/eventos";
 	
 	
 	DefaultHttpClient httpClient = null;
 	EventosFetcher eventosFeher = null;
+	MesasFetcher mesasFecher = null;
 	
 	@Override
 	public int delete(Uri arg0, String arg1, String[] arg2) {
@@ -64,25 +66,56 @@ public class TechMunContentProvider extends ContentProvider {
 	public boolean onCreate() {
 		httpClient = new DefaultHttpClient();
 		eventosFeher = new EventosFetcher(httpClient);
+		mesasFecher = new MesasFetcher(httpClient);
 		return true;
 	}
 
-	@Override
-	public Cursor query(Uri uri, String[] projection, String selection,
-			String[] selectionArgs, String sortOrder) {
-		HttpGet req = new HttpGet(MESAS_REST_SERVICE_BSAE_URI);
-		try {
-			Thread.currentThread().sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	/**
+	 * Extracts the dessired group value from the passed input if matches 
+	 * the provided pattern.
+	 * 
+	 * @param pattern The String pattern to match against the input
+	 * @param input The Stirng input value where to extract the group from
+	 * @param groupNo The int group index
+	 * @return The String value of the pointed group
+	 */
+	private String extractGroupFromPattern(String pattern, String input, 
+			int groupNo) throws IllegalStateException{
+		String s = null;
+		
+		Pattern p = Pattern.compile(MESA_CONTENT_EVENTOS_PETITION_REG_EXP);
+		Matcher matcher = p.matcher(input);
+		if (matcher.matches()){
+			s = matcher.group(groupNo);
+			if (s == null){
+				throw new IllegalStateException("The group passed returned null");
+			}
+		}else{
+			throw new IllegalStateException("The input does not match the " +
+					"passed pattern");
 		}
-		if (uri.toString().matches(MESA_CONTENT_EVENTOS_PETITION_REG_EXP)){
-			//get The mesa id
-			Pattern p = Pattern.compile(MESA_CONTENT_EVENTOS_PETITION_REG_EXP);
-			Matcher matcher = p.matcher(uri.toString());
-			String mesaId = matcher.group(1);
+		return s;
+	}
+	
+	/**
+	 * Returns a Cursor with the Eventos object based on the passed
+	 * content Uri
+	 * @param uri The content Uri uri where to extract the info to match the Eventos
+	 * 
+	 * @return Cursor with the information 
+	 */
+	private Cursor getEventosCursorForUri(Uri uri){
+		if (uri == null){
+			return null;
+		}
+		
+		Cursor result = null;
+		//get The mesa id
+		try{
+			String mesaId = extractGroupFromPattern(MESA_CONTENT_EVENTOS_PETITION_REG_EXP, 
+					uri.toString(), 1);
 			Eventos eventos = eventosFeher.fetchEventos(Long.getLong(mesaId));
+			//Build the cursor
 			MatrixCursor cursor = new MatrixCursor(Evento.EVENTO_COL_NAMES);
 			for( Evento evento : eventos.getEventos() ){
 				List<Object> row = new ArrayList<Object>();
@@ -92,46 +125,43 @@ public class TechMunContentProvider extends ContentProvider {
 				row.add(evento.getFecha());
 				cursor.addRow(row);
 			}
-			return cursor;
+			result = cursor;
+		}catch(IllegalStateException ex){
+			Log.i("Techmun CP", "Unable to fectch eventos from URI"+uri, ex);
 		}
-		//The cursor must contain an _id column of the CursorAdapters won't work.
-		MatrixCursor result = new MatrixCursor(new String[]{"_id","nombre","representante"});
-//		List<String> projections = Arrays.asList((projection != null)?projection:new String[]{});
-//		HttpResponse response;
-//		try {
-//			response = httpClient.execute(req);
-//			HttpEntity entity = response.getEntity();
-//			Document doc = XmlParser.parseHttpEntity(entity);
-//			//get the parent node "mesas"
-//			NodeList mesaNodes = doc.getFirstChild().getChildNodes();
-//			for(int i=0; i < mesaNodes.getLength(); i++){
-//				List<Object> row = new ArrayList<Object>();
-//				if (projections.isEmpty() || projections.contains("id")){
-//					row.add(mesaNodes.item(i).getAttributes().getNamedItem("id").getNodeValue());
-//				}
-//				if (projections.isEmpty() || projections.contains("nombre")){
-//					row.add(mesaNodes.item(i).getAttributes().getNamedItem("nombre").getNodeValue());
-//				}
-//				if (projections.isEmpty() || projections.contains("id")){
-//					row.add(mesaNodes.item(i).getAttributes().getNamedItem("representante").getNodeValue());
-//				}
-//				result.addRow(row);
-//			}
-//		} catch (ClientProtocolException e) {
-//			Log.e("techmun2011", "Error retrieving Mesa objects",e);
-//		} catch (IOException e) {
-//			Log.e("techmun2011", "Error retrieving Mesa objects",e);
-//		} catch (Exception e){
-//			Log.e("techmun2011", "Error parsing Mesa objects",e);
-//		}
-		List<Object> row = new ArrayList<Object>();
-		row.add(1); row.add("pruebas"); row.add("alexandro.blanco@gmail.com");
-		List<Object> row2 = new ArrayList<Object>();
-		row2.add(3); row2.add("pruebas3"); row2.add("alexandro.blanco@gmail.com2");
-		List<Object> row3 = new ArrayList<Object>();
-		row3.add(2); row3.add("pruebas2"); row3.add("alexandro.blanco@gmail.com3");
-		result.addRow(row); result.addRow(row2); result.addRow(row3);
 		return result;
+	}
+	
+	private Cursor getMesasCursorForUri(Uri uri){
+		//The cursor must contain an _id column of the CursorAdapters won't work.
+		Mesas mesas = mesasFecher.getMesas();
+		MatrixCursor result = new MatrixCursor(new String[]{"_id","nombre","representante"});
+		for(Mesa m : mesas.getMesas()){
+			List<Object> row = new ArrayList<Object>();
+			row.add(m.getId());
+			row.add(m.getNombre());
+			row.add(m.getRepresentante());
+			result.addRow(row);
+		}
+		return result;
+	}
+	
+	@Override
+	public Cursor query(Uri uri, String[] projection, String selection,
+			String[] selectionArgs, String sortOrder) {
+		//HttpGet req = new HttpGet(MESAS_REST_SERVICE_BSAE_URI);
+		try {
+			Thread.currentThread().sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (uri.toString().matches(MESA_CONTENT_EVENTOS_PETITION_REG_EXP)){
+			return getEventosCursorForUri(uri);			
+		}else if (uri.toString().matches(CONTENT_BASE_URI)){
+			return getMesasCursorForUri(uri);
+		}
+		return null;
 	}
 
 	@Override

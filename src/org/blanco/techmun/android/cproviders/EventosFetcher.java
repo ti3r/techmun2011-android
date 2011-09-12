@@ -1,4 +1,6 @@
-package org.blanco.techmun.android.misc;
+package org.blanco.techmun.android.cproviders;
+
+import static org.blanco.techmun.android.cproviders.TechMunContentProvider.CONTENT_BASE_URI;
 
 import java.io.IOException;
 import java.util.Date;
@@ -7,13 +9,11 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.blanco.techmun.android.misc.XmlParser;
 import org.blanco.techmun.entities.Evento;
 import org.blanco.techmun.entities.Eventos;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
-
-import android.net.Uri;
-import static org.blanco.techmun.android.cproviders.TechMunContentProvider.CONTENT_BASE_URI;
 /**
  * Class in charge of retrieving the Evento Objects
  * for the application. This can be done from the 
@@ -33,9 +33,15 @@ public class EventosFetcher {
 	
 	public Eventos fetchEventos(Long mesaId){
 		Eventos result = new Eventos();
-		
+		Evento e = new Evento();
+		e.setEvento("Evento de prueba");
+		e.setId(1L); e.setMesaId(1L); e.setFecha(new Date());
+		result.getEventos().add(e);
+		if (!result.getEventos().isEmpty()){
+			return result;
+		}
 		HttpGet request = new HttpGet(
-				CONTENT_BASE_URI+"/"+mesaId+"/eventos");
+				TechMunContentProvider.MESAS_REST_SERVICE_BSAE_URI+"/"+mesaId+"/eventos");
 		
 		HttpResponse response;
 		try {
@@ -55,7 +61,7 @@ public class EventosFetcher {
 					String fecha =
 							eventoNodes.item(i).getAttributes().getNamedItem("fecha").getNodeValue();
 					//Build the Evento Object
-					Evento e = new Evento();
+					//Evento e = new Evento();
 					e.setId(Long.getLong(id));
 					e.setId(Long.getLong(mId));
 					e.setEvento(evento);
@@ -63,17 +69,16 @@ public class EventosFetcher {
 					result.getEventos().add(e);
 				}
 			}
-		} catch (ClientProtocolException e) {
+		} catch (ClientProtocolException ex) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
+			ex.printStackTrace();
+		} catch (IOException ex) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
+			ex.printStackTrace();
+		} catch (Exception ex) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ex.printStackTrace();
 		}
-		
 		return result;
 	}
 	

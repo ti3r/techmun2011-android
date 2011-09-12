@@ -12,4 +12,5 @@
         <item>Tres</item>
         <item>Cuatro</item>
     </string-array>
+        <string name="commentarios_str">Comentarios</string>
 </resources>

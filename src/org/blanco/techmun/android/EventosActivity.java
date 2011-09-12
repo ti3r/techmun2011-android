@@ -5,10 +5,8 @@ import org.blanco.techmun.entities.Mesa;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.widget.ListView;
 import android.widget.TextView;
 
 /**
@@ -49,7 +47,7 @@ public class EventosActivity extends FragmentActivity {
 		tNombre.setText(mesa.getNombre());
 		tRepresentante.setText(mesa.getRepresentante());
 		eventosListFragment = (EventosListFragment) getSupportFragmentManager().findFragmentById(
-				R.id.eventos_layout_eventos_list_fragment);
+						R.id.eventos_layout_eventos_list_fragment);
 		Log.i("techmun2011", "fragment loaded");
 		eventosListFragment.setMesa(mesa);
 	}
