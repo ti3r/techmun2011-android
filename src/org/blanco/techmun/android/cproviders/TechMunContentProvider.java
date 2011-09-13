@@ -6,6 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.blanco.techmun.entities.Comentario;
+import org.blanco.techmun.entities.Comentarios;
 import org.blanco.techmun.entities.Evento;
 import org.blanco.techmun.entities.Eventos;
 import org.blanco.techmun.entities.Mesa;
@@ -32,10 +34,14 @@ public class TechMunContentProvider extends ContentProvider {
 	private static final String MESA_CONTENT_EVENTOS_PETITION_REG_EXP =
 			CONTENT_BASE_URI+"/(\\d+)/eventos";
 	
+	private static final String MESA_CONTENT_COMENTARIOS_PETITION_REG_EXP = 
+			MESA_CONTENT_EVENTOS_PETITION_REG_EXP+"/(\\d+)/comentarios";
+	
 	
 	DefaultHttpClient httpClient = null;
 	EventosFetcher eventosFeher = null;
 	MesasFetcher mesasFecher = null;
+	ComentariosFetcher comentariosFetcher = null;
 	
 	@Override
 	public int delete(Uri arg0, String arg1, String[] arg2) {
@@ -83,7 +89,7 @@ public class TechMunContentProvider extends ContentProvider {
 			int groupNo) throws IllegalStateException{
 		String s = null;
 		
-		Pattern p = Pattern.compile(MESA_CONTENT_EVENTOS_PETITION_REG_EXP);
+		Pattern p = Pattern.compile(pattern);
 		Matcher matcher = p.matcher(input);
 		if (matcher.matches()){
 			s = matcher.group(groupNo);
@@ -160,8 +166,27 @@ public class TechMunContentProvider extends ContentProvider {
 			return getEventosCursorForUri(uri);			
 		}else if (uri.toString().matches(CONTENT_BASE_URI)){
 			return getMesasCursorForUri(uri);
+		}else if (uri.toString().matches(MESA_CONTENT_COMENTARIOS_PETITION_REG_EXP)){
+			return getCommentaroisCursorForUri(uri);
 		}
 		return null;
+	}
+
+	private Cursor getCommentaroisCursorForUri(Uri uri) {
+		String sMesaId = extractGroupFromPattern(MESA_CONTENT_COMENTARIOS_PETITION_REG_EXP, 
+				uri.toString(), 1);
+		String sEventoId = extractGroupFromPattern(MESA_CONTENT_COMENTARIOS_PETITION_REG_EXP, 
+				uri.toString(), 2);
+		Comentarios comentarios = comentariosFetcher.fetchComentarios(sMesaId, sEventoId);
+		MatrixCursor cursor = new MatrixCursor(new String[]{"id","eventoId","comentario"},1);
+		for(Comentario comentario : comentarios){
+			List<Object> row = new ArrayList<Object>();
+			row.add(comentario.getId()); 
+			row.add(comentario.getEventoId()); 
+			row.add(comentario.getComentario());
+			cursor.addRow(row);
+		}
+		return cursor;
 	}
 
 	@Override
