@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+    <TextView android:text="TextView" android:textAppearance="?android:attr/textAppearanceMedium" 
+    android:id="@+id/comentarios_layout_evento_title" 
+    android:layout_height="wrap_content" android:layout_width="wrap_content" 
+    android:layout_alignParentTop="true" android:layout_alignParentLeft="true"></TextView>
+    <TextView android:text="TextView" 
+    android:id="@+id/comentarios_layout_evento_desc" 
+    android:layout_height="wrap_content" android:layout_width="wrap_content" 
+    android:layout_below="@id/comentarios_layout_evento_title" android:layout_alignParentLeft="true"></TextView>
+    
+    <fragment android:name="org.blanco.techmun.android.fragments.ComentariosListFragment"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_below="@id/comentarios_layout_evento_desc"/>
+    
+    
+    
+</RelativeLayout>

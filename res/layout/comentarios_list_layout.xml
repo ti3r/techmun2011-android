@@ -8,7 +8,7 @@
     	android:id="@+id/comentarios_list_layout_title_bar" 
     	android:layout_alignParentTop="true" android:layout_alignParentLeft="true">
         <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_alignParentLeft="true" android:layout_alignParentTop="true" android:layout_width="wrap_content" android:text="@string/commentarios_str"></TextView>
-        <ProgressBar android:layout_alignParentTop="true" android:layout_width="wrap_content" android:layout_alignParentRight="true" android:layout_height="wrap_content" android:visibility="gone" android:id="@+id/eventos_list_layout_title_bar_progress_bar" android:layout_centerVertical="true" style="?android:attr/progressBarStyleSmall"></ProgressBar>
+        <ProgressBar android:layout_alignParentTop="true" android:layout_width="wrap_content" android:layout_alignParentRight="true" android:layout_height="wrap_content" android:visibility="gone" android:id="@+id/comentarios_list_layout_title_bar_progress_bar" android:layout_centerVertical="true" style="?android:attr/progressBarStyleSmall"></ProgressBar>
     </RelativeLayout>
     <ListView android:layout_height="wrap_content" 
     android:layout_width="match_parent" android:id="@android:id/list" 

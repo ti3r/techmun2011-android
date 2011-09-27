@@ -1,6 +1,9 @@
 package org.blanco.techmun.android.fragments;
 
-import java.util.Date;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.StreamCorruptedException;
 
 import org.blanco.techmun.android.R;
 import org.blanco.techmun.android.cproviders.TechMunContentProvider;
@@ -9,11 +12,13 @@ import org.blanco.techmun.entities.Evento;
 import org.blanco.techmun.entities.Eventos;
 import org.blanco.techmun.entities.Mesa;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 public class EventosListFragment extends Fragment 
 	implements OnItemClickListener{
@@ -107,14 +113,20 @@ public class EventosListFragment extends Fragment
 					Uri.parse(TechMunContentProvider.CONTENT_BASE_URI+"/"+mesa.getId()+"/eventos"), 
 					null, null, null, null);
 			if (c != null){
+				int x = 0;
 				while (c.moveToNext()){
-					Evento e = new Evento();
-					e.setId(c.getLong(c.getColumnIndex(Evento.EVENTO_ID_COL_NAME)));
-					e.setMesaId(c.getLong(c.getColumnIndex(Evento.EVENTO_MESAID_COL_NAME)));
-					e.setEvento(c.getString(c.getColumnIndex(Evento.EVENTO_EVENTO_COL_NAME)));
-					e.setFecha(new Date(Date.parse(
-							c.getString(c.getColumnIndex(Evento.EVENTO_FECHA_COL_NAME)))));
-					result.getEventos().add(e);
+					try {
+						ByteArrayInputStream input = new ByteArrayInputStream(c.getBlob(x++));
+						ObjectInputStream stream = new ObjectInputStream(input);
+						Evento e  = (Evento) stream.readObject();
+						result.getEventos().add(e);
+					} catch (StreamCorruptedException e) {
+						Log.e("techmun", "Error parsing eventos",e);
+					} catch (IOException e) {
+						Log.e("techmun", "Error parsing eventos",e);
+					} catch (ClassNotFoundException e) {
+						Log.e("techmun", "Error parsing eventos",e);
+					}
 				}
 				c.close();
 			}
@@ -132,7 +144,11 @@ public class EventosListFragment extends Fragment
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		
+	public void onItemClick(AdapterView<?> adapterView, View view, int pres, long time) {
+		int position = adapterView.getPositionForView(view);
+		Evento e = (Evento) eventosList.getAdapter().getItem(position);
+		Intent intent = new Intent("org.blanco.techmun2011.COMENTARIOS");
+		intent.putExtra("evento", e);
+		startActivity(intent);
 	}
 }

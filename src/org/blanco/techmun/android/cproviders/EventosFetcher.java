@@ -12,6 +12,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.blanco.techmun.android.misc.XmlParser;
 import org.blanco.techmun.entities.Evento;
 import org.blanco.techmun.entities.Eventos;
+import org.json.JSONArray;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 /**
@@ -33,39 +34,24 @@ public class EventosFetcher {
 	
 	public Eventos fetchEventos(Long mesaId){
 		Eventos result = new Eventos();
-		Evento e = new Evento();
-		e.setEvento("Evento de prueba");
-		e.setId(1L); e.setMesaId(1L); e.setFecha(new Date());
-		result.getEventos().add(e);
-		if (!result.getEventos().isEmpty()){
-			return result;
-		}
 		HttpGet request = new HttpGet(
-				TechMunContentProvider.MESAS_REST_SERVICE_BSAE_URI+"/"+mesaId+"/eventos");
+				TechMunContentProvider.MESAS_REST_SERVICE_BSAE_URI+"/mesas/"+mesaId+"/eventos");
 		
-		HttpResponse response;
+		HttpResponse response = null;
 		try {
 			response = httpClient.execute(request);
 			if (response.getStatusLine().getStatusCode() == 200){
-				Document doc = 
-				XmlParser.parseHttpEntity(response.getEntity());
-				//Get the first child of the doc
-				NodeList eventoNodes = doc.getFirstChild().getChildNodes();
-				for (int i=0; i < eventoNodes.getLength(); i++){
-					String id =
-					eventoNodes.item(i).getAttributes().getNamedItem("id").getNodeValue();
-					String mId =
-							eventoNodes.item(i).getAttributes().getNamedItem("mesaId").getNodeValue();
-					String evento =
-							eventoNodes.item(i).getAttributes().getNamedItem("evento").getNodeValue();
-					String fecha =
-							eventoNodes.item(i).getAttributes().getNamedItem("fecha").getNodeValue();
-					//Build the Evento Object
-					//Evento e = new Evento();
-					e.setId(Long.getLong(id));
-					e.setId(Long.getLong(mId));
-					e.setEvento(evento);
+				JSONArray jsonEventos = XmlParser.parseJSONArrayFromHttpEntity(response.getEntity());
+				for(int i=0; i < jsonEventos.length(); i++){
+					Long id = jsonEventos.getJSONObject(i).getLong("id");
+					String titulo = jsonEventos.getJSONObject(i).getString("titulo");
+					String desc = jsonEventos.getJSONObject(i).getString("descripcion");
+					String fecha = jsonEventos.getJSONObject(i).getString("fecha");
+					Evento e = new Evento();
+					e.setId(id); e.setTitulo(titulo);
+					e.setMesaId(mesaId);
 					e.setFecha(new Date(Date.parse(fecha)));
+					e.setDescripcion(desc);
 					result.getEventos().add(e);
 				}
 			}

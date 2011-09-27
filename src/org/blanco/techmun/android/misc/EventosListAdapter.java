@@ -33,7 +33,7 @@ public class EventosListAdapter extends BaseAdapter{
 	 */
 	private void setViewValues(View view, Evento evento){
 		((TextView)view.findViewById(R.id.eventos_list_item_layout_desc))
-			.setText(evento.getEvento());
+			.setText(evento.getTitulo());
 		((TextView)view.findViewById(R.id.eventos_list_item_layout_fecha))
 			.setText(evento.getFecha().toString());
 	}

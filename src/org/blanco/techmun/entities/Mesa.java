@@ -42,7 +42,8 @@ public class Mesa implements Serializable {
 	
 	private Long id = null;
 	private String nombre = null;
-	private String representante = null;
+	private Usuario representante = null;
+	private String color = null;
 	
 	public Mesa(){
 		
@@ -63,10 +64,10 @@ public class Mesa implements Serializable {
 		this.nombre = nombre;
 	}
 	
-	public String getRepresentante() {
+	public Usuario getRepresentante() {
 		return representante;
 	}
-	public void setRepresentante(String representante) {
+	public void setRepresentante(Usuario representante) {
 		this.representante = representante;
 	}
 	
@@ -74,5 +75,13 @@ public class Mesa implements Serializable {
 	public String toString() {
 		return "Mesa[ "+id+", "+nombre+", "+representante;
 	}
-		
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
+	}
+	
+	
+	
 }

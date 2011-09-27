@@ -6,6 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.blanco.techmun.android.misc.ObjectsCursor;
+import org.blanco.techmun.entities.Comentario;
 import org.blanco.techmun.entities.Evento;
 import org.blanco.techmun.entities.Eventos;
 import org.blanco.techmun.entities.Mesa;
@@ -21,7 +23,7 @@ import android.util.Log;
 public class TechMunContentProvider extends ContentProvider {
 
 	protected static String MESAS_REST_SERVICE_BSAE_URI = 
-			"https://techmun2011.appspot.com/rest/mesas";
+			"http://tec-ch-mun-2011.herokuapp.com/rest";
 	
 	public static final String CONTENT_BASE_URI = 
 			"content://org.blanco.techmun.android.mesasprovider";
@@ -32,10 +34,13 @@ public class TechMunContentProvider extends ContentProvider {
 	private static final String MESA_CONTENT_EVENTOS_PETITION_REG_EXP =
 			CONTENT_BASE_URI+"/(\\d+)/eventos";
 	
+	private static final String MESA_CONTENT_COMENTARIOS_PETITION_REG_EXP = 
+			CONTENT_BASE_URI+"/comentarios/(\\d+)";
 	
 	DefaultHttpClient httpClient = null;
 	EventosFetcher eventosFeher = null;
 	MesasFetcher mesasFecher = null;
+	ComentariosFetcher comentsFetcher = null;
 	
 	@Override
 	public int delete(Uri arg0, String arg1, String[] arg2) {
@@ -52,6 +57,8 @@ public class TechMunContentProvider extends ContentProvider {
 			//User wants to retrieve 
 		} else if (uri.toString().matches(MESA_CONTENT_EVENTOS_PETITION_REG_EXP)) {			
 			return "org.blanco.techmun.entities.Evento";
+		} else if (uri.toString().matches(MESA_CONTENT_COMENTARIOS_PETITION_REG_EXP)){
+			Comentario.class.getCanonicalName();
 		}
 		//Petition not recognized, return object as default.
 		return "java.lang.Object";
@@ -67,6 +74,7 @@ public class TechMunContentProvider extends ContentProvider {
 		httpClient = new DefaultHttpClient();
 		eventosFeher = new EventosFetcher(httpClient);
 		mesasFecher = new MesasFetcher(httpClient);
+		comentsFetcher = new ComentariosFetcher(httpClient);
 		return true;
 	}
 
@@ -114,17 +122,9 @@ public class TechMunContentProvider extends ContentProvider {
 		try{
 			String mesaId = extractGroupFromPattern(MESA_CONTENT_EVENTOS_PETITION_REG_EXP, 
 					uri.toString(), 1);
-			Eventos eventos = eventosFeher.fetchEventos(Long.getLong(mesaId));
+			Eventos eventos = eventosFeher.fetchEventos(Long.parseLong(mesaId));
 			//Build the cursor
-			MatrixCursor cursor = new MatrixCursor(Evento.EVENTO_COL_NAMES);
-			for( Evento evento : eventos.getEventos() ){
-				List<Object> row = new ArrayList<Object>();
-				row.add(evento.getId());
-				row.add(evento.getMesaId());
-				row.add(evento.getEvento());
-				row.add(evento.getFecha());
-				cursor.addRow(row);
-			}
+			ObjectsCursor cursor = new ObjectsCursor(eventos.getEventos());
 			result = cursor;
 		}catch(IllegalStateException ex){
 			Log.i("Techmun CP", "Unable to fectch eventos from URI"+uri, ex);
@@ -135,15 +135,15 @@ public class TechMunContentProvider extends ContentProvider {
 	private Cursor getMesasCursorForUri(Uri uri){
 		//The cursor must contain an _id column of the CursorAdapters won't work.
 		Mesas mesas = mesasFecher.getMesas();
-		MatrixCursor result = new MatrixCursor(new String[]{"_id","nombre","representante"});
-		for(Mesa m : mesas.getMesas()){
-			List<Object> row = new ArrayList<Object>();
-			row.add(m.getId());
-			row.add(m.getNombre());
-			row.add(m.getRepresentante());
-			result.addRow(row);
-		}
+		ObjectsCursor result = new ObjectsCursor(mesas.getMesas());
 		return result;
+	}
+	
+	private Cursor getComentariosCursorForUri(Uri uri){
+		String eventoId = 
+		extractGroupFromPattern(MESA_CONTENT_COMENTARIOS_PETITION_REG_EXP, uri.toString(), 1);
+		
+		return null;
 	}
 	
 	@Override
@@ -158,6 +158,8 @@ public class TechMunContentProvider extends ContentProvider {
 		}
 		if (uri.toString().matches(MESA_CONTENT_EVENTOS_PETITION_REG_EXP)){
 			return getEventosCursorForUri(uri);			
+		}else if (uri.toString().matches(MESA_CONTENT_COMENTARIOS_PETITION_REG_EXP)){
+			return getComentariosCursorForUri(uri);
 		}else if (uri.toString().matches(CONTENT_BASE_URI)){
 			return getMesasCursorForUri(uri);
 		}

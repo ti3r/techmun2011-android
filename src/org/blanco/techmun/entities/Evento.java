@@ -21,6 +21,7 @@
  */
 package org.blanco.techmun.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -30,7 +31,7 @@ import java.util.Date;
  * @author Alexandro Blanco <ti3r.bubblenet@gmail.com>
  *
  */
-public class Evento {
+public class Evento implements Serializable {
 
 	public static final String EVENTO_ID_COL_NAME = "id";
 	public static final String EVENTO_MESAID_COL_NAME = "mesaId";
@@ -45,7 +46,8 @@ public class Evento {
 	
 	private Long id;
 	private Long mesaId;
-	private String evento;
+	private String titulo;
+	private String descripcion;
 	private Date fecha;
 	
 	public Long getId() {
@@ -64,12 +66,12 @@ public class Evento {
 		this.mesaId = mesaId;
 	}
 
-	public String getEvento() {
-		return evento;
+	public String getTitulo() {
+		return titulo;
 	}
 
-	public void setEvento(String evento) {
-		this.evento = evento;
+	public void setTitulo(String evento) {
+		this.titulo = evento;
 	}
 
 	public Date getFecha() {
@@ -84,7 +86,16 @@ public class Evento {
 	public String toString() {
 	
 		return "Evento["+id+", mesaId="+mesaId+", evento="
-				+evento+", fecha="+fecha;
+				+titulo+", fecha="+fecha;
 	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	
 	
 }

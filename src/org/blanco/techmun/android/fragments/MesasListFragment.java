@@ -1,10 +1,16 @@
 package org.blanco.techmun.android.fragments;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.StreamCorruptedException;
+
 import org.blanco.techmun.android.EventosActivity;
 import org.blanco.techmun.android.R;
 import org.blanco.techmun.android.misc.MesaListItemClickListener;
 import org.blanco.techmun.android.misc.MesasCursorAdapter;
 import org.blanco.techmun.entities.Mesa;
+import org.blanco.techmun.entities.Mesas;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -82,7 +88,7 @@ public class MesasListFragment extends Fragment
 	 * @author Alexandro Blanco <ti3r.bubblenet@gmail.com>
 	 *
 	 */
-	private class LoadTablesTask extends AsyncTask<Activity, Void, Cursor>{
+	private class LoadTablesTask extends AsyncTask<Activity, Void, Mesas>{
 		
 		@Override
 		protected void onPreExecute() {
@@ -91,7 +97,7 @@ public class MesasListFragment extends Fragment
 		}
 
 		@Override
-		protected Cursor doInBackground(Activity... params) {
+		protected Mesas doInBackground(Activity... params) {
 			Activity ctx = null;
 			if (params.length != 1){
 				throw new RuntimeException("Activities passed for LoadTableTask" +
@@ -100,15 +106,40 @@ public class MesasListFragment extends Fragment
 			ctx = params[0];
 			Cursor cursor = ctx.getContentResolver()
 					.query(mesasUri, null, null, null, null);
-			return cursor ;
+			Mesas result = new Mesas();
+			if (cursor != null){
+				int x = 0;
+				while (cursor.moveToNext()){
+					byte[] bytes = cursor.getBlob(x++);
+					ObjectInputStream in;
+					try {
+						in = new ObjectInputStream(new ByteArrayInputStream(bytes));
+						Object o = in.readObject();
+						result.getMesas().add((Mesa) o);
+					} catch (StreamCorruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				cursor.close();
+			}
+			return result ;
 		}
 
 		@Override
-		protected void onPostExecute(Cursor result) {
+		protected void onPostExecute(Mesas result) {
 			if (list != null){
 				MesasCursorAdapter adapter = null;
-				adapter = new MesasCursorAdapter(getActivity(), result, 
-						MesasListFragment.this);
+				adapter = new MesasCursorAdapter(getActivity(),
+						R.layout.mesas_list_item_layout,
+						android.R.layout.simple_list_item_1,
+						result.getMesas(),MesasListFragment.this);
 				list.setAdapter(adapter);
 			}
 			//Hide the progress bar.

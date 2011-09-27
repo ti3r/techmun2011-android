@@ -10,6 +10,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.http.HttpEntity;
 import org.apache.http.ParseException;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -34,6 +35,20 @@ public class XmlParser {
 			throw new Exception("Error in the parser configuration.",e);
 		} catch (SAXException e) {
 			throw new Exception("Error parsing the entity.",e);
+		}
+	}
+	
+	public static synchronized JSONArray parseJSONArrayFromHttpEntity(HttpEntity entity) 
+			throws Exception{
+		String jsonText = null;
+		try {
+			jsonText = EntityUtils.toString(entity);
+			JSONArray result = new JSONArray(jsonText);
+			return result;
+		} catch (ParseException e) {
+			throw new Exception("Error parsing the entity.",e);
+		} catch (IOException e) {
+			throw new Exception("Error reading the entity.",e);
 		}
 	}
 	
