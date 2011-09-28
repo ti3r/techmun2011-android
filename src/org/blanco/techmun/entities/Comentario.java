@@ -2,6 +2,8 @@ package org.blanco.techmun.entities;
 
 import java.util.Date;
 
+/** Class
+*/
 public class Comentario {
 
 	private Evento evento;

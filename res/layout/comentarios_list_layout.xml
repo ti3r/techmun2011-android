@@ -13,6 +13,13 @@
     <ListView android:layout_height="wrap_content" 
     android:layout_width="match_parent" android:id="@android:id/list" 
     android:layout_below="@id/comentarios_list_layout_title_bar" 
-    android:layout_alignParentLeft="true"></ListView>
-    
+    android:layout_alignParentLeft="true" android:layout_above="@+id/comentarios_list_layout_action_buttons"></ListView>
+    <LinearLayout style="@style/layout_w_match_h_wrap"
+    android:id="@+id/comentarios_list_layout_action_buttons"
+    android:layout_alignParentBottom="true" >
+    <Button android:id="@+id/comentarios_list_layout_refresh_button" 
+    	style="@style/layout_w_wrap_h_wrap" android:text="Refrescar"/>
+    <Button android:id="@+id/comentarios_list_layout_more_button" 
+    	style="@style/layout_w_wrap_h_wrap" android:text="Mas Comentarios"/>
+    </LinearLayout>
 </RelativeLayout>

@@ -13,6 +13,15 @@ import org.blanco.techmun.entities.Evento;
 import org.blanco.techmun.entities.Eventos;
 import org.json.JSONArray;
 
+
+/**
+ * Class in charge of fetching Comentario objects from the
+ * rest services or the cache. This class will be used
+ * by the content provider of the application.
+ * 
+ * @author Alexandro Blanco <ti3r.bubblenet@gmail.com>
+ *
+ */
 public class ComentariosFetcher {
 
 	HttpClient httpClient = null;

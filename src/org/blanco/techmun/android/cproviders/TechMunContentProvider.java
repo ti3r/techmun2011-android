@@ -1,22 +1,17 @@
 package org.blanco.techmun.android.cproviders;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.blanco.techmun.android.misc.ObjectsCursor;
 import org.blanco.techmun.entities.Comentario;
-import org.blanco.techmun.entities.Evento;
 import org.blanco.techmun.entities.Eventos;
-import org.blanco.techmun.entities.Mesa;
 import org.blanco.techmun.entities.Mesas;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.MatrixCursor;
 import android.net.Uri;
 import android.util.Log;
 
