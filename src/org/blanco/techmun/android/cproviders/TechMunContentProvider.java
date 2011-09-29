@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.blanco.techmun.android.misc.ObjectsCursor;
 import org.blanco.techmun.entities.Comentario;
+import org.blanco.techmun.entities.Comentarios;
 import org.blanco.techmun.entities.Eventos;
 import org.blanco.techmun.entities.Mesas;
 
@@ -31,6 +32,9 @@ public class TechMunContentProvider extends ContentProvider {
 	
 	private static final String MESA_CONTENT_COMENTARIOS_PETITION_REG_EXP = 
 			CONTENT_BASE_URI+"/comentarios/(\\d+)";
+
+	private static final String MESA_CONTENT_COMENTARIOS_INSERT_PETITION_REG_EXP =
+			CONTENT_BASE_URI+"/comentarios/add";
 	
 	DefaultHttpClient httpClient = null;
 	EventosFetcher eventosFeher = null;
@@ -61,7 +65,13 @@ public class TechMunContentProvider extends ContentProvider {
 
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
-		throw new UnsupportedOperationException("Not implemented yet");
+		if (uri.toString().matches(MESA_CONTENT_COMENTARIOS_INSERT_PETITION_REG_EXP)){
+			//TODO insert the comentario
+		}else{
+			throw new UnsupportedOperationException("Can't insert other elements that not " +
+					"complain with comentarios expression");
+		}
+		return null;
 	}
 
 	@Override
@@ -86,7 +96,7 @@ public class TechMunContentProvider extends ContentProvider {
 			int groupNo) throws IllegalStateException{
 		String s = null;
 		
-		Pattern p = Pattern.compile(MESA_CONTENT_EVENTOS_PETITION_REG_EXP);
+		Pattern p = Pattern.compile(pattern);
 		Matcher matcher = p.matcher(input);
 		if (matcher.matches()){
 			s = matcher.group(groupNo);
@@ -137,7 +147,15 @@ public class TechMunContentProvider extends ContentProvider {
 	private Cursor getComentariosCursorForUri(Uri uri){
 		String eventoId = 
 		extractGroupFromPattern(MESA_CONTENT_COMENTARIOS_PETITION_REG_EXP, uri.toString(), 1);
-		
+		try{
+			Long leId = Long.parseLong(eventoId);
+			Comentarios comentarios =
+					comentsFetcher.fetchComentarios(leId);
+			ObjectsCursor result = new ObjectsCursor(comentarios.getComentarios());
+			return result;
+		}catch(Exception e){
+			Log.e("techmun", "Error retrieving comentarios",e);
+		}
 		return null;
 	}
 	

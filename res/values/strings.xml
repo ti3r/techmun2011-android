@@ -6,6 +6,7 @@
     <string name="footer_message">
     	Tech.ch.mun 2011. Oct. 29 a Oct. 31\nUn evento de Prepa Tec. Del Tecnologico de Monterrey.
     </string>
+    <string name="comentarios_publish_layout_header">Envia un Comentario</string>
     <string-array name="test_string_array">
         <item>Uno</item>
         <item>Dos</item>
@@ -13,4 +14,9 @@
         <item>Cuatro</item>
     </string-array>
         <string name="commentarios_str">Comentarios</string>
+        <string name="btn_send">Enviar</string>
+        <string name="btn_cancel">Cancelar</string>
+        <string name="txt_comentario">Comentario</string>
+        <string name="autor">Nombre</string>
+        <string name="email">E-Mail</string>
 </resources>

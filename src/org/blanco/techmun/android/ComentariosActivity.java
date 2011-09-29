@@ -21,8 +21,6 @@ public class ComentariosActivity extends FragmentActivity {
 	
 	private Evento evento = null;
 
-	
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -37,5 +35,9 @@ public class ComentariosActivity extends FragmentActivity {
 		txtTitle.setText(evento.getTitulo());
 		TextView txtDesc = (TextView) findViewById(R.id.comentarios_layout_evento_desc);
 		txtDesc.setText(evento.getDescripcion());
+	}
+	
+	public Evento getEvento(){
+		return this.evento;
 	}
 }

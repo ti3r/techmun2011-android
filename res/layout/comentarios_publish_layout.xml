@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+    <TextView android:id="@+id/comentarios_publish_layout_header" 
+    	android:text="@string/comentarios_publish_layout_header" 
+    	android:layout_height="wrap_content" 
+    	android:layout_width="match_parent" 
+    	android:gravity="center_horizontal"
+    	android:textAppearance="?android:attr/textAppearanceMedium" 
+    	android:layout_alignParentTop="true" 
+    	android:layout_alignParentRight="true"></TextView>
+    <TextView android:id="@+id/textView1" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_below="@+id/comentarios_publish_layout_header" android:layout_alignParentLeft="true" android:text="@string/txt_comentario"></TextView>
+    <EditText android:inputType="textMultiLine" android:id="@+id/editText1" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_alignTop="@+id/textView1" android:layout_toRightOf="@+id/textView1" android:layout_alignParentRight="true">
+        <requestFocus></requestFocus>
+    </EditText>
+    <TextView android:id="@+id/textView2" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_below="@+id/editText1" android:layout_alignParentLeft="true" android:text="@string/autor"></TextView>
+    <EditText android:inputType="textPersonName" android:id="@+id/editText2" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_below="@+id/editText1" android:layout_alignLeft="@+id/editText1" android:layout_alignParentRight="true"></EditText>
+    <TextView android:id="@+id/textView3" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_below="@+id/editText2" android:layout_alignParentLeft="true" android:text="@string/email"></TextView>
+    <EditText android:inputType="textEmailAddress" android:id="@+id/editText3" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_alignTop="@+id/textView3" android:layout_alignLeft="@+id/editText2" android:layout_alignParentRight="true"></EditText>
+    <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/button1" android:layout_below="@+id/editText3" android:layout_alignParentRight="true" android:text="@string/btn_cancel"></Button>
+    <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/button2" android:layout_below="@+id/editText3" android:layout_toLeftOf="@+id/button1" android:text="@string/btn_send"></Button>
+    
+</RelativeLayout>

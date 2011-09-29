@@ -1,6 +1,7 @@
 package org.blanco.techmun.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,6 +21,16 @@ public class Usuario implements Serializable {
 	private String nombre;
 	private String correo;
 	private String alta;
+	
+	public Usuario(){
+		this(null,null);
+	}
+	
+	public Usuario(String nombre, String correo){
+		this.nombre = nombre;
+		this.correo = correo;
+		this.alta = "";
+	}
 	
 	public String getNombre() {
 		return nombre;

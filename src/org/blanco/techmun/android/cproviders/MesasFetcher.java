@@ -46,33 +46,35 @@ public class MesasFetcher {
 	
 	public Mesas getMesas(){
 		Mesas result = new Mesas();
-//		Mesa mesa = new Mesa();
-//		mesa.setId(1L); mesa.setNombre("Mesa de Prueba"); mesa.setRepresentante("alex");
-//		result.getMesas().add(mesa);
-		HttpResponse response;
-		try {
-			HttpGet req = new HttpGet(TechMunContentProvider.MESAS_REST_SERVICE_BSAE_URI+"/mesas");
-			response = client.execute(req);
-			HttpEntity entity = response.getEntity();
-			JSONArray mesas = XmlParser.parseJSONArrayFromHttpEntity(entity);
-			for(int i = 0; i < mesas.length(); i++){
-				JSONObject mesaObject = mesas.getJSONObject(i);
-				Mesa mesa = new Mesa();
-				mesa.setId(mesaObject.getLong("id"));
-				mesa.setNombre(mesaObject.getString("nombre"));
-				mesa.setRepresentante(Usuario.fromJSONObject(
-						mesaObject.getJSONObject("representante"))
-						);
-				mesa.setColor(mesaObject.getString("color"));
-				result.getMesas().add(mesa);
-			}
-		} catch (ClientProtocolException e) {
-			Log.e("techmun2011", "Error retrieving Mesa objects",e);
-		} catch (IOException e) {
-			Log.e("techmun2011", "Error retrieving Mesa objects",e);
-		} catch (Exception e){
-			Log.e("techmun2011", "Error parsing Mesa objects",e);
-		}
+		Mesa mesa = new Mesa();
+		mesa.setId(1L); mesa.setNombre("Mesa de Prueba"); 
+		mesa.setRepresentante(new Usuario("alex","alex@alex.com"));
+		mesa.setColor("#123456");
+		result.getMesas().add(mesa);
+//		HttpResponse response;
+//		try {
+//			HttpGet req = new HttpGet(TechMunContentProvider.MESAS_REST_SERVICE_BSAE_URI+"/mesas");
+//			response = client.execute(req);
+//			HttpEntity entity = response.getEntity();
+//			JSONArray mesas = XmlParser.parseJSONArrayFromHttpEntity(entity);
+//			for(int i = 0; i < mesas.length(); i++){
+//				JSONObject mesaObject = mesas.getJSONObject(i);
+//				Mesa mesa = new Mesa();
+//				mesa.setId(mesaObject.getLong("id"));
+//				mesa.setNombre(mesaObject.getString("nombre"));
+//				mesa.setRepresentante(Usuario.fromJSONObject(
+//						mesaObject.getJSONObject("representante"))
+//						);
+//				mesa.setColor(mesaObject.getString("color"));
+//				result.getMesas().add(mesa);
+//			}
+//		} catch (ClientProtocolException e) {
+//			Log.e("techmun2011", "Error retrieving Mesa objects",e);
+//		} catch (IOException e) {
+//			Log.e("techmun2011", "Error retrieving Mesa objects",e);
+//		} catch (Exception e){
+//			Log.e("techmun2011", "Error parsing Mesa objects",e);
+//		}
 		return result;
 	}
 	

@@ -13,10 +13,14 @@
     android:layout_height="wrap_content" android:layout_width="wrap_content" 
     android:layout_below="@id/comentarios_layout_evento_title" android:layout_alignParentLeft="true"></TextView>
     
-    <fragment android:name="org.blanco.techmun.android.fragments.ComentariosListFragment"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    <fragment 
+    android:name="org.blanco.techmun.android.fragments.ComentariosListFragment"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
     android:layout_below="@id/comentarios_layout_evento_desc"/>
     
-    
+    <fragment android:name="org.blanco.techmun.android.fragments.ComentariosPublishFragment"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    />
     
 </RelativeLayout>

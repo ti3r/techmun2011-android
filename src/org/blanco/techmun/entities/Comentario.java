@@ -1,11 +1,17 @@
 package org.blanco.techmun.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /** Class
 */
-public class Comentario {
+public class Comentario implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6943750923161350971L;
+	private long id;
 	private Evento evento;
 	private String comentario;
 	private String autor;
@@ -42,7 +48,11 @@ public class Comentario {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-	
-	
-	
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+		
 }

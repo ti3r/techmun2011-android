@@ -64,4 +64,5 @@ public class Comentarios implements Iterable<Comentario>{
 	public void addComentarios(Comentarios comentarios){
 		this.comentarios.addAll(comentarios.getComentarios());
 	}
+	
 }

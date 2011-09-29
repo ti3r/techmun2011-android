@@ -36,36 +36,40 @@ public class EventosFetcher {
 		Eventos result = new Eventos();
 		HttpGet request = new HttpGet(
 				TechMunContentProvider.MESAS_REST_SERVICE_BSAE_URI+"/mesas/"+mesaId+"/eventos");
-		
-		HttpResponse response = null;
-		try {
-			response = httpClient.execute(request);
-			if (response.getStatusLine().getStatusCode() == 200){
-				JSONArray jsonEventos = XmlParser.parseJSONArrayFromHttpEntity(response.getEntity());
-				for(int i=0; i < jsonEventos.length(); i++){
-					Long id = jsonEventos.getJSONObject(i).getLong("id");
-					String titulo = jsonEventos.getJSONObject(i).getString("titulo");
-					String desc = jsonEventos.getJSONObject(i).getString("descripcion");
-					String fecha = jsonEventos.getJSONObject(i).getString("fecha");
-					Evento e = new Evento();
-					e.setId(id); e.setTitulo(titulo);
-					e.setMesaId(mesaId);
-					e.setFecha(new Date(Date.parse(fecha)));
-					e.setDescripcion(desc);
-					result.getEventos().add(e);
-				}
-			}
-		} catch (ClientProtocolException ex) {
-			// TODO Auto-generated catch block
-			ex.printStackTrace();
-		} catch (IOException ex) {
-			// TODO Auto-generated catch block
-			ex.printStackTrace();
-		} catch (Exception ex) {
-			// TODO Auto-generated catch block
-			ex.printStackTrace();
-		}
+		Evento e = new Evento(); e.setDescripcion("evento de prueba"); 
+		e.setFecha(new Date(System.currentTimeMillis())); e.setId(1L); e.setMesaId(1L); 
+		e.setTitulo("evento de prueba");
+		result.getEventos().add(e);
 		return result;
+//		HttpResponse response = null;
+//		try {
+//			response = httpClient.execute(request);
+//			if (response.getStatusLine().getStatusCode() == 200){
+//				JSONArray jsonEventos = XmlParser.parseJSONArrayFromHttpEntity(response.getEntity());
+//				for(int i=0; i < jsonEventos.length(); i++){
+//					Long id = jsonEventos.getJSONObject(i).getLong("id");
+//					String titulo = jsonEventos.getJSONObject(i).getString("titulo");
+//					String desc = jsonEventos.getJSONObject(i).getString("descripcion");
+//					String fecha = jsonEventos.getJSONObject(i).getString("fecha");
+//					Evento e = new Evento();
+//					e.setId(id); e.setTitulo(titulo);
+//					e.setMesaId(mesaId);
+//					e.setFecha(new Date(Date.parse(fecha)));
+//					e.setDescripcion(desc);
+//					result.getEventos().add(e);
+//				}
+//			}
+//		} catch (ClientProtocolException ex) {
+//			// TODO Auto-generated catch block
+//			ex.printStackTrace();
+//		} catch (IOException ex) {
+//			// TODO Auto-generated catch block
+//			ex.printStackTrace();
+//		} catch (Exception ex) {
+//			// TODO Auto-generated catch block
+//			ex.printStackTrace();
+//		}
+//		return result;
 	}
 	
 }
