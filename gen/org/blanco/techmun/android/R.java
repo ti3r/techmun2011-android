@@ -14,13 +14,14 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int facebook_icon=0x7f020000;
-        public static final int facebook_like=0x7f020001;
-        public static final int icon=0x7f020002;
-        public static final int logo_itesm=0x7f020003;
-        public static final int techch_mun_largo=0x7f020004;
-        public static final int techchmunlogo=0x7f020005;
-        public static final int twitter_t_icon=0x7f020006;
+        public static final int background=0x7f020000;
+        public static final int facebook_icon=0x7f020001;
+        public static final int facebook_like=0x7f020002;
+        public static final int icon=0x7f020003;
+        public static final int logo_itesm=0x7f020004;
+        public static final int techch_mun_largo=0x7f020005;
+        public static final int techchmunlogo=0x7f020006;
+        public static final int twitter_t_icon=0x7f020007;
     }
     public static final class id {
         public static final int button1=0x7f070010;
