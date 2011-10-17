@@ -19,7 +19,7 @@
     android:layout_below="@id/comentarios_layout_evento_desc"/>
     
     <fragment android:name="org.blanco.techmun.android.fragments.ComentariosPublishFragment"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_width="match_parent" android:layout_height="25dip"
     android:layout_alignParentBottom="true"
     />
     

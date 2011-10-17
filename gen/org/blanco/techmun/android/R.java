@@ -24,8 +24,7 @@ public final class R {
         public static final int twitter_t_icon=0x7f020007;
     }
     public static final class id {
-        public static final int button1=0x7f070010;
-        public static final int button2=0x7f070011;
+        public static final int comenarios_publish_layout_txt_nombre=0x7f07000c;
         public static final int comentarios_layout_evento_desc=0x7f070001;
         public static final int comentarios_layout_evento_title=0x7f070000;
         public static final int comentarios_list_item_autor=0x7f070003;
@@ -35,10 +34,14 @@ public final class R {
         public static final int comentarios_list_layout_refresh_button=0x7f070007;
         public static final int comentarios_list_layout_title_bar=0x7f070004;
         public static final int comentarios_list_layout_title_bar_progress_bar=0x7f070005;
+        public static final int comentarios_publish_layout_btn_accept=0x7f070010;
+        public static final int comentarios_publish_layout_btn_cancel=0x7f070011;
+        public static final int comentarios_publish_layout_edt_comentario=0x7f07000b;
+        public static final int comentarios_publish_layout_edt_email=0x7f07000f;
+        public static final int comentarios_publish_layout_edt_nombre=0x7f07000d;
         public static final int comentarios_publish_layout_header=0x7f070009;
-        public static final int editText1=0x7f07000b;
-        public static final int editText2=0x7f07000d;
-        public static final int editText3=0x7f07000f;
+        public static final int comentarios_publish_layout_txt_comentario=0x7f07000a;
+        public static final int comentarios_publish_layout_txt_email=0x7f07000e;
         public static final int eventos_layout_eventos_list_fragment=0x7f070019;
         public static final int eventos_layout_mesa_header=0x7f070012;
         public static final int eventos_list_item_layout_desc=0x7f07001a;
@@ -46,7 +49,7 @@ public final class R {
         public static final int eventos_list_layout_eventos_list=0x7f07001e;
         public static final int eventos_list_layout_title_bar=0x7f07001c;
         public static final int eventos_list_layout_title_bar_progress_bar=0x7f07001d;
-        public static final int imageView1=0x7f070034;
+        public static final int imageView1=0x7f070035;
         public static final int main_layout_calendario_icon=0x7f070025;
         public static final int main_layout_calendario_text=0x7f070026;
         public static final int main_layout_compartir_icon=0x7f07002b;
@@ -66,17 +69,16 @@ public final class R {
         public static final int mesa_header_event_layout_icon=0x7f070013;
         public static final int mesa_header_event_layout_nombre=0x7f070015;
         public static final int mesa_header_event_layout_responsable=0x7f070016;
-        public static final int mesas_fragment_mesas_list=0x7f07002f;
+        public static final int mesas_fragment_mesas_list=0x7f070030;
         public static final int mesas_fragment_mesas_title_bar=0x7f07002d;
-        public static final int mesas_fragment_title_bar_progress_bar=0x7f07002e;
-        public static final int mesas_list_item_layout_id=0x7f070030;
-        public static final int mesas_list_item_layout_logo=0x7f070033;
-        public static final int mesas_list_item_layout_nombre=0x7f070032;
-        public static final int mesas_list_item_layout_representante=0x7f070031;
+        public static final int mesas_fragment_title_bar_progress_bar=0x7f07002f;
+        public static final int mesas_list_item_layout_id=0x7f070031;
+        public static final int mesas_list_item_layout_logo=0x7f070034;
+        public static final int mesas_list_item_layout_nombre=0x7f070033;
+        public static final int mesas_list_item_layout_representante=0x7f070032;
         public static final int progressBar1=0x7f070018;
-        public static final int textView1=0x7f07000a;
-        public static final int textView2=0x7f07000c;
-        public static final int textView3=0x7f07000e;
+        public static final int textView1=0x7f070036;
+        public static final int textView2=0x7f07002e;
     }
     public static final class layout {
         public static final int action_bar=0x7f030000;
