@@ -22,13 +22,7 @@
         		<category android:name="android.intent.category.DEFAULT" ></category>
         	</intent-filter>
         </activity>
-        <activity android:name="MapaActivity">
-        	<intent-filter>
-        		<action android:name="org.blanco.techmun2011.MAPA" />
-        		<category android:name="android.intent.category.DEFAULT" />
-        	</intent-filter>
-        </activity>
-        
+                
         <activity android:name="EventosActivity">
         	<intent-filter>
         		<action android:name="org.blanco.techmun2011.EVENTOS" />
@@ -39,6 +33,13 @@
         <activity android:name="ComentariosActivity">
         	<intent-filter>
         		<action android:name="org.blanco.techmun2011.COMENTARIOS" />
+        		<category android:name="android.intent.category.DEFAULT" />
+        	</intent-filter>
+        </activity>
+        
+        <activity android:name="MensajesActivity">
+        	<intent-filter>
+        		<action android:name="org.blanco.techmun2011.MENSAJES" />
         		<category android:name="android.intent.category.DEFAULT" />
         	</intent-filter>
         </activity>

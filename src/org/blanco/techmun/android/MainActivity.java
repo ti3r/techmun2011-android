@@ -9,6 +9,7 @@ public class MainActivity extends FragmentActivity {
     
 	View mesasMenuItem = null;
 	View mapaMenuItem = null;
+	View mensajesMenuItem = null;
 	
 	/** Called when the activity is first created. */
     @Override
@@ -36,7 +37,14 @@ public class MainActivity extends FragmentActivity {
     	mapaMenuItem.setOnClickListener(new View.OnClickListener() {
 			//Launch the Mapa Activity
 			public void onClick(View v) {
-				startActivity(new Intent(MapaActivity.ACTION_INTENT));
+				
+			}
+		});
+    	mensajesMenuItem = findViewById(R.id.menu_item_mensajes);
+    	mensajesMenuItem.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(MensajesActivity.INTENT_ACTION));
 			}
 		});
     }

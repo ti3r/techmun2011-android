@@ -66,16 +66,15 @@
     		
     		<RelativeLayout android:layout_width="wrap_content"
     			android:layout_height="wrap_content"
-    			android:id="@+id/menu_item_compartir">
+    			android:id="@+id/menu_item_mensajes">
     			
     			<ImageView style="@style/main_menu_item_icon"
     			android:id="@+id/main_layout_compartir_icon" 
-    			android:src="@android:drawable/ic_menu_share" />
+    			android:src="@android:drawable/ic_menu_send" />
     			
     			<TextView style="@style/main_menu_item_text"
     				android:id="@+id/main_layout_compartir_text" 
-    				android:layout_below="@id/main_layout_compartir_icon"
-    				android:text="Compartir"></TextView>
+    				android:layout_below="@id/main_layout_compartir_icon" android:text="@string/mensajes"></TextView>
     			
     		</RelativeLayout>    		
     	

@@ -33,4 +33,10 @@
 		<item name="android:orientation">horizontal</item>
 	</style>
 	
+	<style name="header" parent="layout_w_match_h_wrap">
+		<item name="android:background">#0000FF</item>
+		<item name="android:orientation">horizontal</item>
+		<item name="android:textColor">#FFFFFF</item>
+	</style>
+	
 </resources>

@@ -66,12 +66,11 @@ public class TechMunContentProvider extends ContentProvider {
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
 		if (uri.toString().matches(MESA_CONTENT_COMENTARIOS_INSERT_PETITION_REG_EXP)){
-			//TODO insert the comentario
+			return Uri.parse(CONTENT_BASE_URI+"/comentarios/"+123);
 		}else{
 			throw new UnsupportedOperationException("Can't insert other elements that not " +
 					"complain with comentarios expression");
 		}
-		return null;
 	}
 
 	@Override

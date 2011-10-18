@@ -19,4 +19,7 @@
         <string name="txt_comentario">Comentario</string>
         <string name="autor">Nombre</string>
         <string name="email">E-Mail</string>
+        <string name="mensajes">Mensajes</string>
+        <string name="more">Mas</string>
+        <string name="more_mensajes">Mas Mensajes</string>
 </resources>

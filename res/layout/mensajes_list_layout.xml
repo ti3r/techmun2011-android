@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+  
+  <RelativeLayout style="@style/header" >
+  <TextView style="@style/layout_w_wrap_h_wrap"
+  		android:textAppearance="?android:attr/textAppearanceMedium"
+    	android:id="@+id/mensajes_header" android:text="@string/mensajes"></TextView>
+  <ProgressBar android:layout_height="wrap_content" 
+  	android:layout_width="wrap_content" style="?android:attr/progressBarStyleSmall" 
+  	android:id="@+id/mensajes_list_layout_progress" android:layout_alignParentRight="true"></ProgressBar>
+  	
+  </RelativeLayout>
+  <ListView android:id="@+id/list" android:layout_width="match_parent"
+  	android:layout_below="@id/mensajes_list_layout_progress"
+  	android:layout_height="wrap_content" android:layout_above="@+id/mensajes_list_layout_btn_more"/>
+  <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentBottom="true" android:layout_alignParentRight="true" android:id="@+id/mensajes_list_layout_btn_more" android:text="@string/more_mensajes"></Button>
+  <Button android:text="Refresh" android:layout_width="wrap_content" android:id="@+id/mensajes_list_btn_refresh" android:layout_height="wrap_content" android:layout_alignParentBottom="true" android:layout_toLeftOf="@+id/mensajes_list_layout_btn_more"></Button>
+  
+  
+</RelativeLayout>
