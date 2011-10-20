@@ -42,7 +42,6 @@ public class MainActivity extends FragmentActivity {
 		});
     	mensajesMenuItem = findViewById(R.id.menu_item_mensajes);
     	mensajesMenuItem.setOnClickListener(new View.OnClickListener() {
-			@Override
 			public void onClick(View v) {
 				startActivity(new Intent(MensajesActivity.INTENT_ACTION));
 			}

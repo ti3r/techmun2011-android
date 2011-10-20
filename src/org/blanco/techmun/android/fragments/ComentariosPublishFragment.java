@@ -36,14 +36,12 @@ public class ComentariosPublishFragment extends Fragment {
 		header = (TextView) v.findViewById(R.id.comentarios_publish_layout_header);
 		header.setOnClickListener(new View.OnClickListener() {
 			
-			@Override
 			public void onClick(View v) {
 				animate();
 			}
 		});
 		btnEnviar = (Button) v.findViewById(R.id.comentarios_publish_layout_btn_accept);
 		btnEnviar.setOnClickListener(new View.OnClickListener() {
-			@Override
 			public void onClick(View v) {
 				sendComment();
 				animate();
@@ -51,7 +49,6 @@ public class ComentariosPublishFragment extends Fragment {
 		});
 		btnCancelar = (Button) v.findViewById(R.id.comentarios_publish_layout_btn_cancel);
 		btnCancelar.setOnClickListener(new View.OnClickListener(){
-			@Override
 			public void onClick(View v) {
 				clearFields();
 				animate();

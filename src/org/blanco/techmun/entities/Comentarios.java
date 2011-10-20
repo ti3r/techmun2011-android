@@ -52,7 +52,7 @@ public class Comentarios implements Iterable<Comentario>{
 		this.comentarios = comentarios;
 	}
 
-	@Override
+	
 	public Iterator<Comentario> iterator() {
 		return this.comentarios.iterator();		
 	}

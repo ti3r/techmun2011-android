@@ -8,7 +8,9 @@
   android:id="@+id/mensajes_action_bar"
 	android:layout_height="wrap_content"/>
 
-	<android.support.v4.app.fragment android:layout_width="match_parent" android:layout_height="match_parent"
-	android:name="org.blanco.techmun.android.fragments.MensajesListFragment"
-	android:layout_below="@id/mensajes_action_bar" />
+<fragment android:layout_width="match_parent" android:layout_height="match_parent"
+  	android:layout_below="@id/mensajes_action_bar"
+  	android:id="@+id/eventos_layout_eventos_list_fragment"
+  	android:name="org.blanco.techmun.android.fragments.MensajesListFragment"/>
+	
 </RelativeLayout>

@@ -18,24 +18,20 @@ public class ComentariosListAdapter extends BaseAdapter {
 		this.comentarios = comentarios;
 	}
 	
-	@Override
 	public int getCount() {
 		return (comentarios != null)? comentarios.getComentarios().size(): 0;
 	}
 
-	@Override
 	public Object getItem(int position) {
 		return (comentarios != null && position < comentarios.getComentarios().size())
 				? comentarios.getComentarios().get(position): null;
 	}
 
-	@Override
 	public long getItemId(int position) {
 		return (comentarios != null && position < comentarios.getComentarios().size())
 		? 1 : -1;
 	}
 
-	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null){
 			convertView = LayoutInflater.from(parent.getContext())

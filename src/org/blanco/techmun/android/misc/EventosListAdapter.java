@@ -38,25 +38,21 @@ public class EventosListAdapter extends BaseAdapter{
 			.setText(evento.getFecha().toString());
 	}
 
-	@Override
 	public int getCount() {
 		return (this.eventos != null) ? this.eventos.getEventos().size() : 0;
 	}
 	
-	@Override
 	public Object getItem(int position) {
 		
 		return (this.eventos != null && this.eventos.getEventos().size() >= position ) ?
 				this.eventos.getEventos().get(position) : null ;
 	}
 	
-	@Override
 	public long getItemId(int position) {
 		Evento evento = (Evento) getItem(position);
 		return (evento != null)? evento.getId() : 0;
 	}
 	
-	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if ( convertView == null ) { //we need to inflate a new view
 			convertView = LayoutInflater.from(parent.getContext())

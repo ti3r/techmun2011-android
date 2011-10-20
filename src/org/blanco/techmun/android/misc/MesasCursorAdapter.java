@@ -64,7 +64,6 @@ public class MesasCursorAdapter extends ArrayAdapter<Mesa>
 		setViewValues(convertView, getItem(position));
 		final int pos = position;
 		convertView.setOnClickListener(new OnClickListener() {
-			@Override
 			public void onClick(View arg0) {
 				MesasCursorAdapter.this.clickListener.MesaListItemClicked(MesasCursorAdapter.this.getItem(pos));
 			}
@@ -89,7 +88,7 @@ public class MesasCursorAdapter extends ArrayAdapter<Mesa>
 		return ((Mesa)getItem(arg0)).getId();
 	}
 
-	@Override
+	
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		Toast.makeText(arg1.getContext(), "Fua", 500).show();
 	}

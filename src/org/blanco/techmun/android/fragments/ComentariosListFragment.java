@@ -42,7 +42,6 @@ public class ComentariosListFragment extends ListFragment {
 		progress = (ProgressBar) v.findViewById(R.id.comentarios_list_layout_title_bar_progress_bar);
 		btnRefresh = (Button) v.findViewById(R.id.comentarios_list_layout_refresh_button);
 		btnRefresh.setOnClickListener(new View.OnClickListener() {
-			@Override
 			public void onClick(View v) {
 				refreshComentarios();
 			}

@@ -143,7 +143,6 @@ public class EventosListFragment extends Fragment
 
 	}
 
-	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int pres, long time) {
 		int position = adapterView.getPositionForView(view);
 		Evento e = (Evento) eventosList.getAdapter().getItem(position);
