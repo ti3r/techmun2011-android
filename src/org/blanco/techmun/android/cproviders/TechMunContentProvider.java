@@ -13,6 +13,7 @@ import org.blanco.techmun.entities.Mesas;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.net.Uri;
 import android.util.Log;
 
@@ -35,6 +36,9 @@ public class TechMunContentProvider extends ContentProvider {
 
 	private static final String MESA_CONTENT_COMENTARIOS_INSERT_PETITION_REG_EXP =
 			CONTENT_BASE_URI+"/comentarios/add";
+	
+	private static final String MESA_CONTENT_MENSAJES_PETITION_REG_EXP = 
+			CONTENT_BASE_URI+"/mensajes";
 	
 	DefaultHttpClient httpClient = null;
 	EventosFetcher eventosFeher = null;
@@ -172,6 +176,18 @@ public class TechMunContentProvider extends ContentProvider {
 			return getEventosCursorForUri(uri);			
 		}else if (uri.toString().matches(MESA_CONTENT_COMENTARIOS_PETITION_REG_EXP)){
 			return getComentariosCursorForUri(uri);
+		}else if (uri.toString().matches(MESA_CONTENT_MENSAJES_PETITION_REG_EXP)){
+			MatrixCursor cursor = new MatrixCursor(new String[]{"id","mensaje"});
+			cursor.addRow(new Object[]{"1","Mensaje de Pueba"+Math.random()});
+			cursor.addRow(new Object[]{"2","Mensaje de Pueba"+Math.random()});
+			cursor.addRow(new Object[]{"3","Mensaje de Pueba"+Math.random()});
+			cursor.addRow(new Object[]{"4","Mensaje de Pueba"+Math.random()});
+			cursor.addRow(new Object[]{"5","Mensaje de Pueba"+Math.random() });
+			cursor.addRow(new Object[]{"6","Mensaje de Pueba"+Math.random()});
+			cursor.addRow(new Object[]{"7","Mensaje de Pueba"+Math.random()});
+			cursor.addRow(new Object[]{"8","Mensaje de Pueba"+Math.random()});
+			cursor.addRow(new Object[]{"9","Mensaje de Pueba"+Math.random()});
+			return cursor;
 		}else if (uri.toString().matches(CONTENT_BASE_URI)){
 			return getMesasCursorForUri(uri);
 		}
