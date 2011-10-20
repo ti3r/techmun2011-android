@@ -1,5 +1,6 @@
 package org.blanco.techmun.android.cproviders;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -8,12 +9,12 @@ import org.blanco.techmun.android.misc.ObjectsCursor;
 import org.blanco.techmun.entities.Comentario;
 import org.blanco.techmun.entities.Comentarios;
 import org.blanco.techmun.entities.Eventos;
+import org.blanco.techmun.entities.Mensaje;
 import org.blanco.techmun.entities.Mesas;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.MatrixCursor;
 import android.net.Uri;
 import android.util.Log;
 
@@ -44,6 +45,7 @@ public class TechMunContentProvider extends ContentProvider {
 	EventosFetcher eventosFeher = null;
 	MesasFetcher mesasFecher = null;
 	ComentariosFetcher comentsFetcher = null;
+	MensajesFetcher mensajesFetcher = null;
 	
 	@Override
 	public int delete(Uri arg0, String arg1, String[] arg2) {
@@ -91,6 +93,7 @@ public class TechMunContentProvider extends ContentProvider {
 		eventosFeher = new EventosFetcher(httpClient);
 		mesasFecher = new MesasFetcher(httpClient);
 		comentsFetcher = new ComentariosFetcher(httpClient);
+		mensajesFetcher = new MensajesFetcher(httpClient);
 		return true;
 	}
 
@@ -185,21 +188,18 @@ public class TechMunContentProvider extends ContentProvider {
 		}else if (uri.toString().matches(MESA_CONTENT_COMENTARIOS_PETITION_REG_EXP)){
 			return getComentariosCursorForUri(uri);
 		}else if (uri.toString().matches(MESA_CONTENT_MENSAJES_PETITION_REG_EXP)){
-			MatrixCursor cursor = new MatrixCursor(new String[]{"id","mensaje"});
-			cursor.addRow(new Object[]{"1","Mensaje de Pueba"+Math.random()});
-			cursor.addRow(new Object[]{"2","Mensaje de Pueba"+Math.random()});
-			cursor.addRow(new Object[]{"3","Mensaje de Pueba"+Math.random()});
-			cursor.addRow(new Object[]{"4","Mensaje de Pueba"+Math.random()});
-			cursor.addRow(new Object[]{"5","Mensaje de Pueba"+Math.random() });
-			cursor.addRow(new Object[]{"6","Mensaje de Pueba"+Math.random()});
-			cursor.addRow(new Object[]{"7","Mensaje de Pueba"+Math.random()});
-			cursor.addRow(new Object[]{"8","Mensaje de Pueba"+Math.random()});
-			cursor.addRow(new Object[]{"9","Mensaje de Pueba"+Math.random()});
-			return cursor;
+			return getMensajesCursorForUri(uri);
 		}else if (uri.toString().matches(CONTENT_BASE_URI)){
 			return getMesasCursorForUri(uri);
 		}
 		return null;
+	}
+
+	private Cursor getMensajesCursorForUri(Uri uri) {
+		List<Mensaje> result = null;
+		result = mensajesFetcher.getMensajes();
+		ObjectsCursor cursor = new ObjectsCursor(result);
+		return cursor;
 	}
 
 	@Override

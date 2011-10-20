@@ -1,29 +1,39 @@
 package org.blanco.techmun.android;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.util.EntityUtils;
 import org.blanco.techmun.android.cproviders.TechMunContentProvider;
 import org.blanco.techmun.android.misc.ExpandAnimation;
+import org.blanco.techmun.android.misc.MensajesListAdapter;
+import org.blanco.techmun.entities.Mensaje;
 
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
+import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -105,6 +115,7 @@ public class MensajesActivity extends Activity {
 	
 	@Override
 	protected void onStart() {
+		list.requestFocus();
 		loadMensajes();
 		super.onStart();
 	}
@@ -141,6 +152,8 @@ public class MensajesActivity extends Activity {
 
 
 	            attachImage = BitmapFactory.decodeFile(filePath);
+	            //Mark the button as image attached
+	            btnAddImage.setBackgroundColor(Color.YELLOW);
 	            Log.i("techmun", "selected image"+filePath+" Loaded.");
 
 			}
@@ -172,9 +185,8 @@ public class MensajesActivity extends Activity {
 		Uri msgUri = 
 				getContentResolver().insert(Uri.parse(TechMunContentProvider.CONTENT_BASE_URI+"/mensajes"), 
 						values);
-		if (!Uri.EMPTY.equals(msgUri)){
-			Toast.makeText(getBaseContext(), "Mensaje Enviado", 500).show();
-		}
+		Toast.makeText(getBaseContext(), getString(R.string.sending_mensaje), 500).show();
+		animate();
 	}
 	
 	class MensajesLoader extends AsyncTask<Void, Void, ListAdapter>{
@@ -183,12 +195,24 @@ public class MensajesActivity extends Activity {
 		protected ListAdapter doInBackground(Void... params) {
 			Cursor c = managedQuery(Uri.parse("content://org.blanco.techmun.android.mesasprovider/mensajes"), 
 					null, null, null, null);
-			List<String> mensajes = new ArrayList<String>();
-			while(c.moveToNext()){
-				mensajes.add(c.getString(c.getColumnIndex("mensaje")));
+			List<Mensaje> mensajes = new ArrayList<Mensaje>();
+			while (c.moveToNext()){
+				ByteArrayInputStream bytesInputStream = new ByteArrayInputStream(c.getBlob(0));
+				ObjectInputStream ois;
+				try {
+					ois = new ObjectInputStream(bytesInputStream);
+					Object mObject = ois.readObject();
+					if (mObject != null && mObject instanceof Mensaje){
+						mensajes.add((Mensaje)mObject);
+					}else{
+						Log.e("techmun", "Object retrieved from Cursor is not a Mensaje object. " +
+								"It will be ignored. "+mObject);
+					}
+				} catch(Exception e){
+					Log.e("techmun", "Error retrieving Mensaje object from cursor.",e);
+				}
 			}
-			ArrayAdapter<String> adapter = 
-					new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1,mensajes); 
+			ListAdapter adapter = new MensajesListAdapter(mensajes);
 			return adapter;
 		}
 
@@ -197,6 +221,17 @@ public class MensajesActivity extends Activity {
 			list.setAdapter(result);	
 			list.onRefreshComplete();
 		}
+	}
+	
+	
+	class MensajeSender extends AsyncTask<ContentValues, Void, Void>{
+
+		@Override
+		protected Void doInBackground(ContentValues... arg0) {
+			
+			return null;
+		}
+		
 	}
 	
 }

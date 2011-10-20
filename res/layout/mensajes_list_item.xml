@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+    <ImageView android:layout_width="35dip" 
+    	android:src="@drawable/icon" android:layout_height="35dip"
+    	android:layout_alignParentTop="true" android:layout_alignParentLeft="true" 
+    	android:layout_marginLeft="10dip" android:layout_marginTop="10dip" 
+    	android:id="@+id/mensajes_list_item_foto"></ImageView>
+    <TextView android:layout_width="match_parent" 
+    	android:textAppearance="?android:attr/textAppearanceMedium"
+    	android:singleLine="false"
+    	android:scrollHorizontally="false"
+    	android:layout_height="wrap_content" 
+    	android:text="TextView" android:layout_alignTop="@+id/mensajes_list_item_foto" 
+    	android:layout_toRightOf="@+id/mensajes_list_item_foto" 
+    	android:layout_alignParentRight="true" 
+    	android:id="@+id/mensajes_list_item_mensaje"></TextView>
+    <TextView android:layout_width="wrap_content" 
+    	android:textAppearance="?android:attr/textAppearanceSmall" 
+    	android:layout_height="wrap_content" android:text="TextView" 
+    	android:layout_below="@+id/mensajes_list_item_foto" 
+    	android:layout_alignParentLeft="true" android:layout_alignParentRight="true" 
+    	android:id="@+id/mensajes_list_item_footer"></TextView>
+    
+</RelativeLayout>

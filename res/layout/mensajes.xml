@@ -19,19 +19,20 @@
    	android:textAppearance="?android:attr/textAppearanceMedium" 
    	android:layout_width="match_parent" android:id="@+id/mensajes_mensaje_header" 
    	android:layout_height="wrap_content" android:layout_below="@+id/mensajes_action_bar" 
-   	android:layout_alignParentLeft="true"></TextView>
+   	android:layout_alignParentLeft="true">
+   	
+   	</TextView>
 
   <com.markupartist.android.widget.PullToRefreshListView android:id="@+id/mensajes_list" 
   	android:layout_width="match_parent" android:layout_height="match_parent" 
-  	android:background="#FF0000"
   	android:layout_alignParentLeft="true" 
   	android:layout_alignParentRight="true" 
-  	android:layout_below="@+id/mensajes_mensaje_header" android:layout_above="@+id/mensaje_post_mensaje_post_form"/>
+  	android:layout_below="@+id/mensajes_mensaje_header" android:layout_above="@+id/mensaje_post_mensaje_post_form">
+  	</com.markupartist.android.widget.PullToRefreshListView>
   
   <RelativeLayout android:layout_width="wrap_content" 
-  	android:id="@+id/mensaje_post_mensaje_post_form" android:layout_height="240dip" 
+  	android:id="@+id/mensaje_post_mensaje_post_form" android:layout_height="24dip" 
   	android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
-  	android:background="#555555" 
   	android:layout_alignParentRight="true">
   
   <TextView android:text="@string/mensaje_send_header" 
@@ -46,8 +47,12 @@
   <TextView android:layout_width="wrap_content" android:id="@+id/mensajes_post_mensaje_txt_titulo" android:layout_height="wrap_content" android:layout_below="@+id/mensajes_post_mensaje_header" android:layout_alignParentLeft="true" android:text="@string/titulo"></TextView>
   <EditText android:layout_width="wrap_content" android:inputType="textMultiLine" android:layout_height="wrap_content" android:layout_alignTop="@+id/mensajes_post_mensaje_txt_titulo" android:layout_alignParentRight="true" android:layout_toRightOf="@+id/mensajes_post_mensaje_txt_titulo" android:id="@+id/mensajes_post_mensaje_edt_titulo" />
   
-  <TextView android:text="@string/mensaje" android:layout_below="@id/mensajes_post_mensaje_txt_titulo" android:layout_width="wrap_content" android:id="@+id/mensajes_post_mensaje_txt_mensaje" android:layout_height="wrap_content" android:layout_alignParentLeft="true"></TextView>
-  <EditText android:layout_width="wrap_content" android:inputType="textMultiLine" android:layout_height="wrap_content"  android:layout_alignParentRight="true" android:layout_toRightOf="@+id/mensajes_post_mensaje_txt_mensaje" android:layout_below="@id/mensajes_post_mensaje_edt_titulo" android:id="@+id/mensajes_post_mensaje_edt_mensaje" />
+  <TextView android:text="@string/mensaje" android:layout_width="wrap_content" android:id="@+id/mensajes_post_mensaje_txt_mensaje" 
+  	android:layout_height="wrap_content" android:layout_alignParentLeft="true"
+  	android:layout_below="@id/mensajes_post_mensaje_edt_titulo"></TextView>
+  <EditText android:layout_width="wrap_content" android:inputType="textMultiLine" 
+  android:layout_height="wrap_content"  android:layout_alignParentRight="true" android:layout_toRightOf="@+id/mensajes_post_mensaje_txt_mensaje" android:layout_below="@id/mensajes_post_mensaje_edt_titulo" android:id="@+id/mensajes_post_mensaje_edt_mensaje"
+  android:minLines="5" />
       
   <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/mensajes_post_mensaje_edt_mensaje" android:layout_alignParentRight="true" android:id="@+id/mensaje_post_mensaje_btn_cancel" android:text="@string/btn_cancel"></Button>
   <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/mensajes_post_mensaje_edt_mensaje" android:layout_toLeftOf="@+id/mensaje_post_mensaje_btn_cancel" android:id="@+id/mensaje_post_mensaje_btn_acept" android:text="@string/btn_send"></Button>
@@ -59,7 +64,7 @@
   	android:layout_below="@+id/mensajes_post_mensaje_edt_mensaje"
   	android:layout_alignBottom="@+id/mensaje_post_mensaje_btn_acept" 
   	android:layout_toLeftOf="@+id/mensaje_post_mensaje_btn_acept" />
-  
+  	
   </RelativeLayout>
 
 </RelativeLayout>
