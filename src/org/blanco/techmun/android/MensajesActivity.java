@@ -1,8 +1,10 @@
 package org.blanco.techmun.android;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.blanco.techmun.android.cproviders.TechMunContentProvider;
 import org.blanco.techmun.android.misc.ExpandAnimation;
 
 import android.app.Activity;
@@ -11,6 +13,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Bitmap.CompressFormat;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,6 +27,7 @@ import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.markupartist.android.widget.PullToRefreshListView;
 import com.markupartist.android.widget.PullToRefreshListView.OnRefreshListener;
@@ -161,7 +165,15 @@ public class MensajesActivity extends Activity {
 		values.put("titulo", edtTitulo.getText().toString());
 		values.put("mensaje", edtMensaje.getText().toString());
 		if (attachImage != null){
-			//values.put("foto", attachImage.);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			attachImage.compress(CompressFormat.JPEG, 80, baos);
+			values.put("foto", baos.toByteArray());
+		}
+		Uri msgUri = 
+				getContentResolver().insert(Uri.parse(TechMunContentProvider.CONTENT_BASE_URI+"/mensajes"), 
+						values);
+		if (!Uri.EMPTY.equals(msgUri)){
+			Toast.makeText(getBaseContext(), "Mensaje Enviado", 500).show();
 		}
 	}
 	

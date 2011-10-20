@@ -71,6 +71,14 @@ public class TechMunContentProvider extends ContentProvider {
 	public Uri insert(Uri uri, ContentValues values) {
 		if (uri.toString().matches(MESA_CONTENT_COMENTARIOS_INSERT_PETITION_REG_EXP)){
 			return Uri.parse(CONTENT_BASE_URI+"/comentarios/"+123);
+		}else if(uri.toString().matches(MESA_CONTENT_MENSAJES_PETITION_REG_EXP)){
+			try {
+				Thread.currentThread().sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return Uri.parse(CONTENT_BASE_URI+"/mensajes/"+123);
 		}else{
 			throw new UnsupportedOperationException("Can't insert other elements that not " +
 					"complain with comentarios expression");

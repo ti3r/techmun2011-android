@@ -129,28 +129,28 @@ public final class R {
         public static final int tech_mun_footer_message=0x7f030014;
     }
     public static final class string {
-        public static final int app_name=0x7f040000;
-        public static final int autor=0x7f04000d;
-        public static final int btn_cancel=0x7f04000b;
-        public static final int btn_send=0x7f04000a;
-        public static final int comentarios_publish_layout_header=0x7f040008;
-        public static final int commentarios_str=0x7f040009;
-        public static final int email=0x7f04000e;
-        public static final int empty=0x7f040013;
-        public static final int footer_message=0x7f040007;
-        public static final int hello=0x7f040005;
-        public static final int mensaje=0x7f040012;
-        public static final int mensaje_send_header=0x7f040014;
-        public static final int mensajes=0x7f04000f;
-        public static final int mesas_fragment_title_bar_caption=0x7f040006;
-        public static final int more=0x7f040010;
-        public static final int more_mensajes=0x7f040011;
-        public static final int pull_to_refresh_pull_label=0x7f040001;
-        public static final int pull_to_refresh_refreshing_label=0x7f040003;
-        public static final int pull_to_refresh_release_label=0x7f040002;
-        public static final int pull_to_refresh_tap_label=0x7f040004;
-        public static final int titulo=0x7f040015;
-        public static final int txt_comentario=0x7f04000c;
+        public static final int app_name=0x7f040001;
+        public static final int autor=0x7f040009;
+        public static final int btn_cancel=0x7f040007;
+        public static final int btn_send=0x7f040006;
+        public static final int comentarios_publish_layout_header=0x7f040004;
+        public static final int commentarios_str=0x7f040005;
+        public static final int email=0x7f04000a;
+        public static final int empty=0x7f04000f;
+        public static final int footer_message=0x7f040003;
+        public static final int hello=0x7f040000;
+        public static final int mensaje=0x7f04000e;
+        public static final int mensaje_send_header=0x7f040010;
+        public static final int mensajes=0x7f04000b;
+        public static final int mesas_fragment_title_bar_caption=0x7f040002;
+        public static final int more=0x7f04000c;
+        public static final int more_mensajes=0x7f04000d;
+        public static final int pull_to_refresh_pull_label=0x7f040012;
+        public static final int pull_to_refresh_refreshing_label=0x7f040014;
+        public static final int pull_to_refresh_release_label=0x7f040013;
+        public static final int pull_to_refresh_tap_label=0x7f040015;
+        public static final int titulo=0x7f040011;
+        public static final int txt_comentario=0x7f040008;
     }
     public static final class style {
         public static final int header=0x7f060006;
