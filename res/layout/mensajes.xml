@@ -44,14 +44,12 @@
   	android:layout_centerHorizontal="true" />
   	
   
-  <TextView android:layout_width="wrap_content" android:id="@+id/mensajes_post_mensaje_txt_titulo" android:layout_height="wrap_content" android:layout_below="@+id/mensajes_post_mensaje_header" android:layout_alignParentLeft="true" android:text="@string/titulo"></TextView>
-  <EditText android:layout_width="wrap_content" android:inputType="textMultiLine" android:layout_height="wrap_content" android:layout_alignTop="@+id/mensajes_post_mensaje_txt_titulo" android:layout_alignParentRight="true" android:layout_toRightOf="@+id/mensajes_post_mensaje_txt_titulo" android:id="@+id/mensajes_post_mensaje_edt_titulo" />
-  
+    
   <TextView android:text="@string/mensaje" android:layout_width="wrap_content" android:id="@+id/mensajes_post_mensaje_txt_mensaje" 
   	android:layout_height="wrap_content" android:layout_alignParentLeft="true"
-  	android:layout_below="@id/mensajes_post_mensaje_edt_titulo"></TextView>
+  	android:layout_below="@+id/mensajes_post_mensaje_header"></TextView>
   <EditText android:layout_width="wrap_content" android:inputType="textMultiLine" 
-  android:layout_height="wrap_content"  android:layout_alignParentRight="true" android:layout_toRightOf="@+id/mensajes_post_mensaje_txt_mensaje" android:layout_below="@id/mensajes_post_mensaje_edt_titulo" android:id="@+id/mensajes_post_mensaje_edt_mensaje"
+  android:layout_height="wrap_content"  android:layout_alignParentRight="true" android:layout_toRightOf="@+id/mensajes_post_mensaje_txt_mensaje" android:layout_below="@id/mensajes_post_mensaje_header" android:id="@+id/mensajes_post_mensaje_edt_mensaje"
   android:minLines="5" />
       
   <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/mensajes_post_mensaje_edt_mensaje" android:layout_alignParentRight="true" android:id="@+id/mensaje_post_mensaje_btn_cancel" android:text="@string/btn_cancel"></Button>

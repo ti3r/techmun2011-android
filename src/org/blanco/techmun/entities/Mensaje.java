@@ -47,7 +47,7 @@ public class Mensaje implements Serializable {
 		this.mensaje = mensaje;
 		this.fecha = fecha;
 		this.autor = autor;
-		this.fotoUrl = this.fotoUrl;
+		this.fotoUrl = fotoUrl;
 	}
 	
 	public String getMensaje() {

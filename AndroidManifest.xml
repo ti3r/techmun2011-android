@@ -46,6 +46,14 @@
         	</intent-filter>
         </activity>
         
+        <activity android:name="MensajeDetailsActivity">
+        	<intent-filter>
+        		<action android:name="org.blanco.techmun2011.MENSAJE_DTLS" />
+        		<category android:name="android.intent.category.DEFAULT" />
+        	</intent-filter>
+        </activity>
+            
+            
         <provider android:authorities="org.blanco.techmun.android.mesasprovider" 
         android:label="Mesas Content Provider" 
         android:enabled="true" 

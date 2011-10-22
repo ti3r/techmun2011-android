@@ -67,6 +67,10 @@ public class MensajesListAdapter extends BaseAdapter {
 		}
 	}
 
+	public List<Mensaje> getMensajesList(){
+		return this.mensajes;
+	}
+	
 	public int getCount() {
 		return (this.mensajes != null) ? this.mensajes.size() : 0;
 	}
@@ -109,7 +113,10 @@ public class MensajesListAdapter extends BaseAdapter {
 		@Override
 		protected Bitmap doInBackground(Void... arg0) {
 			AndroidHttpClient client = AndroidHttpClient.newInstance("fotoloader");
-			HttpGet getReq = new HttpGet("http://blog.leadcritic.com/wp-content/uploads/1998_google.jpg");
+			//HttpGet getReq = new HttpGet("http://blog.leadcritic.com/wp-content/uploads/1998_google.jpg");
+			HttpGet getReq = new HttpGet("http://tec-ch-mun-2011.herokuapp.com/admin/mensajes/"+
+			/*mensajeId*/14
+			+"/foto");
 			getReq.setHeader("Accept", "image/*");
 			try {
 				HttpResponse response = client.execute(getReq);

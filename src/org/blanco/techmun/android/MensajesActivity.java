@@ -3,14 +3,19 @@ package org.blanco.techmun.android;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.util.EntityUtils;
-import org.blanco.techmun.android.cproviders.TechMunContentProvider;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.ByteArrayBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.blanco.techmun.android.misc.ExpandAnimation;
 import org.blanco.techmun.android.misc.MensajesListAdapter;
 import org.blanco.techmun.entities.Mensaje;
@@ -24,16 +29,17 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
-import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HeaderViewListAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -57,12 +63,13 @@ public class MensajesActivity extends Activity {
 	View actionBar = null;
 	ImageButton btnAddImage = null;
 	Bitmap attachImage = null;
-	EditText edtTitulo = null;
 	EditText edtMensaje = null;
+	String userName = null;
 	
 	@Override
 	protected void onCreate(Bundle arg0) {
 		setContentView(R.layout.mensajes);
+		userName = getIntent().getStringExtra("user-name");
 		init();
 		super.onCreate(arg0);
 	}
@@ -75,6 +82,20 @@ public class MensajesActivity extends Activity {
 			public void onRefresh() {
 				loadMensajes();
 			}
+		});
+		list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapter, View view, int index,
+					long itemId) {
+				Mensaje Mensaje = (org.blanco.techmun.entities.Mensaje) 
+						list.getAdapter().getItem(index);
+				Intent i = new Intent(MensajeDetailsActivity.INTENT_ACTION);
+				i.putExtra("mensaje",  Mensaje);
+				startActivity(i);
+				Log.i("techmun", "Display details for mensaje"+Mensaje);
+			}
+			
 		});
 		btnAceptar = (Button) findViewById(R.id.mensaje_post_mensaje_btn_acept);
 		btnAceptar.setOnClickListener(new View.OnClickListener() {
@@ -109,16 +130,12 @@ public class MensajesActivity extends Activity {
 			}
 		});
 		edtMensaje = (EditText) findViewById(R.id.mensajes_post_mensaje_edt_mensaje);
-		edtTitulo = (EditText) findViewById(R.id.mensajes_post_mensaje_edt_titulo);
-		
+		//Hide the post mensaje form if no user is specified
+		if (userName == null){
+			forma.setVisibility(View.GONE);
+		}
 	}
 	
-	@Override
-	protected void onStart() {
-		list.requestFocus();
-		loadMensajes();
-		super.onStart();
-	}
 	
 	protected void loadMensajes(){
 		if (loader != null && loader.getStatus().equals(AsyncTask.Status.RUNNING)){
@@ -163,7 +180,28 @@ public class MensajesActivity extends Activity {
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
+	@Override
+	public Object onRetainNonConfigurationInstance() {
+		if (list.getAdapter() != null){
+			HeaderViewListAdapter adapter = (HeaderViewListAdapter) list.getAdapter(); 
+			return ((MensajesListAdapter)adapter.getWrappedAdapter()).getMensajesList();
+		}else{
+			return super.onRetainNonConfigurationInstance();
+		}
+	}
 
+	@Override
+	protected void onStart() {
+		list.requestFocus();
+		Object mensajes = getLastNonConfigurationInstance();
+		if (mensajes != null){
+			list.setAdapter(new MensajesListAdapter((List<Mensaje>) mensajes));
+		}else{
+			loadMensajes();
+		}
+		super.onStart();
+	}
+	
 	private void animate(){
 		int endHeight = (isFormExtended)? formHeader.getHeight() : 
 			getWindowManager().getDefaultDisplay().getHeight() - 
@@ -174,18 +212,19 @@ public class MensajesActivity extends Activity {
 	}
 	
 	private void sendMensaje(){
+		Toast.makeText(getBaseContext(), getString(R.string.mensaje_sending), Toast.LENGTH_SHORT)
+		.show();
 		ContentValues values = new ContentValues();
-		values.put("titulo", edtTitulo.getText().toString());
+		values.put("nombre", "alex");
 		values.put("mensaje", edtMensaje.getText().toString());
 		if (attachImage != null){
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			attachImage.compress(CompressFormat.JPEG, 80, baos);
-			values.put("foto", baos.toByteArray());
+			attachImage.compress(CompressFormat.PNG, 80, baos);
+			values.put("foto",baos.toByteArray());
+			values.put("foto-format", "png");
 		}
-		Uri msgUri = 
-				getContentResolver().insert(Uri.parse(TechMunContentProvider.CONTENT_BASE_URI+"/mensajes"), 
-						values);
-		Toast.makeText(getBaseContext(), getString(R.string.sending_mensaje), 500).show();
+		MensajeSender sender = new MensajeSender();
+		sender.execute(values);
 		animate();
 	}
 	
@@ -196,8 +235,8 @@ public class MensajesActivity extends Activity {
 			Cursor c = managedQuery(Uri.parse("content://org.blanco.techmun.android.mesasprovider/mensajes"), 
 					null, null, null, null);
 			List<Mensaje> mensajes = new ArrayList<Mensaje>();
-			while (c.moveToNext()){
-				ByteArrayInputStream bytesInputStream = new ByteArrayInputStream(c.getBlob(0));
+			for(int x=0; x < c.getCount(); x++){
+				ByteArrayInputStream bytesInputStream = new ByteArrayInputStream(c.getBlob(x));
 				ObjectInputStream ois;
 				try {
 					ois = new ObjectInputStream(bytesInputStream);
@@ -223,13 +262,57 @@ public class MensajesActivity extends Activity {
 		}
 	}
 	
+	public void clearSendForm(){
+		edtMensaje.setText("");
+		attachImage = null;
+		btnAddImage.setBackgroundDrawable(getResources().getDrawable(android.R.drawable.btn_default));
+	}
 	
-	class MensajeSender extends AsyncTask<ContentValues, Void, Void>{
+	class MensajeSender extends AsyncTask<ContentValues, Void, Boolean>{
 
 		@Override
-		protected Void doInBackground(ContentValues... arg0) {
+		protected void onPostExecute(Boolean result) {
+			if (result = true){
+				MensajesActivity.this.clearSendForm();
+				Toast.makeText(getBaseContext(), getString(R.string.mensaje_sent), 500).show();
+			}else{
+				Toast.makeText(getBaseContext(), getString(R.string.mensaje_not_sent), 500).show();
+			}
+		}
+
+		@Override
+		protected Boolean doInBackground(ContentValues... arg0) {
+			if (arg0.length != 1){
+				throw new IllegalArgumentException("ContentValues bundle must be exactly one");
+			}
+			HttpClient client = new DefaultHttpClient();
+			HttpPost postReq = new HttpPost("http://tec-ch-mun-2011.herokuapp.com/application/publicarmensaje");
 			
-			return null;
+			MultipartEntity entity = new MultipartEntity();
+			try {
+				String nombre = arg0[0].getAsString("nombre");
+				String mensaje = arg0[0].getAsString("mensaje");
+				entity.addPart("mensaje.autor.nombre",new StringBody(nombre));
+				entity.addPart("mensaje.mensaje",new StringBody(mensaje));
+				if (arg0[0].containsKey("foto")){
+					//ByteArrayOutputStream baos = new ByteArrayOutputStream();
+					//attachImage.compress(CompressFormat.JPEG, 80, baos);
+					entity.addPart("mensaje.foto",new ByteArrayBody(arg0[0].getAsByteArray("foto"), 
+							"image/"+arg0[0].getAsString("foto-format"),"foto"+System.currentTimeMillis()+".png"));
+				}
+				postReq.setEntity(entity);
+				HttpResponse response = client.execute(postReq);
+				if (response.getStatusLine().getStatusCode() == 200){
+					return true;
+				}else{
+					Log.i("techmun", "Error sending Mensaje, response returned code"+response.getStatusLine().getStatusCode());
+				}
+			} catch (UnsupportedEncodingException e) {
+				Log.e("techmun","Unable to create MultipartEntity to send the message",e);
+			}  catch (Exception e) {
+				Log.e("techmun", "Error sending Mensaje to server",e);
+			}
+			return false;
 		}
 		
 	}

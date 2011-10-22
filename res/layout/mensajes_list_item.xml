@@ -21,7 +21,8 @@
     <TextView android:layout_width="wrap_content" 
     	android:textAppearance="?android:attr/textAppearanceSmall" 
     	android:layout_height="wrap_content" android:text="TextView" 
-    	android:layout_below="@+id/mensajes_list_item_foto" 
+    	android:layout_below="@+id/mensajes_list_item_mensaje"
+    	android:gravity="right" 
     	android:layout_alignParentLeft="true" android:layout_alignParentRight="true" 
     	android:id="@+id/mensajes_list_item_footer"></TextView>
     
