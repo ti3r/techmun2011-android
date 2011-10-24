@@ -91,6 +91,7 @@ public class MensajesActivity extends Activity {
 				Mensaje Mensaje = (org.blanco.techmun.entities.Mensaje) 
 						list.getAdapter().getItem(index);
 				Intent i = new Intent(MensajeDetailsActivity.INTENT_ACTION);
+				
 				i.putExtra("mensaje",  Mensaje);
 				startActivity(i);
 				Log.i("techmun", "Display details for mensaje"+Mensaje);
@@ -180,6 +181,8 @@ public class MensajesActivity extends Activity {
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
+	
+	
 	@Override
 	public Object onRetainNonConfigurationInstance() {
 		if (list.getAdapter() != null){
@@ -219,7 +222,7 @@ public class MensajesActivity extends Activity {
 		values.put("mensaje", edtMensaje.getText().toString());
 		if (attachImage != null){
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			attachImage.compress(CompressFormat.PNG, 80, baos);
+			attachImage.compress(CompressFormat.PNG, 50, baos);
 			values.put("foto",baos.toByteArray());
 			values.put("foto-format", "png");
 		}

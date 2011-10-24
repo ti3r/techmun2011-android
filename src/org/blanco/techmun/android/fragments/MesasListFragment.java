@@ -36,7 +36,8 @@ public class MesasListFragment extends Fragment
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    mesasUri = Uri.parse("content://org.blanco.techmun.android.mesasprovider"); 
-		super.onCreate(savedInstanceState);
+		
+	    super.onCreate(savedInstanceState);
 	}
 	
 	@Override
@@ -80,6 +81,8 @@ public class MesasListFragment extends Fragment
 			progressBar.setVisibility(View.GONE);
 		}
 	}
+	
+	
 	
 	/**
 	 * The Asynchronous task in charge of loading the available tables from the
@@ -134,20 +137,19 @@ public class MesasListFragment extends Fragment
 
 		@Override
 		protected void onPostExecute(Mesas result) {
-			if (list != null){
-				MesasCursorAdapter adapter = null;
-				adapter = new MesasCursorAdapter(getActivity(),
+			if (list != null && result != null){
+				if (getActivity() != null){
+					MesasCursorAdapter adapter = null;
+					adapter = new MesasCursorAdapter(getActivity(),
 						R.layout.mesas_list_item_layout,
 						android.R.layout.simple_list_item_1,
 						result.getMesas(),MesasListFragment.this);
-				list.setAdapter(adapter);
+					list.setAdapter(adapter);
+				}
 			}
 			//Hide the progress bar.
 			MesasListFragment.this.hideProgressBar();
 		}
-		
-		
-		
 	}
 
 	public void MesaListItemClicked(Mesa mesa) {

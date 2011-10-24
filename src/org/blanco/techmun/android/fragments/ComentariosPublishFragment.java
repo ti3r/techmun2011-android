@@ -3,9 +3,12 @@ package org.blanco.techmun.android.fragments;
 import org.blanco.techmun.android.R;
 import org.blanco.techmun.android.misc.ExpandAnimation;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,6 +29,7 @@ public class ComentariosPublishFragment extends Fragment {
 	EditText edtComment = null;
 	EditText edtNombre = null;
 	EditText edtEmail = null;
+	Dialog dialog = null;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,17 +73,10 @@ public class ComentariosPublishFragment extends Fragment {
 	}
 	
 	private void sendComment(){
-		ContentResolver resolver = getActivity().getContentResolver();
-		ContentValues values = new ContentValues(3);
-		values.put("comentario", edtComment.getText().toString());
-		values.put("nombre", edtNombre.getText().toString());
-		values.put("email", edtEmail.getText().toString());
-		Uri result =
-				resolver.insert(Uri.parse("content://org.blanco.techmun.android.mesasprovider/comentarios/add"), values);
-		if (result != Uri.EMPTY){
-			Toast.makeText(getActivity(), "The comment has been sent", 500).show();
-			clearFields();
-		}
+		dialog = ProgressDialog.show(getActivity(), "", 
+				getString(R.string.comentario_sending));
+		ComentarioSender sender = new ComentarioSender();
+		sender.execute();
 	}
 	
 	private void animate(){
@@ -88,4 +85,31 @@ public class ComentariosPublishFragment extends Fragment {
 		ExpandAnimation anim = new ExpandAnimation(getView(), getView().getHeight(), endHeight);
 		getView().startAnimation(anim);
 	}
+	
+	class ComentarioSender extends AsyncTask<Void, Void, Uri>{
+
+		@Override
+		protected Uri doInBackground(Void... params) {
+			ContentResolver resolver = getActivity().getContentResolver();
+			ContentValues values = new ContentValues(3);
+			values.put("comentario", edtComment.getText().toString());
+			values.put("nombre", edtNombre.getText().toString());
+			values.put("email", edtEmail.getText().toString());
+			Uri result =
+					resolver.insert(Uri.parse("content://org.blanco.techmun.android.mesasprovider/comentarios/add"), values);
+			return result;
+		}
+
+		@Override
+		protected void onPostExecute(Uri result) {
+			if (result != Uri.EMPTY){
+				Toast.makeText(getActivity(), getString(R.string.comentario_sent), 500).show();
+				clearFields();
+			}
+			dialog.dismiss();
+			super.onPostExecute(result);
+		}
+
+	}
+	
 }

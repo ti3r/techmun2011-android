@@ -35,4 +35,24 @@
     <string name="pull_to_refresh_refreshing_label">Cargando...</string>
     <string name="pull_to_refresh_tap_label">Presiona para refrescar...</string>
     <string name="sending_mensaje">Enviando Mensaje...</string>
+    <string name="user">Usuario o Email:</string>
+    <string name="password">Contraseña:</string>
+    <string name="login">Acceder</string>
+    <string name="login_failed_msg">Error al verificar usuario y contraseña. Por favor asegurate que los datos estan correctos e intenta nuevamente.</string>
+    <string name="login_correct_msg">Usuario y contraseña validos</string>
+    <string name="auth_progress_dialog_title">Login</string>
+    <string name="auth_progress_dialog_cap">Comunicando con el servidor. Por favor espere</string>
+    
+    <string name="comentario_sending">Enviando Comentario</string>
+    <string name="comentario_sent">Tu comentario fue enviado con exito</string>
+      
+    <string name="initial_geo_uri">"geo:28.674389,-106.076968?z=20"</string>
+    
+    <string name="login_baner">Acceder con tu usuario y contraseña registrados en la pagina web 
+        de Tec Ch Mun 2011, te permitira enviar mensajes desde tu dispositivo movil sobre
+        lo que esta ocurriendo en el evento.\nSolo ingresa tu usuario y contraseña y accede 
+        a la seccion de mensajes desde el menu principal.\nSi no recuerdas tu usuario y contraseña contacta al administrador del evento</string>
+        <!--
+    <string name="initial_geo_uri">"google.streetview:cbll=28.674389,-106.076968&amp;mz=20"</string>
+    -->
 </resources>

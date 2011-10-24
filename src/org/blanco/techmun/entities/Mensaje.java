@@ -18,7 +18,7 @@ public class Mensaje implements Serializable {
 	private Usuario autor;
 	private String fotoUrl;
 	private Bitmap foto;
-	
+	private boolean failedRetrieveFoto = false;
 	
 	public Bitmap getFoto() {
 		return foto;
@@ -75,6 +75,14 @@ public class Mensaje implements Serializable {
 
 	public void setFotoUrl(String fotoUrl) {
 		this.fotoUrl = fotoUrl;
+	}
+
+	public boolean isFailedRetrieveFoto() {
+		return failedRetrieveFoto;
+	}
+
+	public void setFailedRetrieveFoto(boolean failedRetrieveFoto) {
+		this.failedRetrieveFoto = failedRetrieveFoto;
 	}
 	
 }

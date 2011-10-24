@@ -10,6 +10,8 @@ import org.blanco.techmun.entities.Mensaje;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.text.format.DateFormat;
@@ -60,10 +62,12 @@ public class MensajesListAdapter extends BaseAdapter {
 		}
 		sFooter.append(DateFormat.getDateFormat(view.getContext()).format(mensaje.getFecha()));
 		footer.setText(sFooter);
-		if (mensaje.getFoto() == null){
+		if (mensaje.getFoto() == null && !mensaje.isFailedRetrieveFoto()){
 			//launch the foto loader for this mensaje
 			MensajeFotoLoader loader = new MensajeFotoLoader(mensaje, foto);
 			loader.execute();
+		}else if (mensaje.isFailedRetrieveFoto()){
+			foto.setBackgroundDrawable(view.getResources().getDrawable(android.R.drawable.stat_sys_warning));
 		}
 	}
 
@@ -104,6 +108,11 @@ public class MensajesListAdapter extends BaseAdapter {
 
 		private Mensaje mensajeId;
 		private ImageView view = null;
+		private Drawable defaultD = null;
+		
+		public MensajeFotoLoader(Drawable defaultDrawable){
+			this.defaultD = defaultDrawable;
+		}
 		
 		public MensajeFotoLoader(Mensaje mensaje, ImageView view){
 			this.mensajeId = mensaje;
@@ -120,12 +129,15 @@ public class MensajesListAdapter extends BaseAdapter {
 			getReq.setHeader("Accept", "image/*");
 			try {
 				HttpResponse response = client.execute(getReq);
-				byte[] imageBytes = EntityUtils.toByteArray(response.getEntity());
-				Bitmap result = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-				mensajeId.setFoto(result);
+				Bitmap result = null;
+				if (response.getStatusLine().getStatusCode() == 200){
+					byte[] imageBytes = EntityUtils.toByteArray(response.getEntity());
+					result = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+				}
 				client.close();
 				return result;
 			} catch (Exception e) {
+				mensajeId.setFailedRetrieveFoto(true);
 				Log.i("tech-mun", "Error retrieving image for mensaje "+mensajeId,e);
 				return null;
 			} 
@@ -138,8 +150,11 @@ public class MensajesListAdapter extends BaseAdapter {
 				view.setImageBitmap(result);
 			}else{
 				//set the default value
-				view.setImageDrawable(view.getContext()
-						.getResources().getDrawable(android.R.drawable.stat_sys_warning));
+				BitmapDrawable drawable = (BitmapDrawable) view.getContext()
+						.getResources().getDrawable(android.R.drawable.stat_sys_warning); 
+				view.setImageDrawable(drawable);
+				mensajeId.setFailedRetrieveFoto(true);
+				mensajeId.setFoto(drawable.getBitmap());
 			}
 			super.onPostExecute(result);
 		}

@@ -13,6 +13,7 @@
 
     <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content"
     android:stretchColumns="0,1" android:shrinkColumns="0,1"
+    android:scrollbars="vertical"
     android:layout_below="@id/main_menu_logo">
     	    	
     	<TableRow android:layout_width="match_parent" android:layout_height="wrap_content" >
@@ -79,7 +80,22 @@
     		</RelativeLayout>    		
     	
     	</TableRow>
-    	
+    	<TableRow>
+    	    <RelativeLayout android:layout_width="wrap_content"
+    			android:layout_height="wrap_content"
+    			android:id="@+id/menu_item_login">
+    			
+    			<ImageView style="@style/main_menu_item_icon"
+    			android:id="@+id/main_layout_login_icon" 
+    			android:src="@android:drawable/ic_lock_lock" />
+    			
+    			<TextView style="@style/main_menu_item_text"
+    				android:id="@+id/main_layout_login_text" 
+    				android:layout_below="@id/main_layout_login_icon" 
+    				android:text="@string/login"></TextView>
+    			
+    		</RelativeLayout>
+    	</TableRow>
     	
     </TableLayout>
 

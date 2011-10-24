@@ -52,8 +52,21 @@
         		<category android:name="android.intent.category.DEFAULT" />
         	</intent-filter>
         </activity>
+        
+        <activity android:name="LoginActivity">
+        	<intent-filter>
+        		<action android:name="org.blanco.techmun2011.LOGIN" />
+        		<category android:name="android.intent.category.DEFAULT" />
+        	</intent-filter>
+        </activity>
             
-            
+        <activity android:name=".MapaActivity">
+        	<intent-filter>
+        		<action android:name="org.blanco.techmun2011.MAPA" />
+        		<category android:name="android.intent.category.DEFAULT" />
+        	</intent-filter>
+        </activity>
+        
         <provider android:authorities="org.blanco.techmun.android.mesasprovider" 
         android:label="Mesas Content Provider" 
         android:enabled="true" 
