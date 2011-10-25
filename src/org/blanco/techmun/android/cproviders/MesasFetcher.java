@@ -1,8 +1,10 @@
 package org.blanco.techmun.android.cproviders;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -15,10 +17,8 @@ import org.blanco.techmun.entities.Mesas;
 import org.blanco.techmun.entities.Usuario;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
+import android.content.Context;
 import android.util.Log;
 
 /**
@@ -32,6 +32,7 @@ import android.util.Log;
 public class MesasFetcher {
 
 	HttpClient client = null;
+	Context context = null;
 	
 	/**
 	 * Default Constructor used to retrieve the mesa objects
@@ -40,41 +41,89 @@ public class MesasFetcher {
 	 * @param client The httpClient used to retrieve the mesa objects
 	 * from the rest services in case of
 	 */
-	public MesasFetcher(HttpClient client){
+	public MesasFetcher(HttpClient client, Context ctx){
+		if (client == null || ctx == null){
+			throw new IllegalArgumentException("HttpClient and Context can not be null");
+		}
 		this.client = client;
+		this.context = ctx;
+	}
+	
+	private void saveOnCache(Context context, Mesas mesas){
+		try {
+			FileOutputStream mesasFOS = context.openFileOutput("mesas.df", Context.MODE_PRIVATE);
+			ObjectOutputStream mesasOOS = new ObjectOutputStream(mesasFOS);
+			mesasOOS.writeObject(mesas);
+			mesasOOS.close();
+		} catch (IOException e) {
+			Log.e("tachmun", "Error opening cache file for mesas in content provider. " +
+					"No cache will be saved",e);
+		}
+	}
+	
+	private Mesas tryToLoadFromCache(Context context){
+		try {
+			FileInputStream mesasFIS = context.openFileInput("mesas.df");
+			ObjectInputStream mesasOIS = new ObjectInputStream(mesasFIS);
+			Mesas result = (Mesas) mesasOIS.readObject();
+			mesasOIS.close();
+			return result;
+		} catch (IOException e) {
+			Log.e("tachmun", "Error opening cache file for mesas in content provider. " +
+					"No cache will be restored",e);
+			return null;
+		} catch (ClassNotFoundException e) {
+			Log.e("tachmun", "Error in cache file for mesas in content provider. " +
+					"Something is there but is not a Mesas object. Cache no restored",e);
+			return null;
+		}
 	}
 	
 	public Mesas getMesas(){
-		Mesas result = new Mesas();
-		Mesa mesa = new Mesa();
-		mesa.setId(1L); mesa.setNombre("Mesa de Prueba"); 
-		mesa.setRepresentante(new Usuario("alex","alex@alex.com"));
-		mesa.setColor("#123456");
-		result.getMesas().add(mesa);
-//		HttpResponse response;
-//		try {
-//			HttpGet req = new HttpGet(TechMunContentProvider.MESAS_REST_SERVICE_BSAE_URI+"/mesas");
-//			response = client.execute(req);
-//			HttpEntity entity = response.getEntity();
-//			JSONArray mesas = XmlParser.parseJSONArrayFromHttpEntity(entity);
-//			for(int i = 0; i < mesas.length(); i++){
-//				JSONObject mesaObject = mesas.getJSONObject(i);
-//				Mesa mesa = new Mesa();
-//				mesa.setId(mesaObject.getLong("id"));
-//				mesa.setNombre(mesaObject.getString("nombre"));
-//				mesa.setRepresentante(Usuario.fromJSONObject(
-//						mesaObject.getJSONObject("representante"))
-//						);
-//				mesa.setColor(mesaObject.getString("color"));
-//				result.getMesas().add(mesa);
-//			}
-//		} catch (ClientProtocolException e) {
-//			Log.e("techmun2011", "Error retrieving Mesa objects",e);
-//		} catch (IOException e) {
-//			Log.e("techmun2011", "Error retrieving Mesa objects",e);
-//		} catch (Exception e){
-//			Log.e("techmun2011", "Error parsing Mesa objects",e);
-//		}
+		Mesas result = tryToLoadFromCache(context);
+		//Mesa mesa = new Mesa();
+		//mesa.setId(1L); mesa.setNombre("Mesa de Prueba"); 
+		//mesa.setRepresentante(new Usuario("alex","alex@alex.com"));
+		//mesa.setColor("#123456");
+		//result.getMesas().add(mesa);
+		if (result != null){
+			Log.d("techmun", "Mesas loaded from cache");
+			return result;
+		}
+		result = new Mesas();
+		HttpResponse response;
+		try {
+			HttpGet req = new HttpGet(TechMunContentProvider.MESAS_REST_SERVICE_BSAE_URI+"/mesas");
+			response = client.execute(req);
+			HttpEntity entity = response.getEntity();
+			JSONArray mesas = XmlParser.parseJSONArrayFromHttpEntity(entity);
+			for(int i = 0; i < mesas.length(); i++){
+				JSONObject mesaObject = mesas.getJSONObject(i);
+				Mesa mesa = new Mesa();
+				mesa.setId(mesaObject.getLong("id"));
+				mesa.setNombre(mesaObject.getString("nombre"));
+				//Representante can be optional at the begining of the event
+				if (mesaObject.has("representante")){
+					mesa.setRepresentante(Usuario.fromJSONObject(
+						mesaObject.getJSONObject("representante"))
+						);
+				}
+				if (mesaObject.has("descripcion")){
+					mesa.setDescripcion(mesaObject.getString("descripcion"));
+				}
+				mesa.setColor(mesaObject.getString("color"));
+				result.getMesas().add(mesa);
+			}
+		} catch (ClientProtocolException e) {
+			Log.e("techmun2011", "Error retrieving Mesa objects",e);
+		} catch (IOException e) {
+			Log.e("techmun2011", "Error retrieving Mesa objects",e);
+		} catch (Exception e){
+			Log.e("techmun2011", "Error parsing Mesa objects",e);
+		}
+		//save the retrieved objects in the cache file
+		saveOnCache(context, result);
+		
 		return result;
 	}
 	

@@ -11,6 +11,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.ParseException;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -44,6 +45,20 @@ public class XmlParser {
 		try {
 			jsonText = EntityUtils.toString(entity);
 			JSONArray result = new JSONArray(jsonText);
+			return result;
+		} catch (ParseException e) {
+			throw new Exception("Error parsing the entity.",e);
+		} catch (IOException e) {
+			throw new Exception("Error reading the entity.",e);
+		}
+	}
+	
+	public static synchronized JSONObject parseJSONObjectFromHttpEntity(HttpEntity entity) 
+			throws Exception{
+		String jsonText = null;
+		try {
+			jsonText = EntityUtils.toString(entity);
+			JSONObject result = new JSONObject(jsonText);
 			return result;
 		} catch (ParseException e) {
 			throw new Exception("Error parsing the entity.",e);

@@ -4,10 +4,8 @@ import java.util.List;
 
 import org.blanco.techmun.android.R;
 import org.blanco.techmun.entities.Mesa;
-import org.blanco.techmun.entities.Mesas;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,7 +42,8 @@ public class MesasCursorAdapter extends ArrayAdapter<Mesa>
 				.findViewById(R.id.mesas_list_item_layout_logo);
 		long vid = mesa.getId();
 		String vnombre = mesa.getNombre();
-		String vrep = mesa.getRepresentante().getNombre();
+		String vrep = (mesa.getRepresentante() != null)?
+				mesa.getRepresentante().getNombre(): "";
 		String color = mesa.getColor();
 		id.setText(String.valueOf(vid));
 		nombre.setText(vnombre);

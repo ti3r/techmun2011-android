@@ -6,11 +6,12 @@
   android:layout_height="match_parent">
   
   <RelativeLayout android:id="@+id/eventos_list_layout_title_bar"
-  	style="@style/mesa_fragment_main_layout_title_bar">
+      
+  	style="@style/header">
  	
  	<TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
  		android:text="Eventos"
- 		android:textAppearance="?android:attr/textAppearanceMedium"
+ 		style="@style/header"
  		android:layout_alignParentLeft="true" 
  		android:layout_alignParentTop="true"/>
  	
@@ -27,5 +28,10 @@
   	style="@style/layout_w_match_h_match"
   	android:layout_below="@id/eventos_list_layout_title_bar"
   />
+  
+  <TextView android:id="@+id/eventos_list_layout_empty_list" 
+  style="@style/layout_w_match_h_match"
+  android:text="No hay eventos aun"
+  android:gravity="center_vertical|center_horizontal"/>
   
 </RelativeLayout>

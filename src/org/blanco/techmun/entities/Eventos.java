@@ -21,6 +21,7 @@
  */
 package org.blanco.techmun.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -34,8 +35,12 @@ import java.util.List;
  *
  */
 
-public class Eventos {
+public class Eventos implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8814952043918363006L;
 	private List<Evento> eventos = null;
 	
 	/**

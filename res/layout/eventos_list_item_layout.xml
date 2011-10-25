@@ -4,7 +4,17 @@
   android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
-    <TextView android:id="@+id/eventos_list_item_layout_desc" android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="wrap_content" android:layout_alignParentTop="true" android:layout_alignParentRight="true" android:text="Descripcion de Evento" android:layout_alignParentLeft="true" android:layout_marginLeft="35dip"></TextView>
+
+    <TextView
+        android:id="@+id/eventos_list_item_layout_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="Descripcion de Evento"
+        android:textAppearance="?android:attr/textAppearanceMedium" >
+</TextView>
     <TextView android:id="@+id/eventos_list_item_layout_fecha" android:text="Fecha" android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_height="wrap_content" android:layout_below="@+id/eventos_list_item_layout_desc" android:layout_alignParentRight="true"></TextView>
   
 </RelativeLayout>

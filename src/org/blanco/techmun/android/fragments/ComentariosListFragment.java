@@ -38,6 +38,7 @@ public class ComentariosListFragment extends ListFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup group, 
 			Bundle bundle){
+		setRetainInstance(true);
 		View v = inflater.inflate(R.layout.comentarios_list_layout, null);
 		progress = (ProgressBar) v.findViewById(R.id.comentarios_list_layout_title_bar_progress_bar);
 		btnRefresh = (Button) v.findViewById(R.id.comentarios_list_layout_refresh_button);

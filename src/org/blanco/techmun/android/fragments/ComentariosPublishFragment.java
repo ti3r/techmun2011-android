@@ -30,6 +30,8 @@ public class ComentariosPublishFragment extends Fragment {
 	EditText edtNombre = null;
 	EditText edtEmail = null;
 	Dialog dialog = null;
+	long eventoId = -1;
+	private ComentariosListFragment listFragment = null;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,19 +66,34 @@ public class ComentariosPublishFragment extends Fragment {
 	}
 
 	private void clearFields(){
-		if (edtComment != null)
+		if (edtComment != null){
 			edtComment.getText().clear();
-		if (edtNombre != null)
+			edtComment.clearFocus();
+		}
+		if (edtNombre != null){
 			edtNombre.getText().clear();
-		if (edtEmail != null)
+			edtNombre.clearFocus();
+		}
+		if (edtEmail != null){
 			edtEmail.getText().clear();
+			edtEmail.clearFocus();
+		}
+	}
+	
+	public void setEventoId(long id){
+		this.eventoId = id;
 	}
 	
 	private void sendComment(){
-		dialog = ProgressDialog.show(getActivity(), "", 
-				getString(R.string.comentario_sending));
-		ComentarioSender sender = new ComentarioSender();
-		sender.execute();
+		if (eventoId > 0){
+			dialog = ProgressDialog.show(getActivity(), "", 
+					getString(R.string.comentario_sending));
+			ComentarioSender sender = new ComentarioSender();
+			sender.execute();
+		}else{
+			Toast.makeText(getActivity(), getString(R.string.no_evento_selected_to_publish), 
+					Toast.LENGTH_LONG).show();
+		}
 	}
 	
 	private void animate(){
@@ -85,16 +102,23 @@ public class ComentariosPublishFragment extends Fragment {
 		ExpandAnimation anim = new ExpandAnimation(getView(), getView().getHeight(), endHeight);
 		getView().startAnimation(anim);
 	}
-	
+		
+	public void setListFragment(ComentariosListFragment listFragment) {
+		this.listFragment = listFragment;
+	}
+
+
+
 	class ComentarioSender extends AsyncTask<Void, Void, Uri>{
 
 		@Override
 		protected Uri doInBackground(Void... params) {
 			ContentResolver resolver = getActivity().getContentResolver();
-			ContentValues values = new ContentValues(3);
+			ContentValues values = new ContentValues(4);
+			values.put("eventoId", eventoId);
 			values.put("comentario", edtComment.getText().toString());
-			values.put("nombre", edtNombre.getText().toString());
-			values.put("email", edtEmail.getText().toString());
+			values.put("autor", edtNombre.getText().toString());
+			values.put("contacto", edtEmail.getText().toString());
 			Uri result =
 					resolver.insert(Uri.parse("content://org.blanco.techmun.android.mesasprovider/comentarios/add"), values);
 			return result;
@@ -107,6 +131,10 @@ public class ComentariosPublishFragment extends Fragment {
 				clearFields();
 			}
 			dialog.dismiss();
+			//If the associated list is set, refresh it
+			if (listFragment != null){
+				listFragment.refreshComentarios();
+			}
 			super.onPostExecute(result);
 		}
 

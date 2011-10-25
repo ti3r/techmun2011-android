@@ -72,14 +72,9 @@ public class TechMunContentProvider extends ContentProvider {
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
 		if (uri.toString().matches(MESA_CONTENT_COMENTARIOS_INSERT_PETITION_REG_EXP)){
-			return Uri.parse(CONTENT_BASE_URI+"/comentarios/"+123);
+			long id = comentsFetcher.publishComentario(values);
+			return Uri.parse(CONTENT_BASE_URI+"/comentarios/"+id);
 		}else if(uri.toString().matches(MESA_CONTENT_MENSAJES_PETITION_REG_EXP)){
-			try {
-				Thread.currentThread().sleep(3000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			return Uri.parse(CONTENT_BASE_URI+"/mensajes/"+123);
 		}else{
 			throw new UnsupportedOperationException("Can't insert other elements that not " +
@@ -90,8 +85,8 @@ public class TechMunContentProvider extends ContentProvider {
 	@Override
 	public boolean onCreate() {
 		httpClient = new DefaultHttpClient();
-		eventosFeher = new EventosFetcher(httpClient);
-		mesasFecher = new MesasFetcher(httpClient);
+		eventosFeher = new EventosFetcher(httpClient,getContext());
+		mesasFecher = new MesasFetcher(httpClient, getContext());
 		comentsFetcher = new ComentariosFetcher(httpClient);
 		mensajesFetcher = new MensajesFetcher(httpClient);
 		return true;
@@ -177,12 +172,6 @@ public class TechMunContentProvider extends ContentProvider {
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
 		//HttpGet req = new HttpGet(MESAS_REST_SERVICE_BSAE_URI);
-		try {
-			Thread.currentThread().sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		if (uri.toString().matches(MESA_CONTENT_EVENTOS_PETITION_REG_EXP)){
 			return getEventosCursorForUri(uri);			
 		}else if (uri.toString().matches(MESA_CONTENT_COMENTARIOS_PETITION_REG_EXP)){

@@ -4,22 +4,27 @@
   android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
-    <TextView android:text="TextView" android:textAppearance="?android:attr/textAppearanceMedium" 
+    <include layout="@layout/action_bar" android:layout_width="match_parent" 
+        android:layout_height="wrap_content" android:id="@+id/comentarios_layout_action_bar"
+        android:layout_alignParentTop="true"/>
+    
+    <TextView android:text="TextView" android:textAppearance="?android:attr/textAppearanceLarge" 
     android:id="@+id/comentarios_layout_evento_title" 
     android:layout_height="wrap_content" android:layout_width="wrap_content" 
-    android:layout_alignParentTop="true" android:layout_alignParentLeft="true"></TextView>
-    <TextView android:text="TextView" 
+    android:layout_below="@id/comentarios_layout_action_bar" android:layout_alignParentLeft="true"></TextView>
+    <TextView android:text="TextView" android:textAppearance="?android:attr/textAppearanceMedium"
     android:id="@+id/comentarios_layout_evento_desc" 
     android:layout_height="wrap_content" android:layout_width="wrap_content" 
     android:layout_below="@id/comentarios_layout_evento_title" android:layout_alignParentLeft="true"></TextView>
     
-    <fragment 
+    <fragment android:id="@+id/comentarios_layout_comentarios_list_fragment"
     android:name="org.blanco.techmun.android.fragments.ComentariosListFragment"
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:layout_below="@id/comentarios_layout_evento_desc"/>
     
     <fragment android:name="org.blanco.techmun.android.fragments.ComentariosPublishFragment"
     android:layout_width="match_parent" android:layout_height="25dip"
+    android:id="@+id/comentarios_layout_publish_comentario_fragment"
     android:layout_alignParentBottom="true"
     />
     

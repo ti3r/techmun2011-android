@@ -3,8 +3,6 @@ package org.blanco.techmun.android;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +29,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -131,6 +128,7 @@ public class MensajesActivity extends Activity {
 			}
 		});
 		edtMensaje = (EditText) findViewById(R.id.mensajes_post_mensaje_edt_mensaje);
+		edtMensaje.clearFocus();
 		//Hide the post mensaje form if no user is specified
 		if (userName == null){
 			forma.setVisibility(View.GONE);

@@ -17,6 +17,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,12 +39,14 @@ public class EventosListFragment extends Fragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.eventos_list_layout, null);
+		setRetainInstance(true);
+		View v = inflater.inflate(R.layout.eventos_list_layout, container);
 		progress = (ProgressBar) v
 				.findViewById(R.id.eventos_list_layout_title_bar_progress_bar);
 		eventosList = (ListView) v
 				.findViewById(R.id.eventos_list_layout_eventos_list);
-		eventosList.setEmptyView(inflater.inflate(R.layout.eventos_list_empty_layout, null));
+		View emptyView = v.findViewById(R.id.eventos_list_layout_empty_list);
+		eventosList.setEmptyView(emptyView);
 		eventosList.setOnItemClickListener(this);
 		return v;
 	}
@@ -55,7 +58,11 @@ public class EventosListFragment extends Fragment
 	}
 
 	private void loadMesaEvents(){
-		if (mesa != null ){
+		if (mesa != null && eventosList != null && 
+				(eventosList.getAdapter() == null || 
+				(eventosList.getAdapter() != null && eventosList.getAdapter().isEmpty()))
+				|| PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("force_eventos_refresh_"+mesa.getId(), 
+						false)){
 			loader = new EventosLoader();
 			loader.execute(mesa);
 		}
@@ -84,6 +91,14 @@ public class EventosListFragment extends Fragment
 	public void hideProgressBar(){
 		if (this.progress != null){
 			progress.setVisibility(View.GONE);
+		}
+	}
+
+	public void postRefresh(){
+		if (getActivity() != null){
+			PreferenceManager.getDefaultSharedPreferences(getActivity())
+			.edit().putBoolean("force_eventos_refresh_"+mesa.getId(), true).commit();
+			loadMesaEvents();
 		}
 	}
 	

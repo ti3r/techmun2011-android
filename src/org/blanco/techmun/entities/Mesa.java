@@ -44,6 +44,7 @@ public class Mesa implements Serializable {
 	private String nombre = null;
 	private Usuario representante = null;
 	private String color = null;
+	private String descripcion = null;
 	
 	public Mesa(){
 		
@@ -81,7 +82,11 @@ public class Mesa implements Serializable {
 	public void setColor(String color) {
 		this.color = color;
 	}
-	
-	
+	public String getDescripcion() {
+		return descripcion;
+	}
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 	
 }

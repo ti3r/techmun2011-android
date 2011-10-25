@@ -4,13 +4,15 @@
   android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
-    <RelativeLayout style="@style/mesa_fragment_main_layout_title_bar" 
+    <RelativeLayout style="@style/header"
     	android:id="@+id/comentarios_list_layout_title_bar" 
     	android:layout_alignParentTop="true" android:layout_alignParentLeft="true">
-        <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_alignParentLeft="true" android:layout_alignParentTop="true" android:layout_width="wrap_content" android:text="@string/commentarios_str"></TextView>
-        <ProgressBar android:layout_alignParentTop="true" android:layout_width="wrap_content" android:layout_alignParentRight="true" android:layout_height="wrap_content" android:visibility="gone" android:id="@+id/comentarios_list_layout_title_bar_progress_bar" android:layout_centerVertical="true" style="?android:attr/progressBarStyleSmall"></ProgressBar>
+        <TextView style="@style/header" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_alignParentLeft="true" android:layout_alignParentTop="true" android:layout_width="wrap_content" android:text="@string/commentarios_str"></TextView>
+        <ProgressBar android:layout_alignParentTop="true" 
+            android:layout_width="wrap_content" android:layout_alignParentRight="true" android:layout_height="wrap_content" android:visibility="gone" android:id="@+id/comentarios_list_layout_title_bar_progress_bar" android:layout_centerVertical="true"
+            style="?android:attr/progressBarStyleSmall" ></ProgressBar>
     </RelativeLayout>
-    <ListView android:layout_height="200dip" 
+    <ListView android:layout_height="match_parent" 
     android:layout_width="match_parent" android:id="@android:id/list" 
     android:layout_below="@id/comentarios_list_layout_title_bar" 
     android:layout_alignParentLeft="true"></ListView>
@@ -21,4 +23,13 @@
         <Button android:text="Refrescar" android:id="@+id/comentarios_list_layout_refresh_button" style="@style/layout_w_wrap_h_wrap"></Button>
         <Button android:text="Mas Comentarios" android:id="@+id/comentarios_list_layout_more_button" style="@style/layout_w_wrap_h_wrap"></Button>
     </LinearLayout>
+ 
+      <!-- 
+     <TextView
+         android:id="@+id/comentarios_list_layout_empty_view"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:gravity="center"
+         android:text="@string/comentarios_list_empty_list" />
+ -->
 </RelativeLayout>

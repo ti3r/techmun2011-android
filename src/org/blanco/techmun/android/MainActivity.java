@@ -13,6 +13,7 @@ public class MainActivity extends FragmentActivity {
 	View mapaMenuItem = null;
 	View mensajesMenuItem = null;
 	View logInMenuItem = null;
+	View calendarioMenuItem = null;
 	String user = null;
 	
 	/** Called when the activity is first created. */
@@ -63,6 +64,21 @@ public class MainActivity extends FragmentActivity {
 				startActivityForResult(new Intent(LoginActivity.ACTION_INTENT), 0);
 			}
 		});
+    	
+    	calendarioMenuItem = findViewById(R.id.menu_item_calendario);
+    	calendarioMenuItem.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+//				Intent i = new Intent(Intent.ACTION_EDIT);
+//				i.setType("vnd.android.cursor.item/event");
+//				i.putExtra("title", "some title");
+//				i.putExtra("description", "Some description");
+//				i.putExtra("beginTime", System.currentTimeMillis());
+//				i.putExtra("endTime", System.currentTimeMillis()+4000);
+//				startActivity(i);
+			}
+		});
+    	
     }
 
 	@Override

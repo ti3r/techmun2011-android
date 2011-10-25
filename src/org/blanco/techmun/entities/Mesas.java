@@ -21,6 +21,7 @@
  */
 package org.blanco.techmun.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -35,8 +36,12 @@ import java.util.List;
  *
  */
 
-public class Mesas {
+public class Mesas implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7813036714358229572L;
 	/**
 	 * The List that will hold the Mesa objects
 	 */

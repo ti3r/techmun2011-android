@@ -12,15 +12,32 @@
     	android:layout_alignParentRight="true"
     	android:visibility="gone" />
    
-    <TextView android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_height="wrap_content" android:text="Representante" android:id="@+id/mesas_list_item_layout_representante" android:layout_below="@+id/mesas_list_item_layout_nombre" android:layout_alignLeft="@+id/mesas_list_item_layout_nombre"></TextView>
-    <ImageView  
-    	android:layout_width="25dip" 
-    	android:layout_height="25dip" 
-    	android:cropToPadding="true" 
-    	android:id="@+id/mesas_list_item_layout_logo" 
-    	android:padding="1dip"
-    	android:layout_centerVertical="true" 
-    	android:layout_alignParentTop="true" android:layout_alignParentRight="true"></ImageView>
-    <TextView android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_height="wrap_content" android:text="Nombre" android:id="@+id/mesas_list_item_layout_nombre" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"></TextView>
+       <TextView
+        android:id="@+id/mesas_list_item_layout_nombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/mesas_list_item_layout_logo"
+        android:text="Nombre"
+        android:textAppearance="?android:attr/textAppearanceLarge" >
+		</TextView>
+    
+    <TextView android:layout_width="wrap_content" 
+        android:textAppearance="?android:attr/textAppearanceSmall" 
+        android:layout_height="wrap_content" android:text="Representante" 
+        android:id="@+id/mesas_list_item_layout_representante" 
+        android:layout_below="@+id/mesas_list_item_layout_nombre" 
+        android:layout_alignLeft="@+id/mesas_list_item_layout_nombre"></TextView>
+
+    <ImageView
+        android:id="@+id/mesas_list_item_layout_logo"
+        android:layout_width="25dip"
+        android:layout_height="25dip"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:cropToPadding="true"
+        android:layout_margin="5dip" >
+</ImageView>
     
 </RelativeLayout>

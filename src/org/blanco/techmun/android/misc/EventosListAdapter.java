@@ -63,7 +63,9 @@ public class EventosListAdapter extends BaseAdapter{
 	}
 	@Override
 	public boolean isEmpty() {
-		return this.eventos.getEventos().isEmpty();
-	}	
-		
+		boolean empty = this.eventos.getEventos().isEmpty();
+		return empty;
+	}
+	
+
 }

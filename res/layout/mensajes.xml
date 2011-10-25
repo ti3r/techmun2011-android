@@ -39,6 +39,7 @@
   	android:textAppearance="?android:attr/textAppearanceMedium" 
   	android:gravity="center_horizontal"
   	style="@style/header"
+  	android:focusableInTouchMode="true"
   	android:layout_width="match_parent" android:id="@+id/mensajes_post_mensaje_header" 
   	android:layout_height="wrap_content" 
   	android:layout_centerHorizontal="true" />

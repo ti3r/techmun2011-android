@@ -8,7 +8,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.widget.ImageView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -47,16 +50,40 @@ public class EventosActivity extends FragmentActivity {
 		TextView tRepresentante = (TextView) 
 			findViewById(R.id.mesa_header_event_layout_responsable);
 		tNombre.setText(mesa.getNombre());
-		tRepresentante.setText(mesa.getRepresentante().getNombre());
+		
+		tRepresentante.setText((mesa.getRepresentante() != null)?
+				mesa.getRepresentante().getNombre(): "");
+		TextView tDescripcion = (TextView) 
+				findViewById(R.id.mesa_header_event_layout_descripcion);
+		tDescripcion.setText((mesa.getDescripcion() != null)?mesa.getDescripcion() : "");
 		String scolor = mesa.getColor();
 		int color = Color.parseColor(scolor);
-		ImageView img = ((ImageView)findViewById(R.id.mesa_header_event_layout_icon));
+		LinearLayout img = ((LinearLayout)findViewById(R.id.eventos_layout_mesa_bar));
 		img.setBackgroundColor(color);
 		
 		eventosListFragment = (EventosListFragment) getSupportFragmentManager().findFragmentById(
 						R.id.eventos_layout_eventos_list_fragment);
 		Log.i("techmun2011", "fragment loaded");
 		eventosListFragment.setMesa(mesa);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = new MenuInflater(getBaseContext());
+		inflater.inflate(R.menu.eventos_list_fragment_options_menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.eventos_list_menu_item_refresh:
+			eventosListFragment.postRefresh();
+			return true;
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 	
 }

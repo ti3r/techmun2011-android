@@ -32,14 +32,14 @@
         	</intent-filter>
         </activity>
         
-        <activity android:name="ComentariosActivity">
+        <activity android:name="ComentariosActivity" android:windowSoftInputMode="stateHidden">
         	<intent-filter>
         		<action android:name="org.blanco.techmun2011.COMENTARIOS" />
         		<category android:name="android.intent.category.DEFAULT" />
         	</intent-filter>
         </activity>
         
-        <activity android:name="MensajesActivity">
+        <activity android:name="MensajesActivity" android:windowSoftInputMode="stateHidden">
         	<intent-filter>
         		<action android:name="org.blanco.techmun2011.MENSAJES" />
         		<category android:name="android.intent.category.DEFAULT" />

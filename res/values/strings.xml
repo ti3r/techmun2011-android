@@ -55,4 +55,10 @@
         <!--
     <string name="initial_geo_uri">"google.streetview:cbll=28.674389,-106.076968&amp;mz=20"</string>
     -->
+    
+    <string name="comentarios_list_empty_list">No existen comentarios aun!!</string>
+    
+    <string name="refresh">Refrescar</string>
+    <string name="no_evento_selected_to_publish">No se selecciono un evento para publicar el comentario, trata de refrescar la pagina para corregir el error</string>
+    
 </resources>
