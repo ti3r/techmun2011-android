@@ -5,8 +5,8 @@
 
     <ImageView
         android:id="@+id/mensaje_details_layout_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
@@ -16,32 +16,38 @@
         android:id="@+id/mensaje_details_layout_mensaje"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/mensaje_details_layout_image"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="200dip"
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
+    
     <TextView
         android:id="@+id/mensaje_details_layout_txt_autor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/mensaje_details_layout_mensaje"
         android:gravity="right"
-        android:text="Medium Text"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/mensaje_details_layout_mensaje"
+        android:text="Autor"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/mensaje_details_layout_txt_fecha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/mensaje_details_layout_txt_autor"
         android:gravity="right"
-        android:text="Medium Text"
+        android:layout_below="@id/mensaje_details_layout_txt_autor"
+        android:layout_centerHorizontal="true"
+        android:text="Fecha"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
+    <ProgressBar
+        android:id="@+id/mensaje_details_layout_loading_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/mensaje_details_layout_mensaje"
+        android:layout_centerHorizontal="true" />
+    
 </RelativeLayout>

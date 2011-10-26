@@ -1,5 +1,6 @@
 package org.blanco.techmun.android.cproviders;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -7,7 +8,6 @@ import java.util.regex.Pattern;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.blanco.techmun.android.misc.ObjectsCursor;
 import org.blanco.techmun.entities.Comentario;
-import org.blanco.techmun.entities.Comentarios;
 import org.blanco.techmun.entities.Eventos;
 import org.blanco.techmun.entities.Mensaje;
 import org.blanco.techmun.entities.Mesas;
@@ -72,8 +72,12 @@ public class TechMunContentProvider extends ContentProvider {
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
 		if (uri.toString().matches(MESA_CONTENT_COMENTARIOS_INSERT_PETITION_REG_EXP)){
-			long id = comentsFetcher.publishComentario(values);
-			return Uri.parse(CONTENT_BASE_URI+"/comentarios/"+id);
+			boolean success = comentsFetcher.publishComentario(values);
+			if (success){
+				return Uri.parse(CONTENT_BASE_URI+"/comentarios/");
+			}else{
+				return Uri.EMPTY;
+			}
 		}else if(uri.toString().matches(MESA_CONTENT_MENSAJES_PETITION_REG_EXP)){
 			return Uri.parse(CONTENT_BASE_URI+"/mensajes/"+123);
 		}else{
@@ -88,7 +92,7 @@ public class TechMunContentProvider extends ContentProvider {
 		eventosFeher = new EventosFetcher(httpClient,getContext());
 		mesasFecher = new MesasFetcher(httpClient, getContext());
 		comentsFetcher = new ComentariosFetcher(httpClient);
-		mensajesFetcher = new MensajesFetcher(httpClient);
+		mensajesFetcher = new MensajesFetcher(httpClient, getContext());
 		return true;
 	}
 
@@ -101,7 +105,7 @@ public class TechMunContentProvider extends ContentProvider {
 	 * @param groupNo The int group index
 	 * @return The String value of the pointed group
 	 */
-	private String extractGroupFromPattern(String pattern, String input, 
+	public static String extractGroupFromPattern(String pattern, String input, 
 			int groupNo) throws IllegalStateException{
 		String s = null;
 		
@@ -153,14 +157,27 @@ public class TechMunContentProvider extends ContentProvider {
 		return result;
 	}
 	
-	private Cursor getComentariosCursorForUri(Uri uri){
+	private Cursor getComentariosCursorForUri(Uri uri, String selection){
 		String eventoId = 
 		extractGroupFromPattern(MESA_CONTENT_COMENTARIOS_PETITION_REG_EXP, uri.toString(), 1);
+		//Extracting the pagina selection part
+		
+		String pagina = "0";
+		try{
+			pagina = extractGroupFromPattern("pagina=(\\d)", selection, 1);
+		}catch(Exception e){
+			Log.e("techmun", "Unable to retrieve the pagina number from selection argument. " +
+					"Pagina will be 0",e);
+		}
 		try{
 			Long leId = Long.parseLong(eventoId);
-			Comentarios comentarios =
-					comentsFetcher.fetchComentarios(leId);
-			ObjectsCursor result = new ObjectsCursor(comentarios.getComentarios());
+			Integer lPagina = Integer.parseInt(pagina);
+			FetchComentariosResult fetchResult =
+					comentsFetcher.fetchComentarios(leId,lPagina);
+			List<FetchComentariosResult> resultList = 
+					new ArrayList<FetchComentariosResult>(1);
+			resultList.add(fetchResult);
+			ObjectsCursor result = new ObjectsCursor(resultList);
 			return result;
 		}catch(Exception e){
 			Log.e("techmun", "Error retrieving comentarios",e);
@@ -175,7 +192,7 @@ public class TechMunContentProvider extends ContentProvider {
 		if (uri.toString().matches(MESA_CONTENT_EVENTOS_PETITION_REG_EXP)){
 			return getEventosCursorForUri(uri);			
 		}else if (uri.toString().matches(MESA_CONTENT_COMENTARIOS_PETITION_REG_EXP)){
-			return getComentariosCursorForUri(uri);
+			return getComentariosCursorForUri(uri,selection);
 		}else if (uri.toString().matches(MESA_CONTENT_MENSAJES_PETITION_REG_EXP)){
 			return getMensajesCursorForUri(uri);
 		}else if (uri.toString().matches(CONTENT_BASE_URI)){

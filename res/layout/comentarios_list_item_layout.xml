@@ -12,7 +12,7 @@
     android:layout_alignParentRight="true"></TextView>
     
     <TextView android:layout_width="wrap_content" android:id="@+id/comentarios_list_item_autor" 
-    android:textAppearance="?android:attr/textAppearanceSmall" android:text="Anonimo" 
+    android:textAppearance="?android:attr/textAppearanceSmall" android:text="@string/anonymous" 
     android:layout_height="wrap_content" android:layout_below="@id/comentarios_list_item_comentario" 
     android:layout_alignParentRight="true"></TextView>
     

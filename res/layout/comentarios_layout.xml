@@ -17,10 +17,20 @@
     android:layout_height="wrap_content" android:layout_width="wrap_content" 
     android:layout_below="@id/comentarios_layout_evento_title" android:layout_alignParentLeft="true"></TextView>
     
-    <fragment android:id="@+id/comentarios_layout_comentarios_list_fragment"
-    android:name="org.blanco.techmun.android.fragments.ComentariosListFragment"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:layout_below="@id/comentarios_layout_evento_desc"/>
+    <fragment
+        android:id="@+id/comentarios_layout_comentarios_list_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/comentarios_layout_comentarios_empty_bottom"
+        android:layout_below="@id/comentarios_layout_evento_desc"
+        android:name="org.blanco.techmun.android.fragments.ComentariosListFragment" />
+    
+    <!-- Empty layout with the height of the initial height of the publish fragment in order
+    to align the bottom of the list fragment with this -->
+    <LinearLayout android:id="@+id/comentarios_layout_comentarios_empty_bottom" 
+        android:layout_width="match_parent" android:layout_height="25dip"
+        android:background="#FF0000"
+        android:layout_alignParentBottom="true" />
     
     <fragment android:name="org.blanco.techmun.android.fragments.ComentariosPublishFragment"
     android:layout_width="match_parent" android:layout_height="25dip"

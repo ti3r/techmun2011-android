@@ -8,12 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.ByteArrayBody;
 import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.blanco.techmun.android.misc.ExpandAnimation;
 import org.blanco.techmun.android.misc.MensajesListAdapter;
 import org.blanco.techmun.entities.Mensaje;
@@ -27,6 +25,7 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -89,7 +88,10 @@ public class MensajesActivity extends Activity {
 						list.getAdapter().getItem(index);
 				Intent i = new Intent(MensajeDetailsActivity.INTENT_ACTION);
 				
-				i.putExtra("mensaje",  Mensaje);
+				i.putExtra("mensaje",  Mensaje.getMensaje());
+				i.putExtra("autor", Mensaje.getAutor());
+				i.putExtra("id", Mensaje.getId());
+				i.putExtra("fecha", Mensaje.getFecha());
 				startActivity(i);
 				Log.i("techmun", "Display details for mensaje"+Mensaje);
 			}
@@ -286,7 +288,7 @@ public class MensajesActivity extends Activity {
 			if (arg0.length != 1){
 				throw new IllegalArgumentException("ContentValues bundle must be exactly one");
 			}
-			HttpClient client = new DefaultHttpClient();
+			AndroidHttpClient client = AndroidHttpClient.newInstance("tecmun");
 			HttpPost postReq = new HttpPost("http://tec-ch-mun-2011.herokuapp.com/application/publicarmensaje");
 			
 			MultipartEntity entity = new MultipartEntity();
@@ -312,6 +314,8 @@ public class MensajesActivity extends Activity {
 				Log.e("techmun","Unable to create MultipartEntity to send the message",e);
 			}  catch (Exception e) {
 				Log.e("techmun", "Error sending Mensaje to server",e);
+			}finally{
+				client.close();
 			}
 			return false;
 		}

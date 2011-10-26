@@ -1,5 +1,6 @@
 package org.blanco.techmun.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -13,8 +14,12 @@ import java.util.List;
  * @author Alexandro Blanco <ti3r.bubblenet@gmail.com>
  *
  */
-public class Comentarios implements Iterable<Comentario>{
+public class Comentarios implements Iterable<Comentario>, Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6330956612447729039L;
 	/**
 	 * The list that will hold the elements
 	 */

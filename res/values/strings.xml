@@ -45,7 +45,8 @@
     
     <string name="comentario_sending">Enviando Comentario</string>
     <string name="comentario_sent">Tu comentario fue enviado con exito</string>
-      
+    <string name="comentario_not_sent">No fue posible enviar tu comentario, intenta de nuevo o contacta al administrador</string>
+    
     <string name="initial_geo_uri">"geo:28.674389,-106.076968?z=20"</string>
     
     <string name="login_baner">Acceder con tu usuario y contraseña registrados en la pagina web 
@@ -61,4 +62,6 @@
     <string name="refresh">Refrescar</string>
     <string name="no_evento_selected_to_publish">No se selecciono un evento para publicar el comentario, trata de refrescar la pagina para corregir el error</string>
     
+    <string name="anonymous">Anonimo</string>
+        
 </resources>

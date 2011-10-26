@@ -40,8 +40,10 @@ public class ComentariosListAdapter extends BaseAdapter {
 		Comentario comentario = (Comentario) getItem(position);
 		((TextView)convertView.findViewById(R.id.comentarios_list_item_comentario))
 			.setText(comentario.getComentario());
-		((TextView)convertView.findViewById(R.id.comentarios_list_item_autor))
-		.setText("Anonimo");
+		if(comentario.getAutor() != null && !comentario.getAutor().equals("")){
+			((TextView)convertView.findViewById(R.id.comentarios_list_item_autor))
+			.setText(comentario.getAutor());
+		}
 		return convertView;
 	}
 

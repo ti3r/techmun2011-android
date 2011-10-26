@@ -129,11 +129,13 @@ public class ComentariosPublishFragment extends Fragment {
 			if (result != Uri.EMPTY){
 				Toast.makeText(getActivity(), getString(R.string.comentario_sent), 500).show();
 				clearFields();
+			}else {
+				Toast.makeText(getActivity(), getString(R.string.comentario_not_sent), 500).show();
 			}
 			dialog.dismiss();
 			//If the associated list is set, refresh it
 			if (listFragment != null){
-				listFragment.refreshComentarios();
+				listFragment.refreshComentarios(false);
 			}
 			super.onPostExecute(result);
 		}

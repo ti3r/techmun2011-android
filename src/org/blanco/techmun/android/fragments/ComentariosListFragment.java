@@ -1,14 +1,13 @@
 package org.blanco.techmun.android.fragments;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.blanco.techmun.android.ComentariosActivity;
 import org.blanco.techmun.android.R;
+import org.blanco.techmun.android.cproviders.FetchComentariosResult;
 import org.blanco.techmun.android.cproviders.TechMunContentProvider;
 import org.blanco.techmun.android.misc.ComentariosListAdapter;
 import org.blanco.techmun.entities.Comentario;
@@ -34,6 +33,8 @@ public class ComentariosListFragment extends ListFragment {
 	private ProgressBar progress = null;
 	private ComentariosLoader loader = null;
 	private Button btnRefresh = null;
+	private Button btnMas = null;
+	private Integer nextPageToFetch = 0;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup group, 
@@ -44,7 +45,14 @@ public class ComentariosListFragment extends ListFragment {
 		btnRefresh = (Button) v.findViewById(R.id.comentarios_list_layout_refresh_button);
 		btnRefresh.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				refreshComentarios();
+				refreshComentarios(false);
+			}
+		});
+		btnMas = (Button) v.findViewById(R.id.comentarios_list_layout_more_button);
+		btnMas.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				refreshComentarios(true);
 			}
 		});
 		return v;
@@ -60,19 +68,19 @@ public class ComentariosListFragment extends ListFragment {
 	}
 
 
-	public void refreshComentarios(){
+	public void refreshComentarios(boolean append){
 		if (this.evento != null){
 			if (loader != null && loader.getStatus() == AsyncTask.Status.RUNNING){
 				loader.cancel(true);
 			}
-			loader = new ComentariosLoader();
+			loader = new ComentariosLoader(append,nextPageToFetch);
 			loader.execute(this.evento);
 		}
 	}
 
 	public void setEvento(Evento evento){
 		this.evento = evento;
-		refreshComentarios();
+		refreshComentarios(false);
 	}
 	
 	
@@ -85,6 +93,16 @@ public class ComentariosListFragment extends ListFragment {
 	 */
 	private class ComentariosLoader extends AsyncTask<Evento, Void, List<Comentario>>{
 
+		private boolean fetchMore = false;
+		private Integer currentPage = 0;
+		private boolean append = false;
+		
+		public ComentariosLoader(boolean append, Integer page) {
+			this.append = append;
+			//if not append the page it means complete refresh so current page should be 0
+			this.currentPage = (append == false)? 0 : page;
+		}
+		
 		@Override
 		protected void onPreExecute() {
 			ComentariosListFragment.this.progress.setVisibility(View.VISIBLE);
@@ -97,22 +115,36 @@ public class ComentariosListFragment extends ListFragment {
 			List<Comentario> result = new ArrayList<Comentario>();
 			Cursor c =	getActivity().managedQuery(Uri.parse(
 					TechMunContentProvider.CONTENT_BASE_URI+"/comentarios/"+evento.getId()), 
-					null,null, null, null);
+					null,"pagina="+currentPage, 
+					null, null);
 			if (c != null){
-				int x = 0;
-				while (c.moveToNext()){
+				//Only one result is returned in this call of type ComentariosFetcher.FetchResult
+				if (c.moveToNext()){
+					
 					try {
-						ByteArrayInputStream input = new ByteArrayInputStream(c.getBlob(x++));
+						ByteArrayInputStream input = new ByteArrayInputStream(c.getBlob(0));
 						ObjectInputStream stream = new ObjectInputStream(input);
-						Comentario coment = (Comentario) stream.readObject();
-						result.add(coment);
-					} catch (StreamCorruptedException e) {
-						Log.e("techmun", "Error parsing eventos",e);
-					} catch (IOException e) {
-						Log.e("techmun", "Error parsing eventos",e);
-					} catch (ClassNotFoundException e) {
+						Object object = stream.readObject();
+						if (object instanceof FetchComentariosResult){
+							FetchComentariosResult fetchResult = 
+									(FetchComentariosResult) object;
+							if (fetchResult.comentarios != null){
+								for(Comentario comentario : fetchResult.comentarios){
+									result.add(comentario);
+								}
+							}
+							//Set the result state of this fetcher
+							fetchMore = fetchResult.mas;
+							currentPage = (fetchResult.pagina != null) ? fetchResult.pagina : 0;
+						}else{
+							Log.e("techmun", "Unable to retrieve FetchComentariosResult class from the " +
+									"Objects Cursor. result is not instance of this class");
+						}
+						stream.close();
+					} catch (Exception e) {
 						Log.e("techmun", "Error parsing eventos",e);
 					}
+					
 				}				
 			}
 			return result;
@@ -120,12 +152,26 @@ public class ComentariosListFragment extends ListFragment {
 
 		@Override
 		protected void onPostExecute(List<Comentario> result) {
-			// TODO Auto-generated method stub
 			Comentarios comentarios = new Comentarios();
 			comentarios.getComentarios().addAll(result);
-			ComentariosListAdapter adapter = new ComentariosListAdapter(comentarios);
-			ComentariosListFragment.this.setListAdapter(adapter);
+			if (append && ComentariosListFragment.this.getListAdapter() != null){
+				//retrieve the list adapter
+				ComentariosListAdapter adapter = (ComentariosListAdapter) ComentariosListFragment.this.getListAdapter();
+				adapter.addComentarios(comentarios);
+				adapter.notifyDataSetChanged();
+			}else{
+				//Build a new adapter and add the retrieved results
+				ComentariosListAdapter adapter = new ComentariosListAdapter(comentarios);
+				ComentariosListFragment.this.setListAdapter(adapter);
+				
+			}
 			ComentariosListFragment.this.progress.setVisibility(View.GONE);
+			ComentariosListFragment.this.nextPageToFetch = this.currentPage;
+			if (!this.fetchMore){
+				ComentariosListFragment.this.btnMas.setVisibility(View.GONE);
+			}else{
+				ComentariosListFragment.this.btnMas.setVisibility(View.VISIBLE);
+			}
 			super.onPostExecute(result);
 		}
 		
