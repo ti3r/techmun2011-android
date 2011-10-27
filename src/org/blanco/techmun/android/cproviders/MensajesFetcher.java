@@ -134,11 +134,11 @@ public class MensajesFetcher {
 		List<Mensaje> result = null;
 		
 		//Do not force the cache load first in order to know if the cache is old or not
-			result = tryToLoadFromCache(context, false);
-			if (result != null){
-				//If loaded from cache
-				return result;
-			}
+		//	result = tryToLoadFromCache(context, false);
+		//	if (result != null){
+		//		//If loaded from cache
+		//		return result;
+		//	}
 		
 		HttpResponse response;
 		boolean retrieved = true;
@@ -174,7 +174,7 @@ public class MensajesFetcher {
 			result = tryToLoadFromCache(context, true);
 			return result;
 		}
-		saveOnCache(context, result);
+		//saveOnCache(context, result);
 		return result;
 	}
 	

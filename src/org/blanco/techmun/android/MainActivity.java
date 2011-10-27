@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity {
     
@@ -15,6 +17,7 @@ public class MainActivity extends FragmentActivity {
 	View logInMenuItem = null;
 	View calendarioMenuItem = null;
 	String user = null;
+	TextView txtUser = null;
 	
 	/** Called when the activity is first created. */
     @Override
@@ -78,14 +81,26 @@ public class MainActivity extends FragmentActivity {
 //				startActivity(i);
 			}
 		});
-    	
+    	txtUser = (TextView) findViewById(R.id.main_menu_user);
+    	setUser();
     }
 
+    
+    private void setUser(){
+    	user = PreferenceManager.getDefaultSharedPreferences(getBaseContext())
+    	.getString("user", null);
+    	if (user != null && !user.equals("")){
+    		txtUser.setText(getString(R.string.hola)+" "+user);
+    		txtUser.setVisibility(View.VISIBLE);
+    	}else{
+    		txtUser.setVisibility(View.GONE);
+    	}
+    }
 	@Override
 	protected void onActivityResult(int reqCode, int resCode, Intent data) {
 		if (reqCode == 0 && resCode == Activity.RESULT_OK){
 			//set the user name for the application
-			user = data.getStringExtra("usuario");
+			setUser();
 		}
 		super.onActivityResult(reqCode, resCode, data);
 	}

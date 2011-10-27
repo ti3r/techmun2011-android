@@ -47,6 +47,20 @@ public class LoginActivity extends Activity implements AuthTaskListener {
 				finish();
 			}
 		});
+		Button btnLogout = (Button) findViewById(R.id.login_layout_btn_logout);
+		if (!PreferenceManager.getDefaultSharedPreferences(getBaseContext())
+				.contains("user")){
+			btnLogout.setVisibility(View.GONE);
+		}
+		btnLogout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit()
+				.remove("user").commit();
+				setResult(RESULT_OK);
+				finish();
+			}
+		});
 	}
 	
 	ProgressDialog dialog = null;
@@ -72,9 +86,9 @@ public class LoginActivity extends Activity implements AuthTaskListener {
 			editor.commit();
 			Toast.makeText(getBaseContext(), getString(R.string.login_correct_msg), 
 					Toast.LENGTH_SHORT).show();
-			Intent intent = new Intent();
-			intent.putExtra("usuario", edtUser.getText().toString());
-			setResult(RESULT_OK, intent);
+			setResult(RESULT_OK);
+			PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit()
+			.putString("user", edtUser.getText().toString()).commit();
 			finish();
 		}else{
 			Toast.makeText(getBaseContext(), getString(R.string.login_failed_msg), 

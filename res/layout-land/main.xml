@@ -16,8 +16,8 @@
 	<TextView android:id="@+id/main_menu_user"
 	    android:typeface="serif"
 	    android:layout_width="match_parent" android:layout_height="wrap_content"
-	    android:text="Hola" android:gravity="center_horizontal"
+	    android:text="Hola" android:gravity="right"
 	    android:textAppearance="?android:attr/textAppearanceLarge"
-	    android:layout_below="@id/main_menu_icons"/>
+	    android:layout_alignParentRight="true"/>
 
 </RelativeLayout>

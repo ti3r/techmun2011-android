@@ -2,21 +2,10 @@ package org.blanco.techmun.android.misc;
 
 import java.util.List;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.util.EntityUtils;
 import org.blanco.techmun.android.R;
-import org.blanco.techmun.android.cproviders.MensajesFetcher;
 import org.blanco.techmun.entities.Mensaje;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.http.AndroidHttpClient;
-import android.os.AsyncTask;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +57,9 @@ public class MensajesListAdapter extends BaseAdapter {
 			MensajeFotoLoader loader = new MensajeFotoLoader(mensaje, foto);
 			loader.execute();
 		}else if (mensaje.isFailedRetrieveFoto()){
-			foto.setBackgroundDrawable(view.getResources().getDrawable(android.R.drawable.stat_sys_warning));
+			foto.setImageDrawable(view.getContext().getResources().getDrawable(
+				android.R.drawable.progress_indeterminate_horizontal)
+				);
 		}
 	}
 

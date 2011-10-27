@@ -193,6 +193,7 @@ public class MensajesActivity extends Activity {
 		}
 	}
 
+
 	@Override
 	protected void onStart() {
 		list.requestFocus();

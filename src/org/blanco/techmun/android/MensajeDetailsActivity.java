@@ -14,7 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.Toast;
 
 public class MensajeDetailsActivity extends Activity implements
 	MensajeFootLoaderExtraPostExecute{
@@ -25,6 +25,7 @@ public class MensajeDetailsActivity extends Activity implements
 	Mensaje mensaje = null;
 	MensajeFotoLoader loader  = null;
 	ProgressBar progress = null;
+	StringBuilder caption = new StringBuilder();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,18 +48,24 @@ public class MensajeDetailsActivity extends Activity implements
 		mensaje.setFecha((Date) extras.getSerializable("fecha"));
 		
 		img = (ImageView) findViewById(R.id.mensaje_details_layout_image);
-		
-		TextView txtMensaje = (TextView) findViewById(R.id.mensaje_details_layout_mensaje);
-		txtMensaje.setText(getIntent().getStringExtra("mensaje"));
-		TextView txtAutor = (TextView) findViewById(R.id.mensaje_details_layout_txt_autor);
+		img.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showCaption();
+			}
+		});
+		caption.append(getIntent().getStringExtra("mensaje"));
 		if (mensaje.getAutor() != null){
-			txtAutor.setText(mensaje.getAutor().getNombre());
+			caption.append("\n").append(mensaje.getAutor().getNombre());
 		}
-		TextView txtFecha = (TextView) findViewById(R.id.mensaje_details_layout_txt_fecha);
-		txtFecha.setText(mensaje.getFecha().toLocaleString());
+		caption.append("\n").append(mensaje.getFecha().toLocaleString());
 		progress = (ProgressBar) findViewById(R.id.mensaje_details_layout_loading_progress);
 	}
 
+	private void showCaption(){
+		Toast.makeText(getBaseContext(), caption.toString(), 7000).show();
+	}
+	
 	@Override
 	protected void onStart() {
 		if (loader != null && loader.getStatus().equals(AsyncTask.Status.RUNNING)){
@@ -66,6 +73,7 @@ public class MensajeDetailsActivity extends Activity implements
 		}
 		loader = new MensajeFotoLoader(mensaje, img, this);
 		loader.execute();
+		showCaption();
 		super.onStart();
 	}
 

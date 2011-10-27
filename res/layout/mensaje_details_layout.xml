@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="#000000"
     android:layout_height="match_parent" >
 
     <ImageView
@@ -11,7 +12,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:src="@drawable/icon" />
-
+<!-- 
     <TextView
         android:id="@+id/mensaje_details_layout_mensaje"
         android:layout_width="wrap_content"
@@ -41,13 +42,14 @@
         android:layout_centerHorizontal="true"
         android:text="Fecha"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+ -->
     <ProgressBar
         android:id="@+id/mensaje_details_layout_loading_progress"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/mensaje_details_layout_mensaje"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
     
 </RelativeLayout>

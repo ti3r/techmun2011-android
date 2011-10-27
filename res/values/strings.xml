@@ -4,9 +4,9 @@
     <string name="app_name">Tech Mun 2011</string>
     <string name="mesas_fragment_title_bar_caption">Mesas</string>
     <string name="footer_message">
-    	Tech.ch.mun 2011. Oct. 29 a Oct. 31\nUn evento de Prepa Tec. Del Tecnologico de Monterrey.
+    	Tech.ch.mun 2011. Oct. 29 a Oct. 31\nUn evento de Prepa Tec. Del Tecnológico de Monterrey.
     </string>
-    <string name="comentarios_publish_layout_header">Envia un Comentario</string>
+    <string name="comentarios_publish_layout_header">Enviá un Comentario</string>
     <string-array name="test_string_array">
         <item>Uno</item>
         <item>Dos</item>
@@ -50,9 +50,9 @@
     <string name="initial_geo_uri">"geo:28.674389,-106.076968?z=20"</string>
     
     <string name="login_baner">Acceder con tu usuario y contraseña registrados en la pagina web 
-        de Tec Ch Mun 2011, te permitira enviar mensajes desde tu dispositivo movil sobre
+        de Tec Ch Mun 2011, te permitirá enviar mensajes desde tu dispositivo móvil sobre
         lo que esta ocurriendo en el evento.\nSolo ingresa tu usuario y contraseña y accede 
-        a la seccion de mensajes desde el menu principal.\nSi no recuerdas tu usuario y contraseña contacta al administrador del evento</string>
+        a la sección de mensajes desde el menú principal.\nSi no recuerdas tu usuario y contraseña contacta al administrador del evento</string>
         <!--
     <string name="initial_geo_uri">"google.streetview:cbll=28.674389,-106.076968&amp;mz=20"</string>
     -->
@@ -62,6 +62,7 @@
     <string name="refresh">Refrescar</string>
     <string name="no_evento_selected_to_publish">No se selecciono un evento para publicar el comentario, trata de refrescar la pagina para corregir el error</string>
     
-    <string name="anonymous">Anonimo</string>
-        
+    <string name="anonymous">Anónimo</string>
+    <string name="hola">Hola </string>    
+    <string name="btn_logout">Salir</string>    
 </resources>

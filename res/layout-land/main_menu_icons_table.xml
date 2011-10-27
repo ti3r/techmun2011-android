@@ -12,7 +12,7 @@
 
 
     <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:stretchColumns="0,1" android:shrinkColumns="0,1"
+    android:stretchColumns="0,1,2,3" android:shrinkColumns="0,1,2,3"
     android:scrollbars="vertical"
     android:layout_below="@id/main_menu_logo">
     	    	
@@ -46,9 +46,6 @@
     				android:text="@string/login"></TextView>
     			
     		</RelativeLayout>
-    	</TableRow>
-    	
-    	<TableRow style="@style/layout_w_match_h_wrap" >
     		
     		<RelativeLayout android:layout_width="wrap_content" 
     			android:id="@+id/menu_item_mapa"
@@ -79,8 +76,6 @@
     			
     		</RelativeLayout>    		
     	
-    	</TableRow>
-    	<TableRow>
     	    <RelativeLayout android:layout_width="wrap_content"
     			android:layout_height="wrap_content"
     			android:visibility="gone"

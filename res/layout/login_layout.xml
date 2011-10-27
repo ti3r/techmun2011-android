@@ -76,5 +76,14 @@
         android:layout_alignBottom="@+id/login_layout_btn_cancel"
         android:layout_toLeftOf="@+id/login_layout_btn_cancel"
         android:text="@string/btn_send" />
+    
+    <Button
+        android:id="@+id/login_layout_btn_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/login_layout_btn_cancel"
+        android:layout_alignBottom="@+id/login_layout_btn_cancel"
+        android:layout_alignParentLeft="true"
+        android:text="@string/btn_logout" />
 
 </RelativeLayout>

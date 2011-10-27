@@ -19,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 /**
@@ -55,6 +56,8 @@ public class MesasFetcher {
 			ObjectOutputStream mesasOOS = new ObjectOutputStream(mesasFOS);
 			mesasOOS.writeObject(mesas);
 			mesasOOS.close();
+			PreferenceManager.getDefaultSharedPreferences(context).edit().
+			putLong("mesas_last_cache_saved", System.currentTimeMillis()).commit();
 		} catch (IOException e) {
 			Log.e("tachmun", "Error opening cache file for mesas in content provider. " +
 					"No cache will be saved",e);
@@ -80,7 +83,14 @@ public class MesasFetcher {
 	}
 	
 	public Mesas getMesas(){
-		Mesas result = tryToLoadFromCache(context);
+		long lastFromCache = PreferenceManager.getDefaultSharedPreferences(context).
+				getLong("mesas_last_cache_saved", 0);
+		long diff = System.currentTimeMillis() - lastFromCache;
+		Mesas result = null;
+		//If the last cache from mesas is less than 3 hours load mesas from cache
+		if (diff < 10800000){
+			result = tryToLoadFromCache(context);
+		}
 		//Mesa mesa = new Mesa();
 		//mesa.setId(1L); mesa.setNombre("Mesa de Prueba"); 
 		//mesa.setRepresentante(new Usuario("alex","alex@alex.com"));

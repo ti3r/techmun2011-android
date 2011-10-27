@@ -13,12 +13,17 @@
 	  android:layout_below="@id/eventos_layout_action_bar"
 	  style="@style/layout_w_match_h_wrap">
 	    
-	    <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" 
-	    	android:id="@+id/mesa_header_event_layout_email_button" 
-	    	android:src="@android:drawable/sym_action_email" 
-	    	android:scaleType="center" android:background="@android:color/transparent" 
-	    	android:layout_alignParentTop="true" android:layout_alignParentRight="true"
-	    	></ImageButton>
+	    <ImageButton
+	        android:id="@+id/mesa_header_event_layout_email_button"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_alignParentTop="true"
+	        android:background="@android:color/transparent"
+	        android:scaleType="center"
+	        android:src="@android:drawable/sym_action_email"
+	        android:visibility="gone" >
+</ImageButton>
 	   
 	    <TextView
 	        android:id="@+id/mesa_header_event_layout_nombre"
