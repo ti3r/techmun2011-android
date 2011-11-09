@@ -1,10 +1,32 @@
+/**
+ * Tec ch mun 2011 for Android, is the android application used to 
+ *  
+ * review all the information that is generated during the event
+ * Tec Ch Mun 2011 of the ITESM campus chihuahua.
+ * You can use this application as an example of all the technologies
+ * used in this app.
+ * Copyright (C) 2011  Alexandro Blanco <ti3r.bubblenet@gmail.com>
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * Visit http://tec-ch-mun-2011.herokuapps.com
+ */
 package org.blanco.techmun.android.cproviders;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +35,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.blanco.techmun.android.misc.Base64Coder;
 import org.blanco.techmun.android.misc.XmlParser;
 import org.blanco.techmun.entities.Mensaje;
 import org.blanco.techmun.entities.Usuario;
@@ -20,6 +43,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -48,19 +72,19 @@ public class MensajesFetcher {
 		this.context = context;
 	}
 	
-	private void saveOnCache(Context context, List<Mensaje> mensajes){
-		try {
-			FileOutputStream mesasFOS = context.openFileOutput("mensajes.df", Context.MODE_PRIVATE);
-			ObjectOutputStream mesasOOS = new ObjectOutputStream(mesasFOS);
-			mesasOOS.writeObject(mensajes);
-			mesasOOS.close();
-			PreferenceManager.getDefaultSharedPreferences(context).edit()
-				.putLong("mensajes_last_cache", System.currentTimeMillis());
-		} catch (IOException e) {
-			Log.e("tachmun", "Error opening cache file for mesas in content provider. " +
-					"No cache will be saved",e);
-		}
-	}
+//	private void saveOnCache(Context context, List<Mensaje> mensajes){
+//		try {
+//			FileOutputStream mesasFOS = context.openFileOutput("mensajes.df", Context.MODE_PRIVATE);
+//			ObjectOutputStream mesasOOS = new ObjectOutputStream(mesasFOS);
+//			mesasOOS.writeObject(mensajes);
+//			mesasOOS.close();
+//			PreferenceManager.getDefaultSharedPreferences(context).edit()
+//				.putLong("mensajes_last_cache", System.currentTimeMillis());
+//		} catch (IOException e) {
+//			Log.e("tachmun", "Error opening cache file for mesas in content provider. " +
+//					"No cache will be saved",e);
+//		}
+//	}
 	
 	private List<Mensaje> tryToLoadFromCache(Context context, boolean forceCacheLoad){
 		Long lastCache = 
@@ -163,6 +187,13 @@ public class MensajesFetcher {
 				Mensaje mensaje = new Mensaje(sMensaje, autor);
 				mensaje.setFecha(new Date(Date.parse(sFecha)));
 				mensaje.setId(id);
+				//try to load the foto of the mensaje
+				String encoded_foto = joMensaje.getString("encoded_foto");
+				if (encoded_foto != null && !encoded_foto.equals("")){
+					byte foto[] = Base64Coder.decode(encoded_foto.toCharArray());
+					mensaje.setFoto(BitmapFactory.decodeByteArray(foto, 0, foto.length));
+				}
+				
 				result.add(mensaje);
 			}
 		} catch (Exception e){
